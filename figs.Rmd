@@ -1,0 +1,336 @@
+---
+title: "FiguresTables"
+author: "Malavika Rajeev"
+date: "8/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(deSolve)
+library(ggplot2)
+library(rgdal)
+library(ggthemes)
+library(ggsn)
+library(dplyr)
+newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.background = element_blank())
+
+```
+
+## Figure 1
+
+### Coverage example
+- From vaccination data from Serengeti
+
+```{r coverage}
+## Project population
+vacc_reconstruct <- function(t, y, parms){
+  dS <- -parms["deaths"] * y["S"] + parms["births"] * (y["S"] + y["V"]) + parms["waning"] * y["V"]
+  dV <- -parms["deaths"] * y["V"] - parms["waning"] * y["V"]
+  dWaning <- -parms["waning"] * y["V"]
+  dDeaths <- -parms["deaths"] * y["V"]
+  dBirths <- -parms["births"] * (y["S"] + y["V"])
+  return(list(c(dS, dV)))
+} 
+
+eventfun <- function(t, y, parms){
+  with (as.list(y),{
+    diff <- 0.7*(S + V) - V ## newly vaccinated
+    V <- V + diff
+    S <- S - diff
+    return(c(S, V))
+  })
+}
+
+
+## times in relevant timestep
+times <- seq (1/52, 5, by = 1/52) ## weekly for 10 years
+
+## initial pop
+IS <- 70000
+IV <- 0
+
+## param
+births <- 0.52
+deaths <- 0.52
+waning <- 0
+parms <- c(deaths = deaths, births = births, waning = waning)
+
+## run
+calcsus <- lsoda(y = c(S = IS, V = IV), times = times, func = vacc_reconstruct, parms = parms, 
+                 events = list(func = eventfun, time = seq(1/52, 5, by = 1)))
+vacc_df <- data.frame(Year = calcsus[, "time"], propVacc = calcsus[,"V"]/(calcsus[,"V"] + calcsus[,"S"]))
+ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
+  geom_line(color = "lightseagreen", size = 1) +
+  xlab ("Year") +
+  ylab("Coverage") + 
+  ylim(c(0, 1)) +
+  geom_hline(yintercept = 0.69, color = "aquamarine4", linetype = 2, size = 1) +
+  newtheme +
+  theme(text = element_text(color = "aquamarine4"), axis.text = element_text(color = "aquamarine4"), 
+        axis.line = element_line(color = "aquamarine4"))
+
+```
+
+### Secondary cases
+```{r R0}
+## params
+secondaries <- data.frame(secondaries = rnbinom(1000, mu = 1.2, size = 0.5))
+ggplot(data = secondaries, aes(x = secondaries)) +
+  geom_histogram(binwidth = 1, color = "lightgray", fill = "red", alpha = 0.5) +
+  geom_vline(xintercept = 1.2, color = "red", linetype = 2, size = 1.1) +
+  xlab("Secondary cases") +
+  ylab("Frequency") +
+  newtheme +
+  theme(text = element_text(color = alpha("firebrick3", 1)),
+        axis.text = element_text(color = alpha("firebrick3", 1)), 
+        axis.line = element_line(color = alpha("firebrick3", 1)))
+
+```
+
+### Incubation period
+```{r incubation}
+incubation <- as.data.frame(list(Days = seq(0, 365, 1), 
+                           Density = dgamma(seq(0, 365, 1), shape = 1.1518, 
+                                    rate = 0.0429)))
+ggplot(data = incubation, aes (x = Days, y = Density)) +
+  geom_line(color = "darkred", size = 1.2) +
+  xlab("Incubation Period \n (days)") +
+  geom_vline(xintercept = 22.3, color = "darkred", linetype = 2, size = 1.1, alpha = 0.5) +
+  newtheme +
+  theme(text = element_text(color = "darkred"), axis.text = element_text(color = "darkred"), 
+        axis.line = element_line(color = "darkred"))
+
+```
+
+### Infectious period
+```{r infectious}
+infectious <- as.data.frame(list(Days = seq(0, 10, 0.1), 
+                           Density = dgamma(seq(0, 10, 0.1), shape = 2.9012, 
+                                    rate = 1.013)))
+ggplot(data = infectious, aes (x = Days, y = Density)) +
+  geom_line(color = "navy", size = 1.2) +
+  xlab("Infectious Period \n (days)") +
+  geom_vline(xintercept = 2.9, color = "navy", linetype = 2, size = 1.2, alpha = 0.5) +
+  newtheme +
+  theme(text = element_text(color = "navy"), axis.text = element_text(color = "navy"), 
+        axis.line = element_line(color = "navy"))
+
+```
+
+### Road network with scale
+```{r roads}
+tz_roads <- readOGR("data/gis/Tanzania_Roads/Tanzania_Roads.shp")
+tz_roads <- fortify(tz_roads)
+# TZ <- readOGR("data/tza_admbnda_adm0_20181019/tza_admbnda_adm0_20181019.shp")
+# TZ <- fortify(TZ)
+# ggplot(data = TZ, aes(x = long, y = lat, group = group)) +
+#   geom_polygon(fill = "white", color = "grey") +
+#   geom_line(data = tz_roads, aes(x = long, y = lat, group = group)) +
+#   theme_map()
+
+
+ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
+  geom_line(color = "mediumorchid4") +
+  scalebar(tz_roads, location = "bottomleft", 
+           dist = 200, dist_unit = "km", transform = TRUE, box.fill = c("mediumorchid4", "grey"),
+           box.color =  c("mediumorchid4", "grey"),
+           st.size = 5, st.dist = 0.05, st.color = "mediumorchid4", 
+           height = 0.02, model = 'WGS84') +
+  theme_map()
+
+
+```
+
+### Dispersal kernel
+```{r dispersal}
+## params
+dispersal <- as.data.frame(list(km = seq(0, 10, 0.01), 
+                           Density = dweibull(seq(0, 10, 0.01), shape = 0.3484, 
+                                    scale = 41.28/100)))
+ggplot(data = dispersal, aes (x = km, y = Density)) +
+  geom_line(color = "mediumorchid4", size = 1.2) +
+  xlab("Distance to next bite \n (km)") +
+  geom_vline(xintercept = 0.85, color = "mediumorchid4", linetype = 2, size = 1.2, alpha = 0.75) +
+  newtheme +
+  theme(text = element_text(color = "mediumorchid4"), axis.text = element_text(color = "mediumorchid4"), 
+        axis.line = element_line(color = "mediumorchid4"))
+
+
+```
+
+## Figure 2: Density vs. frequency dependent transmission models
+```{r SEI mods, echo=FALSE}
+# models
+SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alpha = 1, 
+                       gamma = (1/3.1*365), K = 20, START.S.prop = 0.99, START.I.prop = 0.005, START.E.prop = 0.005,
+                       START.R.prop = 0, START.S.density = 15, START.I.density = 0.15, START.E.density = 0.00,
+                       START.R.density = 0, years = 20, steps = 1/52, model = "frequency",...){
+  
+  ### Deterministic skeleton of models for rabies
+  
+  require(deSolve)
+  
+  times <- seq(from = 0, to = years, by = steps)
+  
+  if (model == "frequency"){
+    
+    START.N.prop <- START.S.prop + START.I.prop + START.E.prop
+    
+    beta = (R0*gamma*(sigma + mu))/sigma
+      
+      # This function models a time step for the SIR:
+      dx.dt.SIR <- function(t, y, parms) {
+        N <- y["S"] + y["I"] + y["E"] 
+        S <- y["S"]
+        I <- y["I"]
+        E <- y["E"]
+        R <- y["R"]
+        
+        # Calculate the change in Susceptible
+        dS <-  parms["nu"]*(S+E) - parms["mu"]*S - parms["beta"]*S*(I^parms["alpha"])/N
+        
+        #Calculate the change in Exposed
+        dE <- parms["beta"]*S*(I^parms["alpha"])/N - parms["mu"]*E - parms["sigma"]*E
+        
+        # Calculate the change in Infected
+        dI <- parms["sigma"]*E - parms["gamma"]*I
+        
+        # keeping track of removed
+        dR <- parms["gamma"]*I
+        
+        # Return a list with the changes in S, E, I, R at the current time step
+        return(list(c(dS, dI, dE, dR)))
+      }
+      
+      # Create the parameter vector
+      parms <- c(nu = nu, mu = mu, beta = beta, alpha = alpha, sigma = sigma, gamma = gamma)
+      inits <- c(S=START.S.prop, I=START.I.prop, E=START.E.prop, R=START.R.prop)
+  }
+  
+  if (model == "density"){
+    
+    START.N.density <- START.S.density + START.I.density + START.E.density
+    
+    # the old school rabies model
+    # This function models a time step for the SIR:
+    dx.dt.SIR <- function(t, y, parms) {
+      N <- y["S"] + y["I"] + y["E"]
+      S <- y["S"]
+      I <- y["I"]
+      E <- y["E"]
+      R <- y["R"]
+      
+      ## Calculate dmort and beta here from parms and plug them in
+      dmort <- (parms["nu"] - parms["mu"])/parms["K"]
+      beta <- (parms["R0"]*(parms["sigma"] + parms["nu"])*(parms["gamma"] + parms ["nu"]))/(parms["sigma"]*parms["K"])
+      
+      # Calculate the change in Susceptible
+      dS <-  parms["nu"]*N - parms["mu"]*S - dmort*S - beta*S*I
+      
+      #Calculate the change in Exposed
+      dE <- beta*S*I - parms["mu"]*E - dmort*N*E - parms["sigma"]*E
+      
+      # Calculate the change in Infected
+      dI <- parms["sigma"]*E - parms["mu"]*I - dmort*N*I - parms["gamma"]*I
+      
+      # Calculate the removed pop
+      dR <- parms["gamma"]*I
+      
+      # Return a list with the changes in S, E, I, R at the current time step
+      return(list(c(dS, dI, dE, dR)))
+    }
+    
+    # Create the parameter vector
+    parms <- c(nu = nu, mu = mu, R0 = R0, K = K, sigma = sigma, gamma = gamma)
+    inits <- c(S=START.S.density, I=START.I.density, E=START.E.density, R=START.R.density)
+  }
+  
+  # Run the ODE solver
+  SIR.output <- lsoda(y = inits, 
+                      times = times, 
+                      func = dx.dt.SIR, 
+                      parms = parms)
+  SIR.output <- as.data.frame(SIR.output)
+  SIR.output$N <- SIR.output$S + SIR.output$E + SIR.output$I
+  return (SIR.output)
+}
+
+
+
+## Frequency dependent
+ddt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "density")
+ddt_1.01 <- data.frame(infected = unname(tapply(ddt_1.01$I, (seq_along(ddt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Density")
+ddt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "density")
+ddt_1.1 <- data.frame(infected = unname(tapply(ddt_1.1$I, (seq_along(ddt_1.1$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Density")
+ddt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "density")
+ddt_1.05 <- data.frame(infected = unname(tapply(ddt_1.05$I, (seq_along(ddt_1.05$I)-1) %/% 4, sum)[1:260]),
+                      pop = ddt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Density")
+ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05)
+ddt$time <- 1:260
+ggplot(data = ddt, aes(x = time, y = pop, group = R0, color = R0)) + geom_line()
+ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  newtheme +
+  labs(tag = "B", subtitle = "Density")
+
+
+fdt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "frequency")
+fdt_1.01 <- data.frame(infected = unname(tapply(fdt_1.01$I, (seq_along(fdt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Frequency")
+fdt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "frequency")
+fdt_1.1 <- data.frame(infected = unname(tapply(fdt_1.1$I, (seq_along(fdt_1.1$I)-1) %/% 4, sum)[1:260]),
+                      pop = fdt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Frequency")
+fdt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "frequency")
+fdt_1.05 <- data.frame(infected = unname(tapply(fdt_1.05$I, (seq_along(fdt_1.05$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Frequency")
+fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05)
+fdt$time <- 1:260
+ggplot(data = fdt, aes(x = time, y = pop, group = R0,color = as.factor(R0))) + geom_line() +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Population") +
+  newtheme
+
+ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  newtheme +
+  labs(tag = "A", subtitle = "Frequency")
+```
+
+## Figure 3: Summarizing studies
+
+
+## Figure 4: Correlation between bites & rabies suspect cases
+```{r}
+bites_suspect_TZ <- read.csv("data/monthlybites_suspect_SD_2002_2014.csv")
+bites_suspect_MG <- read.csv("data/monthlybites_suspect_Moramanga_Sep2016_Jan2019.csv")
+bites_suspect_MG %>%
+  filter(month >= 12) -> bites_suspect_MG
+
+bites_suspect_TZ$location <- "TZ"
+bites_suspect_MG$location <- "MG"
+bites_suspect <- bind_rows(bites_suspect_TZ, bites_suspect_MG)
+
+ggplot(data = bites_suspect, aes(x = total_suspect, y = total_bites, color = location)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  # ylim(c(0, max(bites_suspect$total_bites))) +
+  # facet_wrap(~location, scales = "free") +
+  ylab("Total incidence of reported bites \n per 100k persons") +
+  xlab("Total incidence of rabid exposures \n per 100k persons")
+ggsave("figs/bites_suspect.jpeg", device = "jpeg", height = 5, width = 7)  
+cor(bites_suspect_TZ$total_suspect, bites_suspect_TZ$total_bites)
+nrow(bites_suspect_TZ)
+cor(bites_suspect_MG$total_suspect, bites_suspect_MG$total_bites)
+nrow(bites_suspect_MG)
+
+```
