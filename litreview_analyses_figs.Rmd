@@ -12,7 +12,7 @@ library(ggplot2)
 library(rgdal)
 library(ggthemes)
 library(ggsn)
-library(dplyr)
+library(tidyverse)
 newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.background = element_blank())
 
 ```
@@ -20,7 +20,6 @@ newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.backgr
 ## Figure 1
 
 ### Coverage example
-- From vaccination data from Serengeti
 
 ```{r coverage}
 ## Project population
@@ -307,30 +306,55 @@ ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor
 ```
 
 ## Figure 3: Summarizing studies
-
-
-## Figure 4: Correlation between bites & rabies suspect cases
 ```{r}
-bites_suspect_TZ <- read.csv("data/monthlybites_suspect_SD_2002_2014.csv")
-bites_suspect_MG <- read.csv("data/monthlybites_suspect_Moramanga_Sep2016_Jan2019.csv")
-bites_suspect_MG %>%
-  filter(month >= 12) -> bites_suspect_MG
+studies <- read.csv("data/mod_studies.csv")
 
-bites_suspect_TZ$location <- "TZ"
-bites_suspect_MG$location <- "MG"
-bites_suspect <- bind_rows(bites_suspect_TZ, bites_suspect_MG)
+## Year
+ggplot(data = studies, aes(x = Year)) +
+  geom_bar() +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
+  ylab("Number of studies")
 
-ggplot(data = bites_suspect, aes(x = total_suspect, y = total_bites, color = location)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  # ylim(c(0, max(bites_suspect$total_bites))) +
-  # facet_wrap(~location, scales = "free") +
-  ylab("Total incidence of reported bites \n per 100k persons") +
-  xlab("Total incidence of rabid exposures \n per 100k persons")
-ggsave("figs/bites_suspect.jpeg", device = "jpeg", height = 5, width = 7)  
-cor(bites_suspect_TZ$total_suspect, bites_suspect_TZ$total_bites)
-nrow(bites_suspect_TZ)
-cor(bites_suspect_MG$total_suspect, bites_suspect_MG$total_bites)
-nrow(bites_suspect_MG)
+## Countries: refactor countries
+studies %>%
+  mutate(location = case_when(Country %in% c("Australia", "Central African Republic", "Chad", "China", "Indonesia", "Japan", 
+                                            "Phillipines", "South Africa", "Tanzania") ~ as.character(Country), 
+                             Country %in% c("India", "Israel", "Kenya") ~ "Other", 
+                             grepl("Various", Country) == TRUE ~ "Multiple")) -> studies
+ggplot(data = studies, aes(x = reorder(location, location, function(x)-length(x)))) + 
+  geom_bar() +
+  scale_y_continuous(breaks = seq(0, 10, by = 2), labels = scales::number_format(accuracy = 1)) +
+  ylab("Number of studies") +
+  xlab("Location") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+## Key modeling decisions and features
+studies %>%
+  select(Fit.to.incidence.data., Heterogeneity.in.transmission., Introductions., 
+         Incorporated.observation.model) %>%
+  gather() %>%
+  filter(value %in% "Y") -> summary
+
+ggplot(data = summary, aes(x = key)) +
+  geom_bar() +
+  ylab("Number of studies") +
+  xlab("") +
+  coord_flip()
+
+## R0 estimates
+
+## Type of Study
+
+## Type of data
+repdata <- read.csv("data/reported_data.csv")
+
+## Scale of data (temporal vs. spatial and nobs)
+ggplot(data = repdata, aes(x = Spatial.scale, y = Length, color = Temporal.scale, size = Nobs)) +
+  ggbeeswarm::geom_beeswarm()
+
+ggplot(data = repdata, aes(x = Type.of.data)) + 
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
+
