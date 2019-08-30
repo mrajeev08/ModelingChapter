@@ -50,16 +50,16 @@ IS <- 70000
 IV <- 0
 
 ## param
-births <- 0.52
-deaths <- 0.52
-waning <- 0
+births <- 0.50
+deaths <- 0.42
+waning <- 0.33
 parms <- c(deaths = deaths, births = births, waning = waning)
 
 ## run
 calcsus <- lsoda(y = c(S = IS, V = IV), times = times, func = vacc_reconstruct, parms = parms, 
                  events = list(func = eventfun, time = seq(1/52, 5, by = 1)))
 vacc_df <- data.frame(Year = calcsus[, "time"], propVacc = calcsus[,"V"]/(calcsus[,"V"] + calcsus[,"S"]))
-ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
+vacc_a <- ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
   geom_line(color = "lightseagreen", size = 1) +
   xlab ("Year") +
   ylab("Coverage") + 
@@ -68,13 +68,12 @@ ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
   newtheme +
   theme(text = element_text(color = "aquamarine4"), axis.text = element_text(color = "aquamarine4"), 
         axis.line = element_line(color = "aquamarine4"))
-
 ```
 
 ### Secondary cases
 ```{r R0}
 ## params
-secondaries <- data.frame(secondaries = rnbinom(1000, mu = 1.2, size = 0.5))
+secondaries <- data.frame(secondaries = rnbinom(1000, mu = 1.2, size = 1.3))
 ggplot(data = secondaries, aes(x = secondaries)) +
   geom_histogram(binwidth = 1, color = "lightgray", fill = "red", alpha = 0.5) +
   geom_vline(xintercept = 1.2, color = "red", linetype = 2, size = 1.1) +
@@ -110,7 +109,7 @@ infectious <- as.data.frame(list(Days = seq(0, 10, 0.1),
 ggplot(data = infectious, aes (x = Days, y = Density)) +
   geom_line(color = "navy", size = 1.2) +
   xlab("Infectious Period \n (days)") +
-  geom_vline(xintercept = 2.9, color = "navy", linetype = 2, size = 1.2, alpha = 0.5) +
+  geom_vline(xintercept = 3.1, color = "navy", linetype = 2, size = 1.2, alpha = 0.5) +
   newtheme +
   theme(text = element_text(color = "navy"), axis.text = element_text(color = "navy"), 
         axis.line = element_line(color = "navy"))
@@ -145,12 +144,12 @@ ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
 ```{r dispersal}
 ## params
 dispersal <- as.data.frame(list(km = seq(0, 10, 0.01), 
-                           Density = dweibull(seq(0, 10, 0.01), shape = 0.3484, 
-                                    scale = 41.28/100)))
+                           Density = dgamma(seq(0, 10, 0.01), shape = 0.215, 
+                                    scale = 0.245)))
 ggplot(data = dispersal, aes (x = km, y = Density)) +
   geom_line(color = "mediumorchid4", size = 1.2) +
   xlab("Distance to next bite \n (km)") +
-  geom_vline(xintercept = 0.85, color = "mediumorchid4", linetype = 2, size = 1.2, alpha = 0.75) +
+  geom_vline(xintercept = 0.88, color = "mediumorchid4", linetype = 2, size = 1.2, alpha = 0.75) +
   newtheme +
   theme(text = element_text(color = "mediumorchid4"), axis.text = element_text(color = "mediumorchid4"), 
         axis.line = element_line(color = "mediumorchid4"))
@@ -161,10 +160,11 @@ ggplot(data = dispersal, aes (x = km, y = Density)) +
 ## Figure 2: Density vs. frequency dependent transmission models
 ```{r SEI mods, echo=FALSE}
 # models
-SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alpha = 1, 
-                       gamma = (1/3.1*365), K = 20, START.S.prop = 0.99, START.I.prop = 0.005, START.E.prop = 0.005,
-                       START.R.prop = 0, START.S.density = 15, START.I.density = 0.15, START.E.density = 0.00,
-                       START.R.density = 0, years = 20, steps = 1/52, model = "frequency",...){
+SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
+                       gamma = (1/3.1*365), K = 20, START.S = 50000, 
+                       START.E = 2, START.I = 2,
+                       START.S.density = 15, START.I.density = 0.15, 
+                       START.E.density = 0.00, years = 20, steps = 1/52, model = "frequency",...){
   
   ### Deterministic skeleton of models for rabies
   
@@ -172,41 +172,39 @@ SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alp
   
   times <- seq(from = 0, to = years, by = steps)
   
+  ## Simple FDT model with complete disease-induced mortality
   if (model == "frequency"){
     
-    START.N.prop <- START.S.prop + START.I.prop + START.E.prop
+    START.N <- START.S + START.E + START.I
     
     beta = (R0*gamma*(sigma + mu))/sigma
       
       # This function models a time step for the SIR:
       dx.dt.SIR <- function(t, y, parms) {
-        N <- y["S"] + y["I"] + y["E"] 
+        N <- y["S"] + y["E"] + y["I"] 
         S <- y["S"]
-        I <- y["I"]
         E <- y["E"]
-        R <- y["R"]
+        I <- y["I"]
         
         # Calculate the change in Susceptible
-        dS <-  parms["nu"]*(S+E) - parms["mu"]*S - parms["beta"]*S*(I^parms["alpha"])/N
+        dS <-  parms["nu"]*(S + E) - parms["mu"]*S - parms["beta"]*S*I/N
         
         #Calculate the change in Exposed
-        dE <- parms["beta"]*S*(I^parms["alpha"])/N - parms["mu"]*E - parms["sigma"]*E
+        dE <- parms["beta"]*S*I/N - parms["mu"]*E - parms["sigma"]*E
         
         # Calculate the change in Infected
         dI <- parms["sigma"]*E - parms["gamma"]*I
         
-        # keeping track of removed
-        dR <- parms["gamma"]*I
-        
         # Return a list with the changes in S, E, I, R at the current time step
-        return(list(c(dS, dI, dE, dR)))
+        return(list(c(dS, dE, dI)))
       }
       
       # Create the parameter vector
-      parms <- c(nu = nu, mu = mu, beta = beta, alpha = alpha, sigma = sigma, gamma = gamma)
-      inits <- c(S=START.S.prop, I=START.I.prop, E=START.E.prop, R=START.R.prop)
+      parms <- c(nu = nu, mu = mu, beta = beta, sigma = sigma, gamma = gamma)
+      inits <- c(S = START.S, E = START.E, I = START.I)
   }
   
+  ## Classical fox rabies model (widely used for dog rabies as well, adapted from Anderson et al. 1981)
   if (model == "density"){
     
     START.N.density <- START.S.density + START.I.density + START.E.density
@@ -216,10 +214,9 @@ SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alp
     dx.dt.SIR <- function(t, y, parms) {
       N <- y["S"] + y["I"] + y["E"]
       S <- y["S"]
-      I <- y["I"]
       E <- y["E"]
-      R <- y["R"]
-      
+      I <- y["I"]
+
       ## Calculate dmort and beta here from parms and plug them in
       dmort <- (parms["nu"] - parms["mu"])/parms["K"]
       beta <- (parms["R0"]*(parms["sigma"] + parms["nu"])*(parms["gamma"] + parms ["nu"]))/(parms["sigma"]*parms["K"])
@@ -233,16 +230,13 @@ SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alp
       # Calculate the change in Infected
       dI <- parms["sigma"]*E - parms["mu"]*I - dmort*N*I - parms["gamma"]*I
       
-      # Calculate the removed pop
-      dR <- parms["gamma"]*I
-      
       # Return a list with the changes in S, E, I, R at the current time step
-      return(list(c(dS, dI, dE, dR)))
+      return(list(c(dS, dE, dI)))
     }
     
     # Create the parameter vector
     parms <- c(nu = nu, mu = mu, R0 = R0, K = K, sigma = sigma, gamma = gamma)
-    inits <- c(S=START.S.density, I=START.I.density, E=START.E.density, R=START.R.density)
+    inits <- c(S = START.S.density, E = START.E.density, I = START.I.density)
   }
   
   # Run the ODE solver
@@ -255,9 +249,11 @@ SEI.rabies <- function(nu = 0.52, mu = 0.44, R0 = 1.2, sigma = (1/22.5*365), alp
   return (SIR.output)
 }
 
-
-
-## Frequency dependent
+## Density dependent
+ddt_norabies <- SEI.rabies(R0 = 0, years = 20, model = "density")
+ddt_norabies <- data.frame(infected = unname(tapply(ddt_norabies$I, 
+                                                    (seq_along(ddt_norabies$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_norabies$N[seq(1, 20*52, 4)], R0 = 0, trans = "Density")
 ddt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "density")
 ddt_1.01 <- data.frame(infected = unname(tapply(ddt_1.01$I, (seq_along(ddt_1.01$I)-1) %/% 4, sum)[1:260]),
                        pop = ddt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Density")
@@ -267,18 +263,26 @@ ddt_1.1 <- data.frame(infected = unname(tapply(ddt_1.1$I, (seq_along(ddt_1.1$I)-
 ddt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "density")
 ddt_1.05 <- data.frame(infected = unname(tapply(ddt_1.05$I, (seq_along(ddt_1.05$I)-1) %/% 4, sum)[1:260]),
                       pop = ddt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Density")
-ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05)
+
+ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05, ddt_norabies)
 ddt$time <- 1:260
-ggplot(data = ddt, aes(x = time, y = pop, group = R0, color = R0)) + geom_line()
+
 ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
   geom_line(size = 1) +
-  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
   xlab("Months") +
   ylab("Incidence (monthly proportion \n of population infected)") +
   newtheme +
   labs(tag = "B", subtitle = "Density")
 
+ggplot(data = ddt, aes(x = time, y = pop/15.15, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Proportion of starting \n population") +
+  newtheme 
 
+## Frequency dependent
 fdt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "frequency")
 fdt_1.01 <- data.frame(infected = unname(tapply(fdt_1.01$I, (seq_along(fdt_1.01$I)-1) %/% 4, sum)[1:260]),
                        pop = fdt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Frequency")
@@ -288,73 +292,129 @@ fdt_1.1 <- data.frame(infected = unname(tapply(fdt_1.1$I, (seq_along(fdt_1.1$I)-
 fdt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "frequency")
 fdt_1.05 <- data.frame(infected = unname(tapply(fdt_1.05$I, (seq_along(fdt_1.05$I)-1) %/% 4, sum)[1:260]),
                        pop = fdt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Frequency")
-fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05)
+fdt_norabies <- SEI.rabies(R0 = 0, years = 20, model = "frequency")
+fdt_norabies <- data.frame(infected = unname(tapply(fdt_norabies$I, 
+                                                    (seq_along(fdt_norabies$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_norabies$N[seq(1, 20*52, 4)], R0 = 0, trans = "Frequency")
+
+fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05, fdt_norabies)
 fdt$time <- 1:260
-ggplot(data = fdt, aes(x = time, y = pop, group = R0,color = as.factor(R0))) + geom_line() +
-  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
-  xlab("Months") +
-  ylab("Population") +
-  newtheme
 
 ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
   geom_line(size = 1) +
-  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
   xlab("Months") +
   ylab("Incidence (monthly proportion \n of population infected)") +
   newtheme +
   labs(tag = "A", subtitle = "Frequency")
+
+ggplot(data = fdt, aes(x = time, y = pop/50000, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Proportion of starting \n population") +
+  newtheme 
+
 ```
 
 ## Figure 3: Summarizing studies
 ```{r}
-studies <- read.csv("data/mod_studies.csv")
+studies <- read.csv("data/modeling_studies.csv")
 
-## Year
+## A. Studies by Year
 ggplot(data = studies, aes(x = Year)) +
-  geom_bar() +
+  geom_bar(fill = "grey") +
   scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
-  ylab("Number of studies")
+  ylab("Number of studies") +
+  labs(tag = "A") +
+  newtheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-## Countries: refactor countries
+## B. Studies by country
+## refactor countries first
 studies %>%
-  mutate(location = case_when(Country %in% c("Australia", "Central African Republic", "Chad", "China", "Indonesia", "Japan", 
-                                            "Phillipines", "South Africa", "Tanzania") ~ as.character(Country), 
-                             Country %in% c("India", "Israel", "Kenya") ~ "Other", 
-                             grepl("Various", Country) == TRUE ~ "Multiple")) -> studies
-ggplot(data = studies, aes(x = reorder(location, location, function(x)-length(x)))) + 
-  geom_bar() +
+  mutate(Country = fct_recode(Country, Other = "India", Other = "Israel", Other = "Kenya")) -> studies
+## then plot   
+ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)-length(x)), 
+                                            "Multiple (Africa)", "Multiple (global)", 
+                                           "Other", "Hypothetical", after = 10))) + 
+  geom_bar(fill = "grey") +
   scale_y_continuous(breaks = seq(0, 10, by = 2), labels = scales::number_format(accuracy = 1)) +
   ylab("Number of studies") +
-  xlab("Location") +
+  xlab("") +
+  labs(tag = "B") +
+  newtheme +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ## Key modeling decisions and features
 studies %>%
-  select(Fit.to.incidence.data., Heterogeneity.in.transmission., Introductions., 
-         Incorporated.observation.model) %>%
+  select(13, 15:21) %>%
   gather() %>%
   filter(value %in% "Y") -> summary
-
 ggplot(data = summary, aes(x = key)) +
-  geom_bar() +
+  geom_bar(fill = "grey") +
   ylab("Number of studies") +
   xlab("") +
-  coord_flip()
+  coord_flip() +
+  newtheme
 
-## R0 estimates
+## Or upset plot
+library(UpSetR)
+studies %>%
+  mutate_at(c(15:21), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
+  select(c(1, 15:21)) -> studies_set
+upset(studies_set, nsets = 8, nintersects = NA,
+      sets.x.label = "Characteristics", mainbar.y.label = "Number of studies")
 
-## Type of Study
+## Study category
+studies %>%
+  mutate_at(vars(starts_with("Category")), 
+            function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
+  select(Reference, starts_with("Category")) -> categories
+
+## Upset plot
+upset(categories, nsets = 5, nintersects = NA,
+      sets.x.label = "Characteristics", mainbar.y.label = "Number of studies")
+
+## Bar plot
+studies %>%
+  select(Reference, starts_with("Category")) %>%
+  gather() %>%
+  filter(value %in% "Y") -> cat_summary
+ggplot(data = cat_summary, aes(x = key)) +
+  geom_bar(fill = "grey") +
+  ylab("Number of studies") +
+  xlab("") +
+  coord_flip() +
+  newtheme
 
 ## Type of data
 repdata <- read.csv("data/reported_data.csv")
 
 ## Scale of data (temporal vs. spatial and nobs)
-ggplot(data = repdata, aes(x = Spatial.scale, y = Length, color = Temporal.scale, size = Nobs)) +
-  ggbeeswarm::geom_beeswarm()
+ggplot(data = repdata, aes(x = Temporal.scale)) +
+  geom_bar()
+ggplot(data = repdata, aes(x = Spatial.scale)) +
+  geom_bar()
+ggplot(data = repdata, aes(x = Length)) +
+  geom_histogram()
+ggplot(data = repdata, aes(x = Nobs)) +
+  geom_histogram()
+
+ggplot(data = repdata, aes(x = Temporal.scale, y = Length, color = Spatial.scale, 
+                           size = Nobs)) +
+  ggbeeswarm::geom_beeswarm(shape = 1) +
+  scale_size(breaks = c(1, 10, 25, 100), range = c(0.5, 10)) +
+  newtheme
 
 ggplot(data = repdata, aes(x = Type.of.data)) + 
   geom_bar() +
+  coord_flip()
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
 
+
+```{r print session info}
+sessionInfo()
+```
