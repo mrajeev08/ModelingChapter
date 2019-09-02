@@ -13,6 +13,7 @@ library(rgdal)
 library(ggthemes)
 library(ggsn)
 library(tidyverse)
+library(UpSetR)
 newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.background = element_blank())
 
 ```
@@ -68,13 +69,15 @@ vacc_a <- ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
   newtheme +
   theme(text = element_text(color = "aquamarine4"), axis.text = element_text(color = "aquamarine4"), 
         axis.line = element_line(color = "aquamarine4"))
+ggsave("figs/fig1/vacc_a.jpg", vacc_a, device = "jpeg", width = 5, height = 5)
+vacc_a
 ```
 
 ### Secondary cases
 ```{r R0}
 ## params
 secondaries <- data.frame(secondaries = rnbinom(1000, mu = 1.2, size = 1.3))
-ggplot(data = secondaries, aes(x = secondaries)) +
+sec_b <- ggplot(data = secondaries, aes(x = secondaries)) +
   geom_histogram(binwidth = 1, color = "lightgray", fill = "red", alpha = 0.5) +
   geom_vline(xintercept = 1.2, color = "red", linetype = 2, size = 1.1) +
   xlab("Secondary cases") +
@@ -83,7 +86,8 @@ ggplot(data = secondaries, aes(x = secondaries)) +
   theme(text = element_text(color = alpha("firebrick3", 1)),
         axis.text = element_text(color = alpha("firebrick3", 1)), 
         axis.line = element_line(color = alpha("firebrick3", 1)))
-
+ggsave("figs/fig1/sec_b.jpg", sec_b, device = "jpeg", width = 5, height = 5)
+sec_b
 ```
 
 ### Incubation period
@@ -91,14 +95,15 @@ ggplot(data = secondaries, aes(x = secondaries)) +
 incubation <- as.data.frame(list(Days = seq(0, 365, 1), 
                            Density = dgamma(seq(0, 365, 1), shape = 1.1518, 
                                     rate = 0.0429)))
-ggplot(data = incubation, aes (x = Days, y = Density)) +
+inc_c <- ggplot(data = incubation, aes (x = Days, y = Density)) +
   geom_line(color = "darkred", size = 1.2) +
   xlab("Incubation Period \n (days)") +
   geom_vline(xintercept = 22.3, color = "darkred", linetype = 2, size = 1.1, alpha = 0.5) +
   newtheme +
   theme(text = element_text(color = "darkred"), axis.text = element_text(color = "darkred"), 
         axis.line = element_line(color = "darkred"))
-
+ggsave("figs/fig1/inc_c.jpg", inc_c, device = "jpeg", width = 5, height = 5)
+inc_c
 ```
 
 ### Infectious period
@@ -106,14 +111,15 @@ ggplot(data = incubation, aes (x = Days, y = Density)) +
 infectious <- as.data.frame(list(Days = seq(0, 10, 0.1), 
                            Density = dgamma(seq(0, 10, 0.1), shape = 2.9012, 
                                     rate = 1.013)))
-ggplot(data = infectious, aes (x = Days, y = Density)) +
+inf_d <- ggplot(data = infectious, aes (x = Days, y = Density)) +
   geom_line(color = "navy", size = 1.2) +
   xlab("Infectious Period \n (days)") +
   geom_vline(xintercept = 3.1, color = "navy", linetype = 2, size = 1.2, alpha = 0.5) +
   newtheme +
   theme(text = element_text(color = "navy"), axis.text = element_text(color = "navy"), 
         axis.line = element_line(color = "navy"))
-
+ggsave("figs/fig1/inf_d.jpg", inf_d, device = "jpeg", width = 5, height = 5)
+inf_d
 ```
 
 ### Road network with scale
@@ -128,7 +134,7 @@ tz_roads <- fortify(tz_roads)
 #   theme_map()
 
 
-ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
+map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
   geom_line(color = "mediumorchid4") +
   scalebar(tz_roads, location = "bottomleft", 
            dist = 200, dist_unit = "km", transform = TRUE, box.fill = c("mediumorchid4", "grey"),
@@ -136,8 +142,8 @@ ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
            st.size = 5, st.dist = 0.05, st.color = "mediumorchid4", 
            height = 0.02, model = 'WGS84') +
   theme_map()
-
-
+ggsave("figs/fig1/map_e1.jpg", map_e1, device = "jpeg", width = 5, height = 5)
+map_e1
 ```
 
 ### Dispersal kernel
@@ -146,7 +152,7 @@ ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
 dispersal <- as.data.frame(list(km = seq(0, 10, 0.01), 
                            Density = dgamma(seq(0, 10, 0.01), shape = 0.215, 
                                     scale = 0.245)))
-ggplot(data = dispersal, aes (x = km, y = Density)) +
+disp_e2 <- ggplot(data = dispersal, aes (x = km, y = Density)) +
   geom_line(color = "mediumorchid4", size = 1.2) +
   xlab("Distance to next bite \n (km)") +
   geom_vline(xintercept = 0.88, color = "mediumorchid4", linetype = 2, size = 1.2, alpha = 0.75) +
@@ -154,7 +160,8 @@ ggplot(data = dispersal, aes (x = km, y = Density)) +
   theme(text = element_text(color = "mediumorchid4"), axis.text = element_text(color = "mediumorchid4"), 
         axis.line = element_line(color = "mediumorchid4"))
 
-
+ggsave("figs/fig1/disp_e2.jpg", disp_e2, device = "jpeg", width = 5, height = 5)
+disp_e2
 ```
 
 ## Figure 2: Density vs. frequency dependent transmission models
@@ -162,8 +169,8 @@ ggplot(data = dispersal, aes (x = km, y = Density)) +
 # models
 SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
                        gamma = (1/3.1*365), K = 20, START.S = 50000, 
-                       START.E = 2, START.I = 2,
-                       START.S.density = 15, START.I.density = 0.15, 
+                       START.E = 0, START.I = 2,
+                       START.S.density = 15, START.I.density = 0.01, 
                        START.E.density = 0.00, years = 20, steps = 1/52, model = "frequency",...){
   
   ### Deterministic skeleton of models for rabies
@@ -250,10 +257,6 @@ SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
 }
 
 ## Density dependent
-ddt_norabies <- SEI.rabies(R0 = 0, years = 20, model = "density")
-ddt_norabies <- data.frame(infected = unname(tapply(ddt_norabies$I, 
-                                                    (seq_along(ddt_norabies$I)-1) %/% 4, sum)[1:260]),
-                       pop = ddt_norabies$N[seq(1, 20*52, 4)], R0 = 0, trans = "Density")
 ddt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "density")
 ddt_1.01 <- data.frame(infected = unname(tapply(ddt_1.01$I, (seq_along(ddt_1.01$I)-1) %/% 4, sum)[1:260]),
                        pop = ddt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Density")
@@ -264,23 +267,16 @@ ddt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "density")
 ddt_1.05 <- data.frame(infected = unname(tapply(ddt_1.05$I, (seq_along(ddt_1.05$I)-1) %/% 4, sum)[1:260]),
                       pop = ddt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Density")
 
-ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05, ddt_norabies)
+ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05)
 ddt$time <- 1:260
 
-ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+ddt_plot <- ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
   geom_line(size = 1) +
-  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
   xlab("Months") +
   ylab("Incidence (monthly proportion \n of population infected)") +
   newtheme +
   labs(tag = "B", subtitle = "Density")
-
-ggplot(data = ddt, aes(x = time, y = pop/15.15, group = R0, color = as.factor(R0))) + 
-  geom_line(size = 1) +
-  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
-  xlab("Months") +
-  ylab("Proportion of starting \n population") +
-  newtheme 
 
 ## Frequency dependent
 fdt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "frequency")
@@ -292,38 +288,32 @@ fdt_1.1 <- data.frame(infected = unname(tapply(fdt_1.1$I, (seq_along(fdt_1.1$I)-
 fdt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "frequency")
 fdt_1.05 <- data.frame(infected = unname(tapply(fdt_1.05$I, (seq_along(fdt_1.05$I)-1) %/% 4, sum)[1:260]),
                        pop = fdt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Frequency")
-fdt_norabies <- SEI.rabies(R0 = 0, years = 20, model = "frequency")
-fdt_norabies <- data.frame(infected = unname(tapply(fdt_norabies$I, 
-                                                    (seq_along(fdt_norabies$I)-1) %/% 4, sum)[1:260]),
-                       pop = fdt_norabies$N[seq(1, 20*52, 4)], R0 = 0, trans = "Frequency")
-
-fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05, fdt_norabies)
+fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05)
 fdt$time <- 1:260
 
-ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
   geom_line(size = 1) +
-  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
   xlab("Months") +
   ylab("Incidence (monthly proportion \n of population infected)") +
+  guides(colour = "none") +
   newtheme +
   labs(tag = "A", subtitle = "Frequency")
 
-ggplot(data = fdt, aes(x = time, y = pop/50000, group = R0, color = as.factor(R0))) + 
-  geom_line(size = 1) +
-  scale_color_manual(values = c("lightblue", "lightcoral", "red", "darkred"), name = "R0") +
-  xlab("Months") +
-  ylab("Proportion of starting \n population") +
-  newtheme 
-
+library(patchwork)
+fig2 <- fdt_plot + ddt_plot
+ggsave("figs/fig2.jpeg", fig2, device = "jpeg", width = 16, height = 8)
+fig2
 ```
 
+
 ## Figure 3: Summarizing studies
-```{r}
+```{r figure 3}
 studies <- read.csv("data/modeling_studies.csv")
 
 ## A. Studies by Year
-ggplot(data = studies, aes(x = Year)) +
-  geom_bar(fill = "grey") +
+year_A <- ggplot(data = studies, aes(x = Year)) +
+  geom_bar(fill = "grey50") +
   scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
   ylab("Number of studies") +
   labs(tag = "A") +
@@ -335,10 +325,10 @@ ggplot(data = studies, aes(x = Year)) +
 studies %>%
   mutate(Country = fct_recode(Country, Other = "India", Other = "Israel", Other = "Kenya")) -> studies
 ## then plot   
-ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)-length(x)), 
+country_B <- ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)-length(x)), 
                                             "Multiple (Africa)", "Multiple (global)", 
                                            "Other", "Hypothetical", after = 10))) + 
-  geom_bar(fill = "grey") +
+  geom_bar(fill = "grey50") +
   scale_y_continuous(breaks = seq(0, 10, by = 2), labels = scales::number_format(accuracy = 1)) +
   ylab("Number of studies") +
   xlab("") +
@@ -346,74 +336,114 @@ ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)
   newtheme +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-## Key modeling decisions and features
-studies %>%
-  select(13, 15:21) %>%
-  gather() %>%
-  filter(value %in% "Y") -> summary
-ggplot(data = summary, aes(x = key)) +
-  geom_bar(fill = "grey") +
+## C. R0 plot
+r_ests <- read.csv("data/r_ests.csv")
+R0_C <- ggplot(data = filter(r_ests, R_type == "R0"), aes(x = Estimate)) +
+  geom_histogram(binwidth = 0.25, color = "white") +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
+  labs(tag = "C") +
+  xlab("R0 estimate") +
   ylab("Number of studies") +
-  xlab("") +
-  coord_flip() +
   newtheme
 
-## Or upset plot
-library(UpSetR)
+## D. Key modeling decisions and features
 studies %>%
-  mutate_at(c(15:21), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
-  select(c(1, 15:21)) -> studies_set
-upset(studies_set, nsets = 8, nintersects = NA,
-      sets.x.label = "Characteristics", mainbar.y.label = "Number of studies")
+  select(14:20) %>%
+  gather() %>%
+  filter(value %in% "Y") -> summary
+features_D <- ggplot(data = summary, aes(x = reorder(key, key, function(x)-length(x)))) +
+  geom_bar(fill = "grey50") +
+  scale_x_discrete(labels = c("DDT", 
+                              "Fit to data", "Stochastic", "Spatial", 
+                              "Heterogeneity", "Introductions", 
+                              "Underreporting")) +
+  ylab("Number of studies") +
+  xlab("") +
+  labs(tag = "D") +
+  newtheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+fig3 <- year_A + R0_C + country_B + features_D + plot_layout(ncol = 2, nrow = 2)
+ggsave("figs/fig3.jpg", fig3, device = "jpeg", width = 20, height = 15)
+fig3
+```
+
+
+## Figure 4: data
+```{r Fig 4}
+## Scale of data (temporal vs. spatial and nobs)
+
+## Reported data
+repdata <- read.csv("data/reported_data.csv")
+repdata %>%
+  mutate(Nobs_maxed = case_when(Nobs < 250 ~ as.numeric(Nobs), Nobs >= 250 ~ 250), 
+         Spatial.scale = fct_relevel(Spatial.scale, "National", after = Inf), 
+         Temporal.scale = fct_relevel(Temporal.scale, "Month", after = 2)) -> repdata
+
+data_A <- ggplot(data = repdata, aes(x = reorder(Type.of.data, Type.of.data,function(x)-length(x)))) + 
+  geom_bar() +
+  newtheme +
+  scale_x_discrete(labels = c("Clinical and lab \n confirmed animal cases", 
+                              "Reported human \n deaths", 
+                              "Sequence data", "Lab confirmed \n animal cases", 
+                              "Lab confirmed \n human exposures", "Reported \n animal bites")) +
+  xlab("Type of data") +
+  ylab("Number of data \n sources") +
+  labs(tag = "A") +
+  coord_flip()
+
+data_B <- ggplot(data = repdata, aes(x = Temporal.scale, y = Length, fill = Spatial.scale, size = Nobs_maxed)) +
+  ggbeeswarm::geom_beeswarm(cex = 3.5, alpha = 0.75, shape = 21, color = "grey50", stroke = 1.5) +
+  scale_fill_manual(values = c("Darkred", "Red", "Pink", "Grey50"), name = "Spatial scale") +
+  scale_size_area(name = "# of Observations", breaks = c(10, 100, 150, 250), 
+                       labels = c("10", "100", "150", "250+")) +
+  ylab("Length of time \n series (years)") +
+  xlab("Temporal scale") +
+  newtheme +
+  labs(tag = "B") +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  guides(fill = guide_legend(override.aes = list(size = 3)))
+fig4 <- data_A + data_B + plot_layout(ncol = 2, widths = c(1, 1))
+ggsave("figs/fig4.jpeg", plot = fig4, device = "jpeg", height = 6, width = 15)
+fig4
+
+```
+
+## Extra upset plots
+
+``` {r extra upset plots}
+studies %>%
+  mutate_at(c(15:20), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
+  select(c(1, 15:20)) -> studies_set
+names(studies_set) <- c("Reference", "Underreporting", "Introductions", "Heterogeneity", 
+                        "DDT", "Stochastic", "Spatial")
+upset(studies_set, nsets = 8, nintersects = NA, 
+      sets.x.label = "Features", mainbar.y.label = "Number of studies")
 
 ## Study category
 studies %>%
   mutate_at(vars(starts_with("Category")), 
             function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
   select(Reference, starts_with("Category")) -> categories
+names(categories) <- c("Reference", "Estimate parameters", "Identify drivers", 
+                       "Explain patterns", 
+                       "Study control", "Predict trends")
 
 ## Upset plot
+pdf("figs/fig5.pdf", onefile = TRUE, width = 10, height = 8)
 upset(categories, nsets = 5, nintersects = NA,
-      sets.x.label = "Characteristics", mainbar.y.label = "Number of studies")
+      sets.x.label = "Type of study", mainbar.y.label = "Number of studies", text.scale = 2)
+dev.off()
 
 ## Bar plot
 studies %>%
   select(Reference, starts_with("Category")) %>%
   gather() %>%
   filter(value %in% "Y") -> cat_summary
-ggplot(data = cat_summary, aes(x = key)) +
-  geom_bar(fill = "grey") +
-  ylab("Number of studies") +
-  xlab("") +
-  coord_flip() +
-  newtheme
-
-## Type of data
-repdata <- read.csv("data/reported_data.csv")
-
-## Scale of data (temporal vs. spatial and nobs)
-ggplot(data = repdata, aes(x = Temporal.scale)) +
-  geom_bar()
-ggplot(data = repdata, aes(x = Spatial.scale)) +
-  geom_bar()
-ggplot(data = repdata, aes(x = Length)) +
-  geom_histogram()
-ggplot(data = repdata, aes(x = Nobs)) +
-  geom_histogram()
-
-ggplot(data = repdata, aes(x = Temporal.scale, y = Length, color = Spatial.scale, 
-                           size = Nobs)) +
-  ggbeeswarm::geom_beeswarm(shape = 1) +
-  scale_size(breaks = c(1, 10, 25, 100), range = c(0.5, 10)) +
-  newtheme
-
-ggplot(data = repdata, aes(x = Type.of.data)) + 
-  geom_bar() +
-  coord_flip()
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+table(cat_summary$key)
 
 ```
-
 
 ```{r print session info}
 sessionInfo()
