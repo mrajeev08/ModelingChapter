@@ -372,8 +372,6 @@ fig3
 
 ## Figure 4: data
 ```{r Fig 4}
-## Scale of data (temporal vs. spatial and nobs)
-
 ## Reported data
 repdata <- read.csv("data/reported_data.csv")
 repdata %>%
