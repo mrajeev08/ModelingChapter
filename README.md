@@ -1,4 +1,4 @@
-# ModelingChapter
+# Modeling canine rabies virus transmission dynamics 
 To be potentially included in Rabies, 4th edition. 
 
 ## Abstract
