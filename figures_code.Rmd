@@ -128,13 +128,6 @@ inf_d
 ```{r roads}
 tz_roads <- readOGR("data/gis/Tanzania_Roads/Tanzania_Roads.shp")
 tz_roads <- fortify(tz_roads)
-# TZ <- readOGR("data/tza_admbnda_adm0_20181019/tza_admbnda_adm0_20181019.shp")
-# TZ <- fortify(TZ)
-# ggplot(data = TZ, aes(x = long, y = lat, group = group)) +
-#   geom_polygon(fill = "white", color = "grey") +
-#   geom_line(data = tz_roads, aes(x = long, y = lat, group = group)) +
-#   theme_map()
-
 
 map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
   geom_line(color = "mediumorchid4") +
@@ -144,6 +137,7 @@ map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
            st.size = 5, st.dist = 0.05, st.color = "mediumorchid4", 
            height = 0.02, model = 'WGS84') +
   theme_map()
+
 ggsave("figs/fig1/map_e1.jpg", map_e1, device = "jpeg", width = 5, height = 5)
 map_e1
 ```
