@@ -6,7 +6,7 @@ Mathematical models of infectious disease are used to develop an understanding o
 
 ## In this repository
 
-All code used to generate figures in the main text are included in the rmarkdown doc [figures_code.rmd](figures_code.rmd). Final outputs are in [figs/](figs).
+All code used to generate figures in the main text are included in the rmarkdown doc [figures_code.rmd](figures_code.Rmd). Final outputs are in [figs/](figs).
   
 In addition the following supplemental files referred to in the text are included here:
 - [Table S1](Table.S1.xlsx): excel file with summary of all modeling studies included in the
