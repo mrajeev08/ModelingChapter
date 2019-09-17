@@ -1,5 +1,5 @@
 ---
-title: "FiguresTables"
+title: "Figures and associated code"
 author: "Malavika Rajeev"
 date: "8/6/2019"
 output: html_document
@@ -9,6 +9,7 @@ output: html_document
 rm(list = ls())
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
+library(deSolve)
 library(rgdal)
 library(ggthemes)
 library(ggsn)

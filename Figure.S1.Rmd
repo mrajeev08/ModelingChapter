@@ -1,0 +1,168 @@
+---
+title: "Figure S1"
+author: "Malavika Rajeev"
+date: "9/17/2019"
+output: html_document
+---
+
+## Set up
+```{r setup}
+library(patchwork)
+library(tidyverse)
+library(deSolve)
+newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.background = element_blank())
+
+```
+
+## Model code and make fig
+```{r SEI mods}
+# models
+SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
+                       gamma = (1/3.1*365), K = 20, START.S = 50000, 
+                       START.E = 0, START.I = 2,
+                       START.S.density = 15, START.I.density = 0.01, 
+                       START.E.density = 0.00, years = 20, steps = 1/52, model = "frequency",...){
+  
+  ### Deterministic skeleton of models for rabies
+  
+  require(deSolve)
+  
+  times <- seq(from = 0, to = years, by = steps)
+  
+  ## Simple FDT model with complete disease-induced mortality
+  if (model == "frequency"){
+    
+    START.N <- START.S + START.E + START.I
+    
+    beta = (R0*gamma*(sigma + mu))/sigma
+      
+      # This function models a time step for the SIR:
+      dx.dt.SIR <- function(t, y, parms) {
+        N <- y["S"] + y["E"] + y["I"] 
+        S <- y["S"]
+        E <- y["E"]
+        I <- y["I"]
+        
+        # Calculate the change in Susceptible
+        dS <-  parms["nu"]*(S + E) - parms["mu"]*S - parms["beta"]*S*I/N
+        
+        #Calculate the change in Exposed
+        dE <- parms["beta"]*S*I/N - parms["mu"]*E - parms["sigma"]*E
+        
+        # Calculate the change in Infected
+        dI <- parms["sigma"]*E - parms["gamma"]*I
+        
+        # Return a list with the changes in S, E, I, R at the current time step
+        return(list(c(dS, dE, dI)))
+      }
+      
+      # Create the parameter vector
+      parms <- c(nu = nu, mu = mu, beta = beta, sigma = sigma, gamma = gamma)
+      inits <- c(S = START.S, E = START.E, I = START.I)
+  }
+  
+  ## Classical fox rabies model (widely used for dog rabies as well, adapted from Anderson et al. 1981)
+  if (model == "density"){
+    
+    START.N.density <- START.S.density + START.I.density + START.E.density
+    
+    # the old school rabies model
+    # This function models a time step for the SIR:
+    dx.dt.SIR <- function(t, y, parms) {
+      N <- y["S"] + y["I"] + y["E"]
+      S <- y["S"]
+      E <- y["E"]
+      I <- y["I"]
+
+      ## Calculate dmort and beta here from parms and plug them in
+      dmort <- (parms["nu"] - parms["mu"])/parms["K"]
+      beta <- (parms["R0"]*(parms["sigma"] + parms["nu"])*(parms["gamma"] + parms ["nu"]))/(parms["sigma"]*parms["K"])
+      
+      # Calculate the change in Susceptible
+      dS <-  parms["nu"]*N - parms["mu"]*S - dmort*S - beta*S*I
+      
+      #Calculate the change in Exposed
+      dE <- beta*S*I - parms["mu"]*E - dmort*N*E - parms["sigma"]*E
+      
+      # Calculate the change in Infected
+      dI <- parms["sigma"]*E - parms["mu"]*I - dmort*N*I - parms["gamma"]*I
+      
+      # Return a list with the changes in S, E, I, R at the current time step
+      return(list(c(dS, dE, dI)))
+    }
+    
+    # Create the parameter vector
+    parms <- c(nu = nu, mu = mu, R0 = R0, K = K, sigma = sigma, gamma = gamma)
+    inits <- c(S = START.S.density, E = START.E.density, I = START.I.density)
+  }
+  
+  # Run the ODE solver
+  SIR.output <- lsoda(y = inits, 
+                      times = times, 
+                      func = dx.dt.SIR, 
+                      parms = parms)
+  SIR.output <- as.data.frame(SIR.output)
+  SIR.output$N <- SIR.output$S + SIR.output$E + SIR.output$I
+  return (SIR.output)
+}
+
+## Density dependent
+ddt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "density")
+ddt_1.01 <- data.frame(infected = unname(tapply(ddt_1.01$I, (seq_along(ddt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Density")
+ddt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "density")
+ddt_1.1 <- data.frame(infected = unname(tapply(ddt_1.1$I, (seq_along(ddt_1.1$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Density")
+ddt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "density")
+ddt_1.05 <- data.frame(infected = unname(tapply(ddt_1.05$I, (seq_along(ddt_1.05$I)-1) %/% 4, sum)[1:260]),
+                      pop = ddt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Density")
+
+ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05)
+ddt$time <- 1:260
+
+ddt_plot <- ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  newtheme +
+  labs(tag = "B", subtitle = "Density")
+
+## Frequency dependent
+fdt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "frequency")
+fdt_1.01 <- data.frame(infected = unname(tapply(fdt_1.01$I, (seq_along(fdt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Frequency")
+fdt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "frequency")
+fdt_1.1 <- data.frame(infected = unname(tapply(fdt_1.1$I, (seq_along(fdt_1.1$I)-1) %/% 4, sum)[1:260]),
+                      pop = fdt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Frequency")
+fdt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "frequency")
+fdt_1.05 <- data.frame(infected = unname(tapply(fdt_1.05$I, (seq_along(fdt_1.05$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Frequency")
+fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05)
+fdt$time <- 1:260
+
+fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  guides(colour = "none") +
+  newtheme +
+  labs(tag = "A", subtitle = "Frequency")
+figS1 <- fdt_plot / ddt_plot
+
+```
+
+## Figure S1
+``` {r echo = FALSE, fig.width = 7, fig.height = 10}
+figS1
+```
+  
+  
+**Figure S1: Density vs. frequency dependent transmission.** Monthly incidence (the proportion of the population infected, and thus removed (as a result of mortality)) from mass-action models of rabies with A) frequency and B) density dependent transmission. Even in low transmission scenarios (R0 = 1.01 - 1.1), incidence peaks at between 1.5 -  2% per month for models with density-dependent transmission and between 0.01 - 30% for frequency-dependent transmission, compared with the 1 - 2% max annual incidence observed empirically. Demographic and transmission parameters are listed in Table 20.1 (averages of incubation and infectious periods were translated into annual rates). Frequency-dependent model is a SEI model with starting dog population of 50,000 and seeded with 2 infectious individuals. Density-dependent model is adapted from Anderson et al. 1981, with starting population density of 15 dogs per km2 , 0.01 infectious dogs per km2, and carrying capacity of 29 dogs per km2.  
+
+  
+
+```{r print session info}
+sessionInfo()
+```
