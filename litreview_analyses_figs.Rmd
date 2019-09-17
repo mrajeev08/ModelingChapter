@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+rm(list = ls())
 knitr::opts_chunk$set(echo = TRUE)
 library(deSolve)
 library(ggplot2)
@@ -13,6 +14,7 @@ library(rgdal)
 library(ggthemes)
 library(ggsn)
 library(tidyverse)
+library(patchwork)
 library(UpSetR)
 newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.background = element_blank())
 
@@ -164,7 +166,150 @@ ggsave("figs/fig1/disp_e2.jpg", disp_e2, device = "jpeg", width = 5, height = 5)
 disp_e2
 ```
 
-## Figure 2: Density vs. frequency dependent transmission models
+
+## Figure 2: Summarizing studies
+```{r figure 2}
+studies <- read.csv("data/modeling_studies.csv")
+
+## A. Studies by Year
+year_A <- ggplot(data = studies, aes(x = Year)) +
+  geom_bar(fill = "grey50") +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
+  ylab("Number of studies") +
+  labs(tag = "A") +
+  newtheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+## B. Studies by country
+## refactor countries first
+studies %>%
+  mutate(Country = fct_recode(Country, Other = "India", Other = "Israel", Other = "Kenya")) -> studies
+## then plot   
+country_B <- ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)-length(x)), 
+                                            "Multiple (Africa)", "Multiple (global)", 
+                                           "Other", "Hypothetical", after = 10))) + 
+  geom_bar(fill = "grey50") +
+  scale_y_continuous(breaks = seq(0, 10, by = 2), labels = scales::number_format(accuracy = 1)) +
+  ylab("Number of studies") +
+  xlab("") +
+  labs(tag = "B") +
+  newtheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+## C. R0 plot
+r_ests <- read.csv("data/r_ests.csv")
+R0_C <- ggplot(data = filter(r_ests, R_type == "R0"), aes(x = Estimate)) +
+  geom_histogram(binwidth = 0.25, color = "white", fill = "grey50") +
+  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
+  labs(tag = "C") +
+  xlab("R0 estimate") +
+  ylab("Number of studies") +
+  newtheme
+
+## D. Key modeling decisions and features
+studies %>%
+  select(14:20) %>%
+  gather() %>%
+  filter(value %in% "Y") %>%
+  group_by(key) %>%
+  summarize(proportion = n()/51) -> summary
+features_D <- ggplot(data = summary, aes(x = reorder(key, -proportion), y = proportion)) +
+  geom_col(fill = "grey50") +
+  scale_x_discrete(labels = c("DDT", 
+                              "Fit to data", "Stochastic", "Spatial", 
+                              "Heterogeneity", "Introductions", 
+                              "Underreporting")) +
+  ylab("Proportion of studies") +
+  ylim(c(0, 0.8)) +
+  xlab("") +
+  labs(tag = "D") +
+  newtheme +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+fig2 <- year_A + R0_C + country_B + features_D + plot_layout(ncol = 2, nrow = 2)
+ggsave("figs/fig2.jpg", fig2, device = "jpeg", width = 20, height = 15)
+fig2
+```
+
+
+## Figure 3: data
+```{r Fig 3}
+## Reported data
+repdata <- read.csv("data/reported_data.csv")
+repdata %>%
+  mutate(Nobs_maxed = case_when(Nobs < 250 ~ as.numeric(Nobs), Nobs >= 250 ~ 250), 
+         Spatial.scale = fct_relevel(Spatial.scale, "National", after = Inf), 
+         Temporal.scale = fct_relevel(Temporal.scale, "Month", after = 2)) -> repdata
+
+data_A <- ggplot(data = repdata, aes(x = reorder(Type.of.data, Type.of.data,function(x)-length(x)))) + 
+  geom_bar() +
+  newtheme +
+  scale_x_discrete(labels = c("Clinical and lab \n confirmed animal cases", 
+                              "Reported human \n deaths", 
+                              "Sequence data", "Lab confirmed \n animal cases", 
+                              "Lab confirmed \n human exposures", "Reported \n animal bites")) +
+  xlab("Type of data") +
+  ylab("Number of data \n sources") +
+  labs(tag = "A") +
+  coord_flip()
+
+data_B <- ggplot(data = repdata, aes(x = Temporal.scale, y = Length, fill = Spatial.scale, size = Nobs_maxed)) +
+  ggbeeswarm::geom_beeswarm(cex = 3.5, alpha = 0.75, shape = 21, color = "grey50", stroke = 1.5) +
+  scale_fill_manual(values = c("Darkred", "Red", "Pink", "Grey50"), name = "Spatial scale") +
+  scale_size_area(name = "# of Observations", breaks = c(10, 100, 150, 250), 
+                       labels = c("10", "100", "150", "250+")) +
+  ylab("Length of time \n series (years)") +
+  xlab("Temporal scale") +
+  newtheme +
+  labs(tag = "B") +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  guides(fill = guide_legend(override.aes = list(size = 3)))
+fig3 <- data_A + data_B + plot_layout(ncol = 2, widths = c(1, 1))
+ggsave("figs/fig3.jpeg", plot = fig3, device = "jpeg", height = 6, width = 15)
+fig3
+
+```
+
+## Figure 4
+
+```{r extra upset plots}
+studies %>%
+  mutate_at(c(14:20), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
+  select(c(1, 14:20)) -> studies_set
+names(studies_set)
+names(studies_set) <- c("Reference", "Fit to data", "Underreporting", "Introductions", 
+                        "Heterogeneity", 
+                        "DDT", "Stochastic", "Spatial")
+upset(studies_set, nsets = 8, nintersects = NA, 
+      sets.x.label = "Features", mainbar.y.label = "Number of studies")
+
+## Study category
+studies %>%
+  mutate_at(vars(starts_with("Category")), 
+            function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
+  select(Reference, starts_with("Category")) -> categories
+names(categories)
+names(categories) <- c("Reference", "Explain patterns",
+                       "Estimate parameters", "Study control",
+                       "Identify drivers", "Predict trends")
+
+## Upset plot
+pdf("figs/fig4.pdf", onefile = TRUE, width = 10, height = 8)
+upset(categories, nsets = 5, nintersects = NA,
+      sets.x.label = "Type of study", mainbar.y.label = "Number of studies", text.scale = 2)
+dev.off()
+
+## Bar plot
+studies %>%
+  select(Reference, starts_with("Category")) %>%
+  gather() %>%
+  filter(value %in% "Y") -> cat_summary
+table(cat_summary$key)
+
+```
+
+## Figure S1: Density vs. frequency dependent transmission models
 ```{r SEI mods, echo=FALSE}
 # models
 SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
@@ -301,147 +446,11 @@ fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color
   labs(tag = "A", subtitle = "Frequency")
 
 library(patchwork)
-fig2 <- fdt_plot + ddt_plot
-ggsave("figs/fig2.jpeg", fig2, device = "jpeg", width = 16, height = 8)
-fig2
+figS1 <- fdt_plot + ddt_plot
+ggsave("figs/figS1.jpeg", figS1, device = "jpeg", width = 16, height = 8)
+figS1
 ```
 
-
-## Figure 3: Summarizing studies
-```{r figure 3}
-studies <- read.csv("data/modeling_studies.csv")
-
-## A. Studies by Year
-year_A <- ggplot(data = studies, aes(x = Year)) +
-  geom_bar(fill = "grey50") +
-  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
-  ylab("Number of studies") +
-  labs(tag = "A") +
-  newtheme +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-## B. Studies by country
-## refactor countries first
-studies %>%
-  mutate(Country = fct_recode(Country, Other = "India", Other = "Israel", Other = "Kenya")) -> studies
-## then plot   
-country_B <- ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country, function(x)-length(x)), 
-                                            "Multiple (Africa)", "Multiple (global)", 
-                                           "Other", "Hypothetical", after = 10))) + 
-  geom_bar(fill = "grey50") +
-  scale_y_continuous(breaks = seq(0, 10, by = 2), labels = scales::number_format(accuracy = 1)) +
-  ylab("Number of studies") +
-  xlab("") +
-  labs(tag = "B") +
-  newtheme +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-## C. R0 plot
-r_ests <- read.csv("data/r_ests.csv")
-R0_C <- ggplot(data = filter(r_ests, R_type == "R0"), aes(x = Estimate)) +
-  geom_histogram(binwidth = 0.25, color = "white") +
-  scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
-  labs(tag = "C") +
-  xlab("R0 estimate") +
-  ylab("Number of studies") +
-  newtheme
-
-## D. Key modeling decisions and features
-studies %>%
-  select(14:20) %>%
-  gather() %>%
-  filter(value %in% "Y") -> summary
-features_D <- ggplot(data = summary, aes(x = reorder(key, key, function(x)-length(x)))) +
-  geom_bar(fill = "grey50") +
-  scale_x_discrete(labels = c("DDT", 
-                              "Fit to data", "Stochastic", "Spatial", 
-                              "Heterogeneity", "Introductions", 
-                              "Underreporting")) +
-  ylab("Number of studies") +
-  xlab("") +
-  labs(tag = "D") +
-  newtheme +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
-fig3 <- year_A + R0_C + country_B + features_D + plot_layout(ncol = 2, nrow = 2)
-ggsave("figs/fig3.jpg", fig3, device = "jpeg", width = 20, height = 15)
-fig3
-```
-
-
-## Figure 4: data
-```{r Fig 4}
-## Reported data
-repdata <- read.csv("data/reported_data.csv")
-repdata %>%
-  mutate(Nobs_maxed = case_when(Nobs < 250 ~ as.numeric(Nobs), Nobs >= 250 ~ 250), 
-         Spatial.scale = fct_relevel(Spatial.scale, "National", after = Inf), 
-         Temporal.scale = fct_relevel(Temporal.scale, "Month", after = 2)) -> repdata
-
-data_A <- ggplot(data = repdata, aes(x = reorder(Type.of.data, Type.of.data,function(x)-length(x)))) + 
-  geom_bar() +
-  newtheme +
-  scale_x_discrete(labels = c("Clinical and lab \n confirmed animal cases", 
-                              "Reported human \n deaths", 
-                              "Sequence data", "Lab confirmed \n animal cases", 
-                              "Lab confirmed \n human exposures", "Reported \n animal bites")) +
-  xlab("Type of data") +
-  ylab("Number of data \n sources") +
-  labs(tag = "A") +
-  coord_flip()
-
-data_B <- ggplot(data = repdata, aes(x = Temporal.scale, y = Length, fill = Spatial.scale, size = Nobs_maxed)) +
-  ggbeeswarm::geom_beeswarm(cex = 3.5, alpha = 0.75, shape = 21, color = "grey50", stroke = 1.5) +
-  scale_fill_manual(values = c("Darkred", "Red", "Pink", "Grey50"), name = "Spatial scale") +
-  scale_size_area(name = "# of Observations", breaks = c(10, 100, 150, 250), 
-                       labels = c("10", "100", "150", "250+")) +
-  ylab("Length of time \n series (years)") +
-  xlab("Temporal scale") +
-  newtheme +
-  labs(tag = "B") +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
-  guides(fill = guide_legend(override.aes = list(size = 3)))
-fig4 <- data_A + data_B + plot_layout(ncol = 2, widths = c(1, 1))
-ggsave("figs/fig4.jpeg", plot = fig4, device = "jpeg", height = 6, width = 15)
-fig4
-
-```
-
-## Extra upset plots
-
-``` {r extra upset plots}
-studies %>%
-  mutate_at(c(15:20), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
-  select(c(1, 15:20)) -> studies_set
-names(studies_set) <- c("Reference", "Underreporting", "Introductions", "Heterogeneity", 
-                        "DDT", "Stochastic", "Spatial")
-upset(studies_set, nsets = 8, nintersects = NA, 
-      sets.x.label = "Features", mainbar.y.label = "Number of studies")
-
-## Study category
-studies %>%
-  mutate_at(vars(starts_with("Category")), 
-            function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
-  select(Reference, starts_with("Category")) -> categories
-names(categories) <- c("Reference", "Estimate parameters", "Identify drivers", 
-                       "Explain patterns", 
-                       "Study control", "Predict trends")
-
-## Upset plot
-pdf("figs/fig5.pdf", onefile = TRUE, width = 10, height = 8)
-upset(categories, nsets = 5, nintersects = NA,
-      sets.x.label = "Type of study", mainbar.y.label = "Number of studies", text.scale = 2)
-dev.off()
-
-## Bar plot
-studies %>%
-  select(Reference, starts_with("Category")) %>%
-  gather() %>%
-  filter(value %in% "Y") -> cat_summary
-table(cat_summary$key)
-
-```
 
 ```{r print session info}
 sessionInfo()
