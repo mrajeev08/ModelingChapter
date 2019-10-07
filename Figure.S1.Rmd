@@ -2,7 +2,9 @@
 title: "Figure S1"
 author: "Malavika Rajeev"
 date: "9/17/2019"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ## Set up
@@ -154,14 +156,12 @@ figS1 <- fdt_plot / ddt_plot
 ```
 
 ## Figure S1
-``` {r echo = FALSE, fig.width = 7, fig.height = 10}
+``` {r echo = FALSE, fig.width = 6, fig.height = 8}
 figS1
 ```
-  
-  
 **Figure S1: Density vs. frequency dependent transmission.** Monthly incidence (the proportion of the population infected, and thus removed (as a result of mortality)) from mass-action models of rabies with A) frequency and B) density dependent transmission. Even in low transmission scenarios (R0 = 1.01 - 1.1), incidence peaks at between 1.5 -  2% per month for models with density-dependent transmission and between 0.01 - 30% for frequency-dependent transmission, compared with the 1 - 2% max annual incidence observed empirically. Demographic and transmission parameters are listed in Table 20.1 (averages of incubation and infectious periods were translated into annual rates). Frequency-dependent model is a SEI model with starting dog population of 50,000 and seeded with 2 infectious individuals. Density-dependent model is adapted from Anderson et al. 1981, with starting population density of 15 dogs per km2 , 0.01 infectious dogs per km2, and carrying capacity of 29 dogs per km2.  
 
-  
+
 
 ```{r print session info}
 sessionInfo()
