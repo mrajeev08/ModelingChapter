@@ -401,7 +401,7 @@ fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color
   newtheme +
   labs(tag = "A", subtitle = "Frequency")
 figS1 <- fdt_plot / ddt_plot
-ggsave("figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 8, width = 11)
+ggsave("figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 11, width = 11)
 
 ```
 
