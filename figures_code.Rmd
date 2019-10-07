@@ -126,7 +126,7 @@ inf_d
 
 ### Road network with scale
 ```{r roads}
-tz_roads <- readOGR("data/gis/Tanzania_Roads/Tanzania_Roads.shp")
+tz_roads <- readOGR("data/Tanzania_Roads/Tanzania_Roads.shp")
 tz_roads <- fortify(tz_roads)
 
 map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
@@ -265,19 +265,149 @@ fig3
 
 ```
 
-## Figure 4
+## Supplementary Figure S1
+```{r SEI mods}
+# models
+SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
+                       gamma = (1/3.1*365), K = 20, START.S = 50000, 
+                       START.E = 0, START.I = 2,
+                       START.S.density = 15, START.I.density = 0.01, 
+                       START.E.density = 0.00, years = 20, steps = 1/52, model = "frequency",...){
+  
+  ### Deterministic skeleton of models for rabies
+  
+  require(deSolve)
+  
+  times <- seq(from = 0, to = years, by = steps)
+  
+  ## Simple FDT model with complete disease-induced mortality
+  if (model == "frequency"){
+    
+    START.N <- START.S + START.E + START.I
+    
+    beta = (R0*gamma*(sigma + mu))/sigma
+      
+      # This function models a time step for the SIR:
+      dx.dt.SIR <- function(t, y, parms) {
+        N <- y["S"] + y["E"] + y["I"] 
+        S <- y["S"]
+        E <- y["E"]
+        I <- y["I"]
+        
+        # Calculate the change in Susceptible
+        dS <-  parms["nu"]*(S + E) - parms["mu"]*S - parms["beta"]*S*I/N
+        
+        #Calculate the change in Exposed
+        dE <- parms["beta"]*S*I/N - parms["mu"]*E - parms["sigma"]*E
+        
+        # Calculate the change in Infected
+        dI <- parms["sigma"]*E - parms["gamma"]*I
+        
+        # Return a list with the changes in S, E, I, R at the current time step
+        return(list(c(dS, dE, dI)))
+      }
+      
+      # Create the parameter vector
+      parms <- c(nu = nu, mu = mu, beta = beta, sigma = sigma, gamma = gamma)
+      inits <- c(S = START.S, E = START.E, I = START.I)
+  }
+  
+  ## Classical fox rabies model (widely used for dog rabies as well, adapted from Anderson et al. 1981)
+  if (model == "density"){
+    
+    START.N.density <- START.S.density + START.I.density + START.E.density
+    
+    # the old school rabies model
+    # This function models a time step for the SIR:
+    dx.dt.SIR <- function(t, y, parms) {
+      N <- y["S"] + y["I"] + y["E"]
+      S <- y["S"]
+      E <- y["E"]
+      I <- y["I"]
+
+      ## Calculate dmort and beta here from parms and plug them in
+      dmort <- (parms["nu"] - parms["mu"])/parms["K"]
+      beta <- (parms["R0"]*(parms["sigma"] + parms["nu"])*(parms["gamma"] + parms ["nu"]))/(parms["sigma"]*parms["K"])
+      
+      # Calculate the change in Susceptible
+      dS <-  parms["nu"]*N - parms["mu"]*S - dmort*S - beta*S*I
+      
+      #Calculate the change in Exposed
+      dE <- beta*S*I - parms["mu"]*E - dmort*N*E - parms["sigma"]*E
+      
+      # Calculate the change in Infected
+      dI <- parms["sigma"]*E - parms["mu"]*I - dmort*N*I - parms["gamma"]*I
+      
+      # Return a list with the changes in S, E, I, R at the current time step
+      return(list(c(dS, dE, dI)))
+    }
+    
+    # Create the parameter vector
+    parms <- c(nu = nu, mu = mu, R0 = R0, K = K, sigma = sigma, gamma = gamma)
+    inits <- c(S = START.S.density, E = START.E.density, I = START.I.density)
+  }
+  
+  # Run the ODE solver
+  SIR.output <- lsoda(y = inits, 
+                      times = times, 
+                      func = dx.dt.SIR, 
+                      parms = parms)
+  SIR.output <- as.data.frame(SIR.output)
+  SIR.output$N <- SIR.output$S + SIR.output$E + SIR.output$I
+  return (SIR.output)
+}
+
+## Density dependent
+ddt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "density")
+ddt_1.01 <- data.frame(infected = unname(tapply(ddt_1.01$I, (seq_along(ddt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Density")
+ddt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "density")
+ddt_1.1 <- data.frame(infected = unname(tapply(ddt_1.1$I, (seq_along(ddt_1.1$I)-1) %/% 4, sum)[1:260]),
+                       pop = ddt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Density")
+ddt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "density")
+ddt_1.05 <- data.frame(infected = unname(tapply(ddt_1.05$I, (seq_along(ddt_1.05$I)-1) %/% 4, sum)[1:260]),
+                      pop = ddt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Density")
+
+ddt <- bind_rows(ddt_1.01, ddt_1.1, ddt_1.05)
+ddt$time <- 1:260
+
+ddt_plot <- ggplot(data = ddt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  newtheme +
+  labs(tag = "B", subtitle = "Density")
+
+## Frequency dependent
+fdt_1.01 <- SEI.rabies(R0 = 1.01, years = 20, model = "frequency")
+fdt_1.01 <- data.frame(infected = unname(tapply(fdt_1.01$I, (seq_along(fdt_1.01$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.01$N[seq(1, 20*52, 4)], R0 = 1.01, trans = "Frequency")
+fdt_1.1 <- SEI.rabies(R0 = 1.1, years = 20, model = "frequency")
+fdt_1.1 <- data.frame(infected = unname(tapply(fdt_1.1$I, (seq_along(fdt_1.1$I)-1) %/% 4, sum)[1:260]),
+                      pop = fdt_1.1$N[seq(1, 20*52, 4)], R0 = 1.1, trans = "Frequency")
+fdt_1.05 <- SEI.rabies(R0 = 1.05, years = 20, model = "frequency")
+fdt_1.05 <- data.frame(infected = unname(tapply(fdt_1.05$I, (seq_along(fdt_1.05$I)-1) %/% 4, sum)[1:260]),
+                       pop = fdt_1.05$N[seq(1, 20*52, 4)], R0 = 1.05, trans = "Frequency")
+fdt <- bind_rows(fdt_1.01, fdt_1.1, fdt_1.05)
+fdt$time <- 1:260
+
+fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color = as.factor(R0))) + 
+  geom_line(size = 1) +
+  scale_color_manual(values = c("lightcoral", "red", "darkred"), name = "R0") +
+  xlab("Months") +
+  ylab("Incidence (monthly proportion \n of population infected)") +
+  guides(colour = "none") +
+  newtheme +
+  labs(tag = "A", subtitle = "Frequency")
+figS1 <- fdt_plot / ddt_plot
+ggsave("figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 8, width = 11)
+
+```
+
+## Supplementary Figure S2
 
 ```{r extra upset plots}
-studies %>%
-  mutate_at(c(14:20), function(x) ifelse(x == "N" | is.na(x), 0, 1)) %>%
-  select(c(1, 14:20)) -> studies_set
-names(studies_set)
-names(studies_set) <- c("Reference", "Fit to data", "Underreporting", "Introductions", 
-                        "Heterogeneity", 
-                        "DDT", "Stochastic", "Spatial")
-upset(studies_set, nsets = 8, nintersects = NA, 
-      sets.x.label = "Features", mainbar.y.label = "Number of studies")
-
 ## Study category
 studies %>%
   mutate_at(vars(starts_with("Category")), 
@@ -289,7 +419,7 @@ names(categories) <- c("Reference", "Explain patterns",
                        "Identify drivers", "Predict trends")
 
 ## Upset plot
-pdf("figs/fig4.pdf", onefile = TRUE, width = 10, height = 8)
+pdf("figs/figS2.pdf", onefile = TRUE, width = 10, height = 8)
 upset(categories, nsets = 5, nintersects = NA,
       sets.x.label = "Type of study", mainbar.y.label = "Number of studies", text.scale = 2)
 dev.off()
@@ -302,7 +432,6 @@ studies %>%
 table(cat_summary$key)
 
 ```
-
 
 ```{r print session info}
 sessionInfo()
