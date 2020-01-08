@@ -1,13 +1,16 @@
 ---
 title: "Figures and associated code"
 author: "Malavika Rajeev"
-date: "8/6/2019"
-output: html_document
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
 rm(list = ls())
-knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE, fig.fullwidth = TRUE)
 library(ggplot2)
 library(deSolve)
 library(rgdal)
@@ -20,7 +23,7 @@ newtheme <- theme_classic() + theme(text = element_text(size = 25), panel.backgr
 
 ```
 
-## Figure 1
+## Figure 1: code for insets
 
 ### Coverage example
 
@@ -72,7 +75,7 @@ vacc_a <- ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
   theme(text = element_text(color = "aquamarine4"), axis.text = element_text(color = "aquamarine4"), 
         axis.line = element_line(color = "aquamarine4"))
 ggsave("figs/fig1/vacc_a.jpeg", vacc_a, device = "jpeg", width = 5, height = 5)
-vacc_a
+# include_graphics("figs/fig1/vacc_a.jpeg")
 ```
 
 ### Secondary cases
@@ -89,7 +92,7 @@ sec_b <- ggplot(data = secondaries, aes(x = secondaries)) +
         axis.text = element_text(color = alpha("firebrick3", 1)), 
         axis.line = element_line(color = alpha("firebrick3", 1)))
 ggsave("figs/fig1/sec_b.jpeg", sec_b, device = "jpeg", width = 5, height = 5)
-sec_b
+# include_graphics("figs/fig1/secc_b.jpeg")
 ```
 
 ### Incubation period
@@ -105,7 +108,7 @@ inc_c <- ggplot(data = incubation, aes (x = Days, y = Density)) +
   theme(text = element_text(color = "darkred"), axis.text = element_text(color = "darkred"), 
         axis.line = element_line(color = "darkred"))
 ggsave("figs/fig1/inc_c.jpeg", inc_c, device = "jpeg", width = 5, height = 5)
-inc_c
+# include_graphics("figs/fig1/inc_c.jpeg")
 ```
 
 ### Infectious period
@@ -121,7 +124,7 @@ inf_d <- ggplot(data = infectious, aes (x = Days, y = Density)) +
   theme(text = element_text(color = "navy"), axis.text = element_text(color = "navy"), 
         axis.line = element_line(color = "navy"))
 ggsave("figs/fig1/inf_d.jpeg", inf_d, device = "jpeg", width = 5, height = 5)
-inf_d
+# include_graphics("figs/fig1/inf_d.jpeg")
 ```
 
 ### Road network with scale
@@ -139,7 +142,7 @@ map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
   theme_map()
 
 ggsave("figs/fig1/map_e1.jpeg", map_e1, device = "jpeg", width = 5, height = 5)
-map_e1
+# include_graphics("figs/fig1/map_e1.jpeg")
 ```
 
 ### Dispersal kernel
@@ -157,9 +160,13 @@ disp_e2 <- ggplot(data = dispersal, aes (x = km, y = Density)) +
         axis.line = element_line(color = "mediumorchid4"))
 
 ggsave("figs/fig1/disp_e2.jpeg", disp_e2, device = "jpeg", width = 5, height = 5)
-disp_e2
+# include_graphics("figs/fig1/disp_e2.jpeg")
 ```
 
+### Final figure 1
+```{r final fig 1}
+include_graphics("figs/fig1.jpeg")
+```
 
 ## Figure 2: Summarizing studies
 ```{r figure 2}
@@ -223,7 +230,8 @@ features_D <- ggplot(data = summary, aes(x = reorder(key, -proportion), y = prop
 
 fig2 <- year_A + R0_C + country_B + features_D + plot_layout(ncol = 2, nrow = 2)
 ggsave("figs/fig2.jpeg", fig2, device = "jpeg", width = 20, height = 15)
-fig2
+include_graphics("figs/fig2.jpeg")
+
 ```
 
 
@@ -261,8 +269,7 @@ data_B <- ggplot(data = repdata, aes(x = Temporal.scale, y = Length, fill = Spat
   guides(fill = guide_legend(override.aes = list(size = 3)))
 fig3 <- data_A + data_B + plot_layout(ncol = 2, widths = c(1, 1))
 ggsave("figs/fig3.jpeg", plot = fig3, device = "jpeg", height = 6, width = 15)
-fig3
-
+include_graphics("figs/fig3.jpeg")
 ```
 
 ## Supplementary Figure S1
@@ -402,7 +409,7 @@ fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color
   labs(tag = "A", subtitle = "Frequency")
 figS1 <- fdt_plot / ddt_plot
 ggsave("figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 11, width = 11)
-
+include_graphics("figs/figS1.jpeg")
 ```
 
 ## Supplementary Figure S2
@@ -430,7 +437,7 @@ studies %>%
   gather() %>%
   filter(value %in% "Y") -> cat_summary
 table(cat_summary$key)
-
+include_graphics("figs/figS2.jpeg")
 ```
 
 ```{r print session info}
