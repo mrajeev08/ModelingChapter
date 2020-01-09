@@ -515,11 +515,10 @@ include_graphics("../figs/figS2.jpeg")
 
 ### Table S1
 ```{r}
-library(DT)
-library(readxl)
 Table_S1 <- read_excel("../tables/supptable_S1.xlsx")
-datatable(Table_S1, filter = "top", rownames = FALSE)
-
+Table_S1 %>%
+  dplyr::select(-Citation, -`Cite Key`) %>%
+  datatable(rownames = FALSE)
 ```
 
 ### Key for columns
@@ -533,9 +532,21 @@ kable(cols_S1, rownames = FALSE) %>%
 ### Key for values in columns
 ```{r}
 cols_S1 <- read_excel("../tables/supptable_S1.xlsx", sheet = "DefineTerms")
-datatable(cols_S1, rownames = FALSE)
+kable(cols_S1, rownames = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
 ```
-  
+
+### Citations
+```{r}
+library(DT)
+library(readxl)
+Table_S1 <- read_excel("../tables/supptable_S1.xlsx")
+Table_S1 %>%
+  dplyr::select(`Cite Key`, Citation) %>%
+  kable(rownames = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(height = "1000px")
+```
    
 ## Session info
 ```{r print session info}

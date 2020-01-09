@@ -2583,402 +2583,6 @@ _fnSortFlatten:X,_fnSort:nb,_fnSortAria:Jb,_fnSortListener:Va,_fnSortAttachListe
 h.each(n,function(a,b){h.fn.DataTable[a]=b});return h.fn.dataTable});
 </script>
 <style type="text/css">
-.noUi-target,.noUi-target *{-webkit-touch-callout:none;-webkit-user-select:none;-ms-touch-action:none;-ms-user-select:none;-moz-user-select:none;-moz-box-sizing:border-box;box-sizing:border-box}.noUi-target{position:relative;direction:ltr}.noUi-base{width:100%;height:100%;position:relative}.noUi-origin{position:absolute;right:0;top:0;left:0;bottom:0}.noUi-handle{position:relative;z-index:1}.noUi-stacking .noUi-handle{z-index:10}.noUi-state-tap .noUi-origin{-webkit-transition:left .3s,top .3s;transition:left .3s,top .3s}.noUi-state-drag *{cursor:inherit!important}.noUi-base{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.noUi-horizontal{height:10px}.noUi-horizontal .noUi-handle{width:24px;height:18px;left:-12px;top:-6px}.noUi-vertical{width:18px}.noUi-vertical .noUi-handle{width:28px;height:34px;left:-6px;top:-17px}.noUi-background{background:#FAFAFA;box-shadow:inset 0 1px 1px #f0f0f0}.noUi-connect{background:#3FB8AF;box-shadow:inset 0 0 3px rgba(51,51,51,.45);-webkit-transition:background 450ms;transition:background 450ms}.noUi-origin{border-radius:2px}.noUi-target{border-radius:4px;border:1px solid #D3D3D3;box-shadow:inset 0 1px 1px #F0F0F0,0 3px 6px -5px #BBB}.noUi-target.noUi-connect{box-shadow:inset 0 0 3px rgba(51,51,51,.45),0 3px 6px -5px #BBB}.noUi-dragable{cursor:w-resize}.noUi-vertical .noUi-dragable{cursor:n-resize}.noUi-handle{border:1px solid #D9D9D9;border-radius:3px;background:#FFF;cursor:default;box-shadow:inset 0 0 1px #FFF,inset 0 1px 7px #EBEBEB,0 3px 6px -3px #BBB}.noUi-active{box-shadow:inset 0 0 1px #FFF,inset 0 1px 7px #DDD,0 3px 6px -3px #BBB}.noUi-handle:after,.noUi-handle:before{content:"";display:block;position:absolute;height:9px;width:1px;background:#E8E7E6;left:9px;top:3.5px}.noUi-handle:after{left:12px}.noUi-vertical .noUi-handle:after,.noUi-vertical .noUi-handle:before{width:14px;height:1px;left:6px;top:14px}.noUi-vertical .noUi-handle:after{top:17px}[disabled] .noUi-connect,[disabled].noUi-connect{background:#B8B8B8}[disabled] .noUi-handle{cursor:not-allowed}</style>
-<script>/*! noUiSlider - 7.0.10 - 2015-03-17 17:30:22 */
-
-!function(a){"use strict";function b(a,b){return Math.round(a/b)*b}function c(a){return"number"==typeof a&&!isNaN(a)&&isFinite(a)}function d(a){var b=Math.pow(10,7);return Number((Math.round(a*b)/b).toFixed(7))}function e(a,b,c){a.addClass(b),setTimeout(function(){a.removeClass(b)},c)}function f(a){return Math.max(Math.min(a,100),0)}function g(b){return a.isArray(b)?b:[b]}function h(a){var b=a.split(".");return b.length>1?b[1].length:0}function i(a,b){return 100/(b-a)}function j(a,b){return 100*b/(a[1]-a[0])}function k(a,b){return j(a,a[0]<0?b+Math.abs(a[0]):b-a[0])}function l(a,b){return b*(a[1]-a[0])/100+a[0]}function m(a,b){for(var c=1;a>=b[c];)c+=1;return c}function n(a,b,c){if(c>=a.slice(-1)[0])return 100;var d,e,f,g,h=m(c,a);return d=a[h-1],e=a[h],f=b[h-1],g=b[h],f+k([d,e],c)/i(f,g)}function o(a,b,c){if(c>=100)return a.slice(-1)[0];var d,e,f,g,h=m(c,b);return d=a[h-1],e=a[h],f=b[h-1],g=b[h],l([d,e],(c-f)*i(f,g))}function p(a,c,d,e){if(100===e)return e;var f,g,h=m(e,a);return d?(f=a[h-1],g=a[h],e-f>(g-f)/2?g:f):c[h-1]?a[h-1]+b(e-a[h-1],c[h-1]):e}function q(a,b,d){var e;if("number"==typeof b&&(b=[b]),"[object Array]"!==Object.prototype.toString.call(b))throw new Error("noUiSlider: 'range' contains invalid value.");if(e="min"===a?0:"max"===a?100:parseFloat(a),!c(e)||!c(b[0]))throw new Error("noUiSlider: 'range' value isn't numeric.");d.xPct.push(e),d.xVal.push(b[0]),e?d.xSteps.push(isNaN(b[1])?!1:b[1]):isNaN(b[1])||(d.xSteps[0]=b[1])}function r(a,b,c){return b?void(c.xSteps[a]=j([c.xVal[a],c.xVal[a+1]],b)/i(c.xPct[a],c.xPct[a+1])):!0}function s(a,b,c,d){this.xPct=[],this.xVal=[],this.xSteps=[d||!1],this.xNumSteps=[!1],this.snap=b,this.direction=c;var e,f=[];for(e in a)a.hasOwnProperty(e)&&f.push([a[e],e]);for(f.sort(function(a,b){return a[0]-b[0]}),e=0;e<f.length;e++)q(f[e][1],f[e][0],this);for(this.xNumSteps=this.xSteps.slice(0),e=0;e<this.xNumSteps.length;e++)r(e,this.xNumSteps[e],this)}function t(a,b){if(!c(b))throw new Error("noUiSlider: 'step' is not numeric.");a.singleStep=b}function u(b,c){if("object"!=typeof c||a.isArray(c))throw new Error("noUiSlider: 'range' is not an object.");if(void 0===c.min||void 0===c.max)throw new Error("noUiSlider: Missing 'min' or 'max' in 'range'.");b.spectrum=new s(c,b.snap,b.dir,b.singleStep)}function v(b,c){if(c=g(c),!a.isArray(c)||!c.length||c.length>2)throw new Error("noUiSlider: 'start' option is incorrect.");b.handles=c.length,b.start=c}function w(a,b){if(a.snap=b,"boolean"!=typeof b)throw new Error("noUiSlider: 'snap' option must be a boolean.")}function x(a,b){if(a.animate=b,"boolean"!=typeof b)throw new Error("noUiSlider: 'animate' option must be a boolean.")}function y(a,b){if("lower"===b&&1===a.handles)a.connect=1;else if("upper"===b&&1===a.handles)a.connect=2;else if(b===!0&&2===a.handles)a.connect=3;else{if(b!==!1)throw new Error("noUiSlider: 'connect' option doesn't match handle count.");a.connect=0}}function z(a,b){switch(b){case"horizontal":a.ort=0;break;case"vertical":a.ort=1;break;default:throw new Error("noUiSlider: 'orientation' option is invalid.")}}function A(a,b){if(!c(b))throw new Error("noUiSlider: 'margin' option must be numeric.");if(a.margin=a.spectrum.getMargin(b),!a.margin)throw new Error("noUiSlider: 'margin' option is only supported on linear sliders.")}function B(a,b){if(!c(b))throw new Error("noUiSlider: 'limit' option must be numeric.");if(a.limit=a.spectrum.getMargin(b),!a.limit)throw new Error("noUiSlider: 'limit' option is only supported on linear sliders.")}function C(a,b){switch(b){case"ltr":a.dir=0;break;case"rtl":a.dir=1,a.connect=[0,2,1,3][a.connect];break;default:throw new Error("noUiSlider: 'direction' option was not recognized.")}}function D(a,b){if("string"!=typeof b)throw new Error("noUiSlider: 'behaviour' must be a string containing options.");var c=b.indexOf("tap")>=0,d=b.indexOf("drag")>=0,e=b.indexOf("fixed")>=0,f=b.indexOf("snap")>=0;a.events={tap:c||f,drag:d,fixed:e,snap:f}}function E(a,b){if(a.format=b,"function"==typeof b.to&&"function"==typeof b.from)return!0;throw new Error("noUiSlider: 'format' requires 'to' and 'from' methods.")}function F(b){var c,d={margin:0,limit:0,animate:!0,format:V};return c={step:{r:!1,t:t},start:{r:!0,t:v},connect:{r:!0,t:y},direction:{r:!0,t:C},snap:{r:!1,t:w},animate:{r:!1,t:x},range:{r:!0,t:u},orientation:{r:!1,t:z},margin:{r:!1,t:A},limit:{r:!1,t:B},behaviour:{r:!0,t:D},format:{r:!1,t:E}},b=a.extend({connect:!1,direction:"ltr",behaviour:"tap",orientation:"horizontal"},b),a.each(c,function(a,c){if(void 0===b[a]){if(c.r)throw new Error("noUiSlider: '"+a+"' is required.");return!0}c.t(d,b[a])}),d.style=d.ort?"top":"left",d}function G(a,b,c){var d=a+b[0],e=a+b[1];return c?(0>d&&(e+=Math.abs(d)),e>100&&(d-=e-100),[f(d),f(e)]):[d,e]}function H(a){a.preventDefault();var b,c,d=0===a.type.indexOf("touch"),e=0===a.type.indexOf("mouse"),f=0===a.type.indexOf("pointer"),g=a;return 0===a.type.indexOf("MSPointer")&&(f=!0),a.originalEvent&&(a=a.originalEvent),d&&(b=a.changedTouches[0].pageX,c=a.changedTouches[0].pageY),(e||f)&&(f||void 0!==window.pageXOffset||(window.pageXOffset=document.documentElement.scrollLeft,window.pageYOffset=document.documentElement.scrollTop),b=a.clientX+window.pageXOffset,c=a.clientY+window.pageYOffset),g.points=[b,c],g.cursor=e,g}function I(b,c){var d=a("<div><div/></div>").addClass(U[2]),e=["-lower","-upper"];return b&&e.reverse(),d.children().addClass(U[3]+" "+U[3]+e[c]),d}function J(a,b,c){switch(a){case 1:b.addClass(U[7]),c[0].addClass(U[6]);break;case 3:c[1].addClass(U[6]);case 2:c[0].addClass(U[7]);case 0:b.addClass(U[6])}}function K(a,b,c){var d,e=[];for(d=0;a>d;d+=1)e.push(I(b,d).appendTo(c));return e}function L(b,c,d){return d.addClass([U[0],U[8+b],U[4+c]].join(" ")),a("<div/>").appendTo(d).addClass(U[1])}function M(b,c,d){function i(){return C[["width","height"][c.ort]]()}function j(a){var b,c=[E.val()];for(b=0;b<a.length;b+=1)E.trigger(a[b],c)}function k(a){return 1===a.length?a[0]:c.dir?a.reverse():a}function l(a){return function(b,c){E.val([a?null:c,a?c:null],!0)}}function m(b){var c=a.inArray(b,N);E[0].linkAPI&&E[0].linkAPI[b]&&E[0].linkAPI[b].change(M[c],D[c].children(),E)}function n(b,d){var e=a.inArray(b,N);return d&&d.appendTo(D[e].children()),c.dir&&c.handles>1&&(e=1===e?0:1),l(e)}function o(){var a,b;for(a=0;a<N.length;a+=1)this.linkAPI&&this.linkAPI[b=N[a]]&&this.linkAPI[b].reconfirm(b)}function p(a,b,d,e){return a=a.replace(/\s/g,S+" ")+S,b.on(a,function(a){return E.attr("disabled")?!1:E.hasClass(U[14])?!1:(a=H(a),a.calcPoint=a.points[c.ort],void d(a,e))})}function q(a,b){var c,d=b.handles||D,e=!1,f=100*(a.calcPoint-b.start)/i(),g=d[0][0]!==D[0][0]?1:0;c=G(f,b.positions,d.length>1),e=v(d[0],c[g],1===d.length),d.length>1&&(e=v(d[1],c[g?0:1],!1)||e),e&&j(["slide"])}function r(b){a("."+U[15]).removeClass(U[15]),b.cursor&&a("body").css("cursor","").off(S),Q.off(S),E.removeClass(U[12]),j(["set","change"])}function s(b,c){1===c.handles.length&&c.handles[0].children().addClass(U[15]),b.stopPropagation(),p(T.move,Q,q,{start:b.calcPoint,handles:c.handles,positions:[F[0],F[D.length-1]]}),p(T.end,Q,r,null),b.cursor&&(a("body").css("cursor",a(b.target).css("cursor")),D.length>1&&E.addClass(U[12]),a("body").on("selectstart"+S,!1))}function t(b){var d,f=b.calcPoint,g=0;b.stopPropagation(),a.each(D,function(){g+=this.offset()[c.style]}),g=g/2>f||1===D.length?0:1,f-=C.offset()[c.style],d=100*f/i(),c.events.snap||e(E,U[14],300),v(D[g],d),j(["slide","set","change"]),c.events.snap&&s(b,{handles:[D[g]]})}function u(a){var b,c;if(!a.fixed)for(b=0;b<D.length;b+=1)p(T.start,D[b].children(),s,{handles:[D[b]]});a.tap&&p(T.start,C,t,{handles:D}),a.drag&&(c=C.find("."+U[7]).addClass(U[10]),a.fixed&&(c=c.add(C.children().not(c).children())),p(T.start,c,s,{handles:D}))}function v(a,b,d){var e=a[0]!==D[0][0]?1:0,g=F[0]+c.margin,h=F[1]-c.margin,i=F[0]+c.limit,j=F[1]-c.limit;return D.length>1&&(b=e?Math.max(b,g):Math.min(b,h)),d!==!1&&c.limit&&D.length>1&&(b=e?Math.min(b,i):Math.max(b,j)),b=I.getStep(b),b=f(parseFloat(b.toFixed(7))),b===F[e]?!1:(a.css(c.style,b+"%"),a.is(":first-child")&&a.toggleClass(U[17],b>50),F[e]=b,M[e]=I.fromStepping(b),m(N[e]),!0)}function w(a,b){var d,e,f;for(c.limit&&(a+=1),d=0;a>d;d+=1)e=d%2,f=b[e],null!==f&&f!==!1&&("number"==typeof f&&(f=String(f)),f=c.format.from(f),(f===!1||isNaN(f)||v(D[e],I.toStepping(f),d===3-c.dir)===!1)&&m(N[e]))}function x(a){if(E[0].LinkIsEmitting)return this;var b,d=g(a);return c.dir&&c.handles>1&&d.reverse(),c.animate&&-1!==F[0]&&e(E,U[14],300),b=D.length>1?3:1,1===d.length&&(b=1),w(b,d),j(["set"]),this}function y(){var a,b=[];for(a=0;a<c.handles;a+=1)b[a]=c.format.to(M[a]);return k(b)}function z(){return a(this).off(S).removeClass(U.join(" ")).empty(),delete this.LinkUpdate,delete this.LinkConfirm,delete this.LinkDefaultFormatter,delete this.LinkDefaultFlag,delete this.reappend,delete this.vGet,delete this.vSet,delete this.getCurrentStep,delete this.getInfo,delete this.destroy,d}function A(){var b=a.map(F,function(a,b){var c=I.getApplicableStep(a),d=h(String(c[2])),e=M[b],f=100===a?null:c[2],g=Number((e-c[2]).toFixed(d)),i=0===a?null:g>=c[1]?c[2]:c[0]||!1;return[[i,f]]});return k(b)}function B(){return d}var C,D,E=a(b),F=[-1,-1],I=c.spectrum,M=[],N=["lower","upper"].slice(0,c.handles);if(c.dir&&N.reverse(),b.LinkUpdate=m,b.LinkConfirm=n,b.LinkDefaultFormatter=c.format,b.LinkDefaultFlag="lower",b.reappend=o,E.hasClass(U[0]))throw new Error("Slider was already initialized.");C=L(c.dir,c.ort,E),D=K(c.handles,c.dir,C),J(c.connect,E,D),u(c.events),b.vSet=x,b.vGet=y,b.destroy=z,b.getCurrentStep=A,b.getOriginalOptions=B,b.getInfo=function(){return[I,c.style,c.ort]},E.val(c.start)}function N(a){var b=F(a,this);return this.each(function(){M(this,b,a)})}function O(b){return this.each(function(){if(!this.destroy)return void a(this).noUiSlider(b);var c=a(this).val(),d=this.destroy(),e=a.extend({},d,b);a(this).noUiSlider(e),this.reappend(),d.start===e.start&&a(this).val(c)})}function P(){return this[0][arguments.length?"vSet":"vGet"].apply(this[0],arguments)}var Q=a(document),R=a.fn.val,S=".nui",T=window.navigator.pointerEnabled?{start:"pointerdown",move:"pointermove",end:"pointerup"}:window.navigator.msPointerEnabled?{start:"MSPointerDown",move:"MSPointerMove",end:"MSPointerUp"}:{start:"mousedown touchstart",move:"mousemove touchmove",end:"mouseup touchend"},U=["noUi-target","noUi-base","noUi-origin","noUi-handle","noUi-horizontal","noUi-vertical","noUi-background","noUi-connect","noUi-ltr","noUi-rtl","noUi-dragable","","noUi-state-drag","","noUi-state-tap","noUi-active","","noUi-stacking"];s.prototype.getMargin=function(a){return 2===this.xPct.length?j(this.xVal,a):!1},s.prototype.toStepping=function(a){return a=n(this.xVal,this.xPct,a),this.direction&&(a=100-a),a},s.prototype.fromStepping=function(a){return this.direction&&(a=100-a),d(o(this.xVal,this.xPct,a))},s.prototype.getStep=function(a){return this.direction&&(a=100-a),a=p(this.xPct,this.xSteps,this.snap,a),this.direction&&(a=100-a),a},s.prototype.getApplicableStep=function(a){var b=m(a,this.xPct),c=100===a?2:1;return[this.xNumSteps[b-2],this.xVal[b-c],this.xNumSteps[b-c]]},s.prototype.convert=function(a){return this.getStep(this.toStepping(a))};var V={to:function(a){return a.toFixed(2)},from:Number};a.fn.val=function(b){function c(a){return a.hasClass(U[0])?P:R}if(!arguments.length){var d=a(this[0]);return c(d).call(d)}var e=a.isFunction(b);return this.each(function(d){var f=b,g=a(this);e&&(f=b.call(this,d,g.val())),c(g).call(g,f)})},a.fn.noUiSlider=function(a,b){switch(a){case"step":return this[0].getCurrentStep();case"options":return this[0].getOriginalOptions()}return(b?O:N).call(this,a)}}(window.jQuery||window.Zepto);</script>
-<style type="text/css">
-.selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
-visibility: visible !important;
-background: #f2f2f2 !important;
-background: rgba(0, 0, 0, 0.06) !important;
-border: 0 none !important;
--webkit-box-shadow: inset 0 0 12px 4px #ffffff;
-box-shadow: inset 0 0 12px 4px #ffffff;
-}
-.selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
-content: '!';
-visibility: hidden;
-}
-.selectize-control.plugin-drag_drop .ui-sortable-helper {
--webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-.selectize-dropdown-header {
-position: relative;
-padding: 3px 12px;
-border-bottom: 1px solid #d0d0d0;
-background: #f8f8f8;
--webkit-border-radius: 4px 4px 0 0;
--moz-border-radius: 4px 4px 0 0;
-border-radius: 4px 4px 0 0;
-}
-.selectize-dropdown-header-close {
-position: absolute;
-right: 12px;
-top: 50%;
-color: #333333;
-opacity: 0.4;
-margin-top: -12px;
-line-height: 20px;
-font-size: 20px !important;
-}
-.selectize-dropdown-header-close:hover {
-color: #000000;
-}
-.selectize-dropdown.plugin-optgroup_columns .optgroup {
-border-right: 1px solid #f2f2f2;
-border-top: 0 none;
-float: left;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-}
-.selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
-border-right: 0 none;
-}
-.selectize-dropdown.plugin-optgroup_columns .optgroup:before {
-display: none;
-}
-.selectize-dropdown.plugin-optgroup_columns .optgroup-header {
-border-top: 0 none;
-}
-.selectize-control.plugin-remove_button [data-value] {
-position: relative;
-padding-right: 24px !important;
-}
-.selectize-control.plugin-remove_button [data-value] .remove {
-z-index: 1;
-
-position: absolute;
-top: 0;
-right: 0;
-bottom: 0;
-width: 17px;
-text-align: center;
-font-weight: bold;
-font-size: 12px;
-color: inherit;
-text-decoration: none;
-vertical-align: middle;
-display: inline-block;
-padding: 1px 0 0 0;
-border-left: 1px solid rgba(0, 0, 0, 0);
--webkit-border-radius: 0 2px 2px 0;
--moz-border-radius: 0 2px 2px 0;
-border-radius: 0 2px 2px 0;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-}
-.selectize-control.plugin-remove_button [data-value] .remove:hover {
-background: rgba(0, 0, 0, 0.05);
-}
-.selectize-control.plugin-remove_button [data-value].active .remove {
-border-left-color: rgba(0, 0, 0, 0);
-}
-.selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
-background: none;
-}
-.selectize-control.plugin-remove_button .disabled [data-value] .remove {
-border-left-color: rgba(77, 77, 77, 0);
-}
-.selectize-control {
-position: relative;
-}
-.selectize-dropdown,
-.selectize-input,
-.selectize-input input {
-color: #333333;
-font-family: inherit;
-font-size: inherit;
-line-height: 20px;
--webkit-font-smoothing: inherit;
-}
-.selectize-input,
-.selectize-control.single .selectize-input.input-active {
-background: #ffffff;
-cursor: text;
-display: inline-block;
-}
-.selectize-input {
-border: 1px solid #cccccc;
-padding: 6px 12px;
-display: inline-block;
-width: 100%;
-overflow: hidden;
-position: relative;
-z-index: 1;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
--webkit-box-shadow: none;
-box-shadow: none;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
-}
-.selectize-control.multi .selectize-input.has-items {
-padding: 5px 12px 2px;
-}
-.selectize-input.full {
-background-color: #ffffff;
-}
-.selectize-input.disabled,
-.selectize-input.disabled * {
-cursor: default !important;
-}
-.selectize-input.focus {
--webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-.selectize-input.dropdown-active {
--webkit-border-radius: 4px 4px 0 0;
--moz-border-radius: 4px 4px 0 0;
-border-radius: 4px 4px 0 0;
-}
-.selectize-input > * {
-vertical-align: baseline;
-display: -moz-inline-stack;
-display: inline-block;
-zoom: 1;
-*display: inline;
-}
-.selectize-control.multi .selectize-input > div {
-cursor: pointer;
-margin: 0 3px 3px 0;
-padding: 1px 3px;
-background: #efefef;
-color: #333333;
-border: 0 solid rgba(0, 0, 0, 0);
-}
-.selectize-control.multi .selectize-input > div.active {
-background: #428bca;
-color: #ffffff;
-border: 0 solid rgba(0, 0, 0, 0);
-}
-.selectize-control.multi .selectize-input.disabled > div,
-.selectize-control.multi .selectize-input.disabled > div.active {
-color: #808080;
-background: #ffffff;
-border: 0 solid rgba(77, 77, 77, 0);
-}
-.selectize-input > input {
-display: inline-block !important;
-padding: 0 !important;
-min-height: 0 !important;
-max-height: none !important;
-max-width: 100% !important;
-margin: 0 !important;
-text-indent: 0 !important;
-border: 0 none !important;
-background: none !important;
-line-height: inherit !important;
--webkit-user-select: auto !important;
--webkit-box-shadow: none !important;
-box-shadow: none !important;
-}
-.selectize-input > input::-ms-clear {
-display: none;
-}
-.selectize-input > input:focus {
-outline: none !important;
-}
-.selectize-input::after {
-content: ' ';
-display: block;
-clear: left;
-}
-.selectize-input.dropdown-active::before {
-content: ' ';
-display: block;
-position: absolute;
-background: #ffffff;
-height: 1px;
-bottom: 0;
-left: 0;
-right: 0;
-}
-.selectize-dropdown {
-position: absolute;
-z-index: 10;
-border: 1px solid #d0d0d0;
-background: #ffffff;
-margin: -1px 0 0 0;
-border-top: 0 none;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
--webkit-border-radius: 0 0 4px 4px;
--moz-border-radius: 0 0 4px 4px;
-border-radius: 0 0 4px 4px;
-}
-.selectize-dropdown [data-selectable] {
-cursor: pointer;
-overflow: hidden;
-}
-.selectize-dropdown [data-selectable] .highlight {
-background: rgba(255, 237, 40, 0.4);
--webkit-border-radius: 1px;
--moz-border-radius: 1px;
-border-radius: 1px;
-}
-.selectize-dropdown [data-selectable],
-.selectize-dropdown .optgroup-header {
-padding: 3px 12px;
-}
-.selectize-dropdown .optgroup:first-child .optgroup-header {
-border-top: 0 none;
-}
-.selectize-dropdown .optgroup-header {
-color: #777777;
-background: #ffffff;
-cursor: default;
-}
-.selectize-dropdown .active {
-background-color: #f5f5f5;
-color: #262626;
-}
-.selectize-dropdown .active.create {
-color: #262626;
-}
-.selectize-dropdown .create {
-color: rgba(51, 51, 51, 0.5);
-}
-.selectize-dropdown-content {
-overflow-y: auto;
-overflow-x: hidden;
-max-height: 200px;
-}
-.selectize-control.single .selectize-input,
-.selectize-control.single .selectize-input input {
-cursor: pointer;
-}
-.selectize-control.single .selectize-input.input-active,
-.selectize-control.single .selectize-input.input-active input {
-cursor: text;
-}
-.selectize-control.single .selectize-input:after {
-content: ' ';
-display: block;
-position: absolute;
-top: 50%;
-right: 17px;
-margin-top: -3px;
-width: 0;
-height: 0;
-border-style: solid;
-border-width: 5px 5px 0 5px;
-border-color: #333333 transparent transparent transparent;
-}
-.selectize-control.single .selectize-input.dropdown-active:after {
-margin-top: -4px;
-border-width: 0 5px 5px 5px;
-border-color: transparent transparent #333333 transparent;
-}
-.selectize-control.rtl.single .selectize-input:after {
-left: 17px;
-right: auto;
-}
-.selectize-control.rtl .selectize-input > input {
-margin: 0 4px 0 -2px !important;
-}
-.selectize-control .selectize-input.disabled {
-opacity: 0.5;
-background-color: #ffffff;
-}
-.selectize-dropdown,
-.selectize-dropdown.form-control {
-height: auto;
-padding: 0;
-margin: 2px 0 0 0;
-z-index: 1000;
-background: #ffffff;
-border: 1px solid #cccccc;
-border: 1px solid rgba(0, 0, 0, 0.15);
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-}
-.selectize-dropdown .optgroup-header {
-font-size: 12px;
-line-height: 1.42857143;
-}
-.selectize-dropdown .optgroup:first-child:before {
-display: none;
-}
-.selectize-dropdown .optgroup:before {
-content: ' ';
-display: block;
-height: 1px;
-margin: 9px 0;
-overflow: hidden;
-background-color: #e5e5e5;
-margin-left: -12px;
-margin-right: -12px;
-}
-.selectize-dropdown-content {
-padding: 5px 0;
-}
-.selectize-dropdown-header {
-padding: 6px 12px;
-}
-.selectize-input {
-min-height: 34px;
-}
-.selectize-input.dropdown-active {
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
-}
-.selectize-input.dropdown-active::before {
-display: none;
-}
-.selectize-input.focus {
-border-color: #66afe9;
-outline: 0;
--webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-.has-error .selectize-input {
-border-color: #a94442;
--webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-.has-error .selectize-input:focus {
-border-color: #843534;
--webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
-}
-.selectize-control.multi .selectize-input.has-items {
-padding-left: 9px;
-padding-right: 9px;
-}
-.selectize-control.multi .selectize-input > div {
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-}
-.form-control.selectize-control {
-padding: 0;
-height: auto;
-border: none;
-background: none;
--webkit-box-shadow: none;
-box-shadow: none;
--webkit-border-radius: 0;
--moz-border-radius: 0;
-border-radius: 0;
-}
-</style>
-<script>/*! selectize.js - v0.12.1 | https://github.com/brianreavis/selectize.js | Apache License (v2) */
-!function(a,b){"function"==typeof define&&define.amd?define("sifter",b):"object"==typeof exports?module.exports=b():a.Sifter=b()}(this,function(){var a=function(a,b){this.items=a,this.settings=b||{diacritics:!0}};a.prototype.tokenize=function(a){if(a=d(String(a||"").toLowerCase()),!a||!a.length)return[];var b,c,f,h,i=[],j=a.split(/ +/);for(b=0,c=j.length;c>b;b++){if(f=e(j[b]),this.settings.diacritics)for(h in g)g.hasOwnProperty(h)&&(f=f.replace(new RegExp(h,"g"),g[h]));i.push({string:j[b],regex:new RegExp(f,"i")})}return i},a.prototype.iterator=function(a,b){var c;c=f(a)?Array.prototype.forEach||function(a){for(var b=0,c=this.length;c>b;b++)a(this[b],b,this)}:function(a){for(var b in this)this.hasOwnProperty(b)&&a(this[b],b,this)},c.apply(a,[b])},a.prototype.getScoreFunction=function(a,b){var c,d,e,f;c=this,a=c.prepareSearch(a,b),e=a.tokens,d=a.options.fields,f=e.length;var g=function(a,b){var c,d;return a?(a=String(a||""),d=a.search(b.regex),-1===d?0:(c=b.string.length/a.length,0===d&&(c+=.5),c)):0},h=function(){var a=d.length;return a?1===a?function(a,b){return g(b[d[0]],a)}:function(b,c){for(var e=0,f=0;a>e;e++)f+=g(c[d[e]],b);return f/a}:function(){return 0}}();return f?1===f?function(a){return h(e[0],a)}:"and"===a.options.conjunction?function(a){for(var b,c=0,d=0;f>c;c++){if(b=h(e[c],a),0>=b)return 0;d+=b}return d/f}:function(a){for(var b=0,c=0;f>b;b++)c+=h(e[b],a);return c/f}:function(){return 0}},a.prototype.getSortFunction=function(a,c){var d,e,f,g,h,i,j,k,l,m,n;if(f=this,a=f.prepareSearch(a,c),n=!a.query&&c.sort_empty||c.sort,l=function(a,b){return"$score"===a?b.score:f.items[b.id][a]},h=[],n)for(d=0,e=n.length;e>d;d++)(a.query||"$score"!==n[d].field)&&h.push(n[d]);if(a.query){for(m=!0,d=0,e=h.length;e>d;d++)if("$score"===h[d].field){m=!1;break}m&&h.unshift({field:"$score",direction:"desc"})}else for(d=0,e=h.length;e>d;d++)if("$score"===h[d].field){h.splice(d,1);break}for(k=[],d=0,e=h.length;e>d;d++)k.push("desc"===h[d].direction?-1:1);return i=h.length,i?1===i?(g=h[0].field,j=k[0],function(a,c){return j*b(l(g,a),l(g,c))}):function(a,c){var d,e,f;for(d=0;i>d;d++)if(f=h[d].field,e=k[d]*b(l(f,a),l(f,c)))return e;return 0}:null},a.prototype.prepareSearch=function(a,b){if("object"==typeof a)return a;b=c({},b);var d=b.fields,e=b.sort,g=b.sort_empty;return d&&!f(d)&&(b.fields=[d]),e&&!f(e)&&(b.sort=[e]),g&&!f(g)&&(b.sort_empty=[g]),{options:b,query:String(a||"").toLowerCase(),tokens:this.tokenize(a),total:0,items:[]}},a.prototype.search=function(a,b){var c,d,e,f,g=this;return d=this.prepareSearch(a,b),b=d.options,a=d.query,f=b.score||g.getScoreFunction(d),a.length?g.iterator(g.items,function(a,e){c=f(a),(b.filter===!1||c>0)&&d.items.push({score:c,id:e})}):g.iterator(g.items,function(a,b){d.items.push({score:1,id:b})}),e=g.getSortFunction(d,b),e&&d.items.sort(e),d.total=d.items.length,"number"==typeof b.limit&&(d.items=d.items.slice(0,b.limit)),d};var b=function(a,b){return"number"==typeof a&&"number"==typeof b?a>b?1:b>a?-1:0:(a=h(String(a||"")),b=h(String(b||"")),a>b?1:b>a?-1:0)},c=function(a){var b,c,d,e;for(b=1,c=arguments.length;c>b;b++)if(e=arguments[b])for(d in e)e.hasOwnProperty(d)&&(a[d]=e[d]);return a},d=function(a){return(a+"").replace(/^\s+|\s+$|/g,"")},e=function(a){return(a+"").replace(/([.?*+^$[\]\\(){}|-])/g,"\\$1")},f=Array.isArray||$&&$.isArray||function(a){return"[object Array]"===Object.prototype.toString.call(a)},g={a:"[aÀÁÂÃÄÅàáâãäåĀāąĄ]",c:"[cÇçćĆčČ]",d:"[dđĐďĎ]",e:"[eÈÉÊËèéêëěĚĒēęĘ]",i:"[iÌÍÎÏìíîïĪī]",l:"[lłŁ]",n:"[nÑñňŇńŃ]",o:"[oÒÓÔÕÕÖØòóôõöøŌō]",r:"[rřŘ]",s:"[sŠšśŚ]",t:"[tťŤ]",u:"[uÙÚÛÜùúûüůŮŪū]",y:"[yŸÿýÝ]",z:"[zŽžżŻźŹ]"},h=function(){var a,b,c,d,e="",f={};for(c in g)if(g.hasOwnProperty(c))for(d=g[c].substring(2,g[c].length-1),e+=d,a=0,b=d.length;b>a;a++)f[d.charAt(a)]=c;var h=new RegExp("["+e+"]","g");return function(a){return a.replace(h,function(a){return f[a]}).toLowerCase()}}();return a}),function(a,b){"function"==typeof define&&define.amd?define("microplugin",b):"object"==typeof exports?module.exports=b():a.MicroPlugin=b()}(this,function(){var a={};a.mixin=function(a){a.plugins={},a.prototype.initializePlugins=function(a){var c,d,e,f=this,g=[];if(f.plugins={names:[],settings:{},requested:{},loaded:{}},b.isArray(a))for(c=0,d=a.length;d>c;c++)"string"==typeof a[c]?g.push(a[c]):(f.plugins.settings[a[c].name]=a[c].options,g.push(a[c].name));else if(a)for(e in a)a.hasOwnProperty(e)&&(f.plugins.settings[e]=a[e],g.push(e));for(;g.length;)f.require(g.shift())},a.prototype.loadPlugin=function(b){var c=this,d=c.plugins,e=a.plugins[b];if(!a.plugins.hasOwnProperty(b))throw new Error('Unable to find "'+b+'" plugin');d.requested[b]=!0,d.loaded[b]=e.fn.apply(c,[c.plugins.settings[b]||{}]),d.names.push(b)},a.prototype.require=function(a){var b=this,c=b.plugins;if(!b.plugins.loaded.hasOwnProperty(a)){if(c.requested[a])throw new Error('Plugin has circular dependency ("'+a+'")');b.loadPlugin(a)}return c.loaded[a]},a.define=function(b,c){a.plugins[b]={name:b,fn:c}}};var b={isArray:Array.isArray||function(a){return"[object Array]"===Object.prototype.toString.call(a)}};return a}),function(a,b){"function"==typeof define&&define.amd?define("selectize",["jquery","sifter","microplugin"],b):"object"==typeof exports?module.exports=b(require("jquery"),require("sifter"),require("microplugin")):a.Selectize=b(a.jQuery,a.Sifter,a.MicroPlugin)}(this,function(a,b,c){"use strict";var d=function(a,b){if("string"!=typeof b||b.length){var c="string"==typeof b?new RegExp(b,"i"):b,d=function(a){var b=0;if(3===a.nodeType){var e=a.data.search(c);if(e>=0&&a.data.length>0){var f=a.data.match(c),g=document.createElement("span");g.className="highlight";var h=a.splitText(e),i=(h.splitText(f[0].length),h.cloneNode(!0));g.appendChild(i),h.parentNode.replaceChild(g,h),b=1}}else if(1===a.nodeType&&a.childNodes&&!/(script|style)/i.test(a.tagName))for(var j=0;j<a.childNodes.length;++j)j+=d(a.childNodes[j]);return b};return a.each(function(){d(this)})}},e=function(){};e.prototype={on:function(a,b){this._events=this._events||{},this._events[a]=this._events[a]||[],this._events[a].push(b)},off:function(a,b){var c=arguments.length;return 0===c?delete this._events:1===c?delete this._events[a]:(this._events=this._events||{},void(a in this._events!=!1&&this._events[a].splice(this._events[a].indexOf(b),1)))},trigger:function(a){if(this._events=this._events||{},a in this._events!=!1)for(var b=0;b<this._events[a].length;b++)this._events[a][b].apply(this,Array.prototype.slice.call(arguments,1))}},e.mixin=function(a){for(var b=["on","off","trigger"],c=0;c<b.length;c++)a.prototype[b[c]]=e.prototype[b[c]]};var f=/Mac/.test(navigator.userAgent),g=65,h=13,i=27,j=37,k=38,l=80,m=39,n=40,o=78,p=8,q=46,r=16,s=f?91:17,t=f?18:17,u=9,v=1,w=2,x=!/android/i.test(window.navigator.userAgent)&&!!document.createElement("form").validity,y=function(a){return"undefined"!=typeof a},z=function(a){return"undefined"==typeof a||null===a?null:"boolean"==typeof a?a?"1":"0":a+""},A=function(a){return(a+"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")},B=function(a){return(a+"").replace(/\$/g,"$$$$")},C={};C.before=function(a,b,c){var d=a[b];a[b]=function(){return c.apply(a,arguments),d.apply(a,arguments)}},C.after=function(a,b,c){var d=a[b];a[b]=function(){var b=d.apply(a,arguments);return c.apply(a,arguments),b}};var D=function(a){var b=!1;return function(){b||(b=!0,a.apply(this,arguments))}},E=function(a,b){var c;return function(){var d=this,e=arguments;window.clearTimeout(c),c=window.setTimeout(function(){a.apply(d,e)},b)}},F=function(a,b,c){var d,e=a.trigger,f={};a.trigger=function(){var c=arguments[0];return-1===b.indexOf(c)?e.apply(a,arguments):void(f[c]=arguments)},c.apply(a,[]),a.trigger=e;for(d in f)f.hasOwnProperty(d)&&e.apply(a,f[d])},G=function(a,b,c,d){a.on(b,c,function(b){for(var c=b.target;c&&c.parentNode!==a[0];)c=c.parentNode;return b.currentTarget=c,d.apply(this,[b])})},H=function(a){var b={};if("selectionStart"in a)b.start=a.selectionStart,b.length=a.selectionEnd-b.start;else if(document.selection){a.focus();var c=document.selection.createRange(),d=document.selection.createRange().text.length;c.moveStart("character",-a.value.length),b.start=c.text.length-d,b.length=d}return b},I=function(a,b,c){var d,e,f={};if(c)for(d=0,e=c.length;e>d;d++)f[c[d]]=a.css(c[d]);else f=a.css();b.css(f)},J=function(b,c){if(!b)return 0;var d=a("<test>").css({position:"absolute",top:-99999,left:-99999,width:"auto",padding:0,whiteSpace:"pre"}).text(b).appendTo("body");I(c,d,["letterSpacing","fontSize","fontFamily","fontWeight","textTransform"]);var e=d.width();return d.remove(),e},K=function(a){var b=null,c=function(c,d){var e,f,g,h,i,j,k,l;c=c||window.event||{},d=d||{},c.metaKey||c.altKey||(d.force||a.data("grow")!==!1)&&(e=a.val(),c.type&&"keydown"===c.type.toLowerCase()&&(f=c.keyCode,g=f>=97&&122>=f||f>=65&&90>=f||f>=48&&57>=f||32===f,f===q||f===p?(l=H(a[0]),l.length?e=e.substring(0,l.start)+e.substring(l.start+l.length):f===p&&l.start?e=e.substring(0,l.start-1)+e.substring(l.start+1):f===q&&"undefined"!=typeof l.start&&(e=e.substring(0,l.start)+e.substring(l.start+1))):g&&(j=c.shiftKey,k=String.fromCharCode(c.keyCode),k=j?k.toUpperCase():k.toLowerCase(),e+=k)),h=a.attr("placeholder"),!e&&h&&(e=h),i=J(e,a)+4,i!==b&&(b=i,a.width(i),a.triggerHandler("resize")))};a.on("keydown keyup update blur",c),c()},L=function(c,d){var e,f,g,h,i=this;h=c[0],h.selectize=i;var j=window.getComputedStyle&&window.getComputedStyle(h,null);if(g=j?j.getPropertyValue("direction"):h.currentStyle&&h.currentStyle.direction,g=g||c.parents("[dir]:first").attr("dir")||"",a.extend(i,{order:0,settings:d,$input:c,tabIndex:c.attr("tabindex")||"",tagType:"select"===h.tagName.toLowerCase()?v:w,rtl:/rtl/i.test(g),eventNS:".selectize"+ ++L.count,highlightedValue:null,isOpen:!1,isDisabled:!1,isRequired:c.is("[required]"),isInvalid:!1,isLocked:!1,isFocused:!1,isInputHidden:!1,isSetup:!1,isShiftDown:!1,isCmdDown:!1,isCtrlDown:!1,ignoreFocus:!1,ignoreBlur:!1,ignoreHover:!1,hasOptions:!1,currentResults:null,lastValue:"",caretPos:0,loading:0,loadedSearches:{},$activeOption:null,$activeItems:[],optgroups:{},options:{},userOptions:{},items:[],renderCache:{},onSearchChange:null===d.loadThrottle?i.onSearchChange:E(i.onSearchChange,d.loadThrottle)}),i.sifter=new b(this.options,{diacritics:d.diacritics}),i.settings.options){for(e=0,f=i.settings.options.length;f>e;e++)i.registerOption(i.settings.options[e]);delete i.settings.options}if(i.settings.optgroups){for(e=0,f=i.settings.optgroups.length;f>e;e++)i.registerOptionGroup(i.settings.optgroups[e]);delete i.settings.optgroups}i.settings.mode=i.settings.mode||(1===i.settings.maxItems?"single":"multi"),"boolean"!=typeof i.settings.hideSelected&&(i.settings.hideSelected="multi"===i.settings.mode),i.initializePlugins(i.settings.plugins),i.setupCallbacks(),i.setupTemplates(),i.setup()};return e.mixin(L),c.mixin(L),a.extend(L.prototype,{setup:function(){var b,c,d,e,g,h,i,j,k,l=this,m=l.settings,n=l.eventNS,o=a(window),p=a(document),q=l.$input;if(i=l.settings.mode,j=q.attr("class")||"",b=a("<div>").addClass(m.wrapperClass).addClass(j).addClass(i),c=a("<div>").addClass(m.inputClass).addClass("items").appendTo(b),d=a('<input type="text" autocomplete="off" />').appendTo(c).attr("tabindex",q.is(":disabled")?"-1":l.tabIndex),h=a(m.dropdownParent||b),e=a("<div>").addClass(m.dropdownClass).addClass(i).hide().appendTo(h),g=a("<div>").addClass(m.dropdownContentClass).appendTo(e),l.settings.copyClassesToDropdown&&e.addClass(j),b.css({width:q[0].style.width}),l.plugins.names.length&&(k="plugin-"+l.plugins.names.join(" plugin-"),b.addClass(k),e.addClass(k)),(null===m.maxItems||m.maxItems>1)&&l.tagType===v&&q.attr("multiple","multiple"),l.settings.placeholder&&d.attr("placeholder",m.placeholder),!l.settings.splitOn&&l.settings.delimiter){var u=l.settings.delimiter.replace(/[-\/\\^$*+?.()|[\]{}]/g,"\\$&");l.settings.splitOn=new RegExp("\\s*"+u+"+\\s*")}q.attr("autocorrect")&&d.attr("autocorrect",q.attr("autocorrect")),q.attr("autocapitalize")&&d.attr("autocapitalize",q.attr("autocapitalize")),l.$wrapper=b,l.$control=c,l.$control_input=d,l.$dropdown=e,l.$dropdown_content=g,e.on("mouseenter","[data-selectable]",function(){return l.onOptionHover.apply(l,arguments)}),e.on("mousedown click","[data-selectable]",function(){return l.onOptionSelect.apply(l,arguments)}),G(c,"mousedown","*:not(input)",function(){return l.onItemSelect.apply(l,arguments)}),K(d),c.on({mousedown:function(){return l.onMouseDown.apply(l,arguments)},click:function(){return l.onClick.apply(l,arguments)}}),d.on({mousedown:function(a){a.stopPropagation()},keydown:function(){return l.onKeyDown.apply(l,arguments)},keyup:function(){return l.onKeyUp.apply(l,arguments)},keypress:function(){return l.onKeyPress.apply(l,arguments)},resize:function(){l.positionDropdown.apply(l,[])},blur:function(){return l.onBlur.apply(l,arguments)},focus:function(){return l.ignoreBlur=!1,l.onFocus.apply(l,arguments)},paste:function(){return l.onPaste.apply(l,arguments)}}),p.on("keydown"+n,function(a){l.isCmdDown=a[f?"metaKey":"ctrlKey"],l.isCtrlDown=a[f?"altKey":"ctrlKey"],l.isShiftDown=a.shiftKey}),p.on("keyup"+n,function(a){a.keyCode===t&&(l.isCtrlDown=!1),a.keyCode===r&&(l.isShiftDown=!1),a.keyCode===s&&(l.isCmdDown=!1)}),p.on("mousedown"+n,function(a){if(l.isFocused){if(a.target===l.$dropdown[0]||a.target.parentNode===l.$dropdown[0])return!1;l.$control.has(a.target).length||a.target===l.$control[0]||l.blur(a.target)}}),o.on(["scroll"+n,"resize"+n].join(" "),function(){l.isOpen&&l.positionDropdown.apply(l,arguments)}),o.on("mousemove"+n,function(){l.ignoreHover=!1}),this.revertSettings={$children:q.children().detach(),tabindex:q.attr("tabindex")},q.attr("tabindex",-1).hide().after(l.$wrapper),a.isArray(m.items)&&(l.setValue(m.items),delete m.items),x&&q.on("invalid"+n,function(a){a.preventDefault(),l.isInvalid=!0,l.refreshState()}),l.updateOriginalInput(),l.refreshItems(),l.refreshState(),l.updatePlaceholder(),l.isSetup=!0,q.is(":disabled")&&l.disable(),l.on("change",this.onChange),q.data("selectize",l),q.addClass("selectized"),l.trigger("initialize"),m.preload===!0&&l.onSearchChange("")},setupTemplates:function(){var b=this,c=b.settings.labelField,d=b.settings.optgroupLabelField,e={optgroup:function(a){return'<div class="optgroup">'+a.html+"</div>"},optgroup_header:function(a,b){return'<div class="optgroup-header">'+b(a[d])+"</div>"},option:function(a,b){return'<div class="option">'+b(a[c])+"</div>"},item:function(a,b){return'<div class="item">'+b(a[c])+"</div>"},option_create:function(a,b){return'<div class="create">Add <strong>'+b(a.input)+"</strong>&hellip;</div>"}};b.settings.render=a.extend({},e,b.settings.render)},setupCallbacks:function(){var a,b,c={initialize:"onInitialize",change:"onChange",item_add:"onItemAdd",item_remove:"onItemRemove",clear:"onClear",option_add:"onOptionAdd",option_remove:"onOptionRemove",option_clear:"onOptionClear",optgroup_add:"onOptionGroupAdd",optgroup_remove:"onOptionGroupRemove",optgroup_clear:"onOptionGroupClear",dropdown_open:"onDropdownOpen",dropdown_close:"onDropdownClose",type:"onType",load:"onLoad",focus:"onFocus",blur:"onBlur"};for(a in c)c.hasOwnProperty(a)&&(b=this.settings[c[a]],b&&this.on(a,b))},onClick:function(a){var b=this;b.isFocused||(b.focus(),a.preventDefault())},onMouseDown:function(b){{var c=this,d=b.isDefaultPrevented();a(b.target)}if(c.isFocused){if(b.target!==c.$control_input[0])return"single"===c.settings.mode?c.isOpen?c.close():c.open():d||c.setActiveItem(null),!1}else d||window.setTimeout(function(){c.focus()},0)},onChange:function(){this.$input.trigger("change")},onPaste:function(b){var c=this;c.isFull()||c.isInputHidden||c.isLocked?b.preventDefault():c.settings.splitOn&&setTimeout(function(){for(var b=a.trim(c.$control_input.val()||"").split(c.settings.splitOn),d=0,e=b.length;e>d;d++)c.createItem(b[d])},0)},onKeyPress:function(a){if(this.isLocked)return a&&a.preventDefault();var b=String.fromCharCode(a.keyCode||a.which);return this.settings.create&&"multi"===this.settings.mode&&b===this.settings.delimiter?(this.createItem(),a.preventDefault(),!1):void 0},onKeyDown:function(a){var b=(a.target===this.$control_input[0],this);if(b.isLocked)return void(a.keyCode!==u&&a.preventDefault());switch(a.keyCode){case g:if(b.isCmdDown)return void b.selectAll();break;case i:return void(b.isOpen&&(a.preventDefault(),a.stopPropagation(),b.close()));case o:if(!a.ctrlKey||a.altKey)break;case n:if(!b.isOpen&&b.hasOptions)b.open();else if(b.$activeOption){b.ignoreHover=!0;var c=b.getAdjacentOption(b.$activeOption,1);c.length&&b.setActiveOption(c,!0,!0)}return void a.preventDefault();case l:if(!a.ctrlKey||a.altKey)break;case k:if(b.$activeOption){b.ignoreHover=!0;var d=b.getAdjacentOption(b.$activeOption,-1);d.length&&b.setActiveOption(d,!0,!0)}return void a.preventDefault();case h:return void(b.isOpen&&b.$activeOption&&(b.onOptionSelect({currentTarget:b.$activeOption}),a.preventDefault()));case j:return void b.advanceSelection(-1,a);case m:return void b.advanceSelection(1,a);case u:return b.settings.selectOnTab&&b.isOpen&&b.$activeOption&&(b.onOptionSelect({currentTarget:b.$activeOption}),b.isFull()||a.preventDefault()),void(b.settings.create&&b.createItem()&&a.preventDefault());case p:case q:return void b.deleteSelection(a)}return!b.isFull()&&!b.isInputHidden||(f?a.metaKey:a.ctrlKey)?void 0:void a.preventDefault()},onKeyUp:function(a){var b=this;if(b.isLocked)return a&&a.preventDefault();var c=b.$control_input.val()||"";b.lastValue!==c&&(b.lastValue=c,b.onSearchChange(c),b.refreshOptions(),b.trigger("type",c))},onSearchChange:function(a){var b=this,c=b.settings.load;c&&(b.loadedSearches.hasOwnProperty(a)||(b.loadedSearches[a]=!0,b.load(function(d){c.apply(b,[a,d])})))},onFocus:function(a){var b=this,c=b.isFocused;return b.isDisabled?(b.blur(),a&&a.preventDefault(),!1):void(b.ignoreFocus||(b.isFocused=!0,"focus"===b.settings.preload&&b.onSearchChange(""),c||b.trigger("focus"),b.$activeItems.length||(b.showInput(),b.setActiveItem(null),b.refreshOptions(!!b.settings.openOnFocus)),b.refreshState()))},onBlur:function(a,b){var c=this;if(c.isFocused&&(c.isFocused=!1,!c.ignoreFocus)){if(!c.ignoreBlur&&document.activeElement===c.$dropdown_content[0])return c.ignoreBlur=!0,void c.onFocus(a);var d=function(){c.close(),c.setTextboxValue(""),c.setActiveItem(null),c.setActiveOption(null),c.setCaret(c.items.length),c.refreshState(),(b||document.body).focus(),c.ignoreFocus=!1,c.trigger("blur")};c.ignoreFocus=!0,c.settings.create&&c.settings.createOnBlur?c.createItem(null,!1,d):d()}},onOptionHover:function(a){this.ignoreHover||this.setActiveOption(a.currentTarget,!1)},onOptionSelect:function(b){var c,d,e=this;b.preventDefault&&(b.preventDefault(),b.stopPropagation()),d=a(b.currentTarget),d.hasClass("create")?e.createItem(null,function(){e.settings.closeAfterSelect&&e.close()}):(c=d.attr("data-value"),"undefined"!=typeof c&&(e.lastQuery=null,e.setTextboxValue(""),e.addItem(c),e.settings.closeAfterSelect?e.close():!e.settings.hideSelected&&b.type&&/mouse/.test(b.type)&&e.setActiveOption(e.getOption(c))))},onItemSelect:function(a){var b=this;b.isLocked||"multi"===b.settings.mode&&(a.preventDefault(),b.setActiveItem(a.currentTarget,a))},load:function(a){var b=this,c=b.$wrapper.addClass(b.settings.loadingClass);b.loading++,a.apply(b,[function(a){b.loading=Math.max(b.loading-1,0),a&&a.length&&(b.addOption(a),b.refreshOptions(b.isFocused&&!b.isInputHidden)),b.loading||c.removeClass(b.settings.loadingClass),b.trigger("load",a)}])},setTextboxValue:function(a){var b=this.$control_input,c=b.val()!==a;c&&(b.val(a).triggerHandler("update"),this.lastValue=a)},getValue:function(){return this.tagType===v&&this.$input.attr("multiple")?this.items:this.items.join(this.settings.delimiter)},setValue:function(a,b){var c=b?[]:["change"];F(this,c,function(){this.clear(b),this.addItems(a,b)})},setActiveItem:function(b,c){var d,e,f,g,h,i,j,k,l=this;if("single"!==l.settings.mode){if(b=a(b),!b.length)return a(l.$activeItems).removeClass("active"),l.$activeItems=[],void(l.isFocused&&l.showInput());if(d=c&&c.type.toLowerCase(),"mousedown"===d&&l.isShiftDown&&l.$activeItems.length){for(k=l.$control.children(".active:last"),g=Array.prototype.indexOf.apply(l.$control[0].childNodes,[k[0]]),h=Array.prototype.indexOf.apply(l.$control[0].childNodes,[b[0]]),g>h&&(j=g,g=h,h=j),e=g;h>=e;e++)i=l.$control[0].childNodes[e],-1===l.$activeItems.indexOf(i)&&(a(i).addClass("active"),l.$activeItems.push(i));c.preventDefault()}else"mousedown"===d&&l.isCtrlDown||"keydown"===d&&this.isShiftDown?b.hasClass("active")?(f=l.$activeItems.indexOf(b[0]),l.$activeItems.splice(f,1),b.removeClass("active")):l.$activeItems.push(b.addClass("active")[0]):(a(l.$activeItems).removeClass("active"),l.$activeItems=[b.addClass("active")[0]]);l.hideInput(),this.isFocused||l.focus()}},setActiveOption:function(b,c,d){var e,f,g,h,i,j=this;j.$activeOption&&j.$activeOption.removeClass("active"),j.$activeOption=null,b=a(b),b.length&&(j.$activeOption=b.addClass("active"),(c||!y(c))&&(e=j.$dropdown_content.height(),f=j.$activeOption.outerHeight(!0),c=j.$dropdown_content.scrollTop()||0,g=j.$activeOption.offset().top-j.$dropdown_content.offset().top+c,h=g,i=g-e+f,g+f>e+c?j.$dropdown_content.stop().animate({scrollTop:i},d?j.settings.scrollDuration:0):c>g&&j.$dropdown_content.stop().animate({scrollTop:h},d?j.settings.scrollDuration:0)))},selectAll:function(){var a=this;"single"!==a.settings.mode&&(a.$activeItems=Array.prototype.slice.apply(a.$control.children(":not(input)").addClass("active")),a.$activeItems.length&&(a.hideInput(),a.close()),a.focus())},hideInput:function(){var a=this;a.setTextboxValue(""),a.$control_input.css({opacity:0,position:"absolute",left:a.rtl?1e4:-1e4}),a.isInputHidden=!0},showInput:function(){this.$control_input.css({opacity:1,position:"relative",left:0}),this.isInputHidden=!1},focus:function(){var a=this;a.isDisabled||(a.ignoreFocus=!0,a.$control_input[0].focus(),window.setTimeout(function(){a.ignoreFocus=!1,a.onFocus()},0))},blur:function(a){this.$control_input[0].blur(),this.onBlur(null,a)},getScoreFunction:function(a){return this.sifter.getScoreFunction(a,this.getSearchOptions())},getSearchOptions:function(){var a=this.settings,b=a.sortField;return"string"==typeof b&&(b=[{field:b}]),{fields:a.searchField,conjunction:a.searchConjunction,sort:b}},search:function(b){var c,d,e,f=this,g=f.settings,h=this.getSearchOptions();if(g.score&&(e=f.settings.score.apply(this,[b]),"function"!=typeof e))throw new Error('Selectize "score" setting must be a function that returns a function');if(b!==f.lastQuery?(f.lastQuery=b,d=f.sifter.search(b,a.extend(h,{score:e})),f.currentResults=d):d=a.extend(!0,{},f.currentResults),g.hideSelected)for(c=d.items.length-1;c>=0;c--)-1!==f.items.indexOf(z(d.items[c].id))&&d.items.splice(c,1);return d},refreshOptions:function(b){var c,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s;"undefined"==typeof b&&(b=!0);var t=this,u=a.trim(t.$control_input.val()),v=t.search(u),w=t.$dropdown_content,x=t.$activeOption&&z(t.$activeOption.attr("data-value"));for(g=v.items.length,"number"==typeof t.settings.maxOptions&&(g=Math.min(g,t.settings.maxOptions)),h={},i=[],c=0;g>c;c++)for(j=t.options[v.items[c].id],k=t.render("option",j),l=j[t.settings.optgroupField]||"",m=a.isArray(l)?l:[l],e=0,f=m&&m.length;f>e;e++)l=m[e],t.optgroups.hasOwnProperty(l)||(l=""),h.hasOwnProperty(l)||(h[l]=[],i.push(l)),h[l].push(k);for(this.settings.lockOptgroupOrder&&i.sort(function(a,b){var c=t.optgroups[a].$order||0,d=t.optgroups[b].$order||0;return c-d}),n=[],c=0,g=i.length;g>c;c++)l=i[c],t.optgroups.hasOwnProperty(l)&&h[l].length?(o=t.render("optgroup_header",t.optgroups[l])||"",o+=h[l].join(""),n.push(t.render("optgroup",a.extend({},t.optgroups[l],{html:o})))):n.push(h[l].join(""));if(w.html(n.join("")),t.settings.highlight&&v.query.length&&v.tokens.length)for(c=0,g=v.tokens.length;g>c;c++)d(w,v.tokens[c].regex);if(!t.settings.hideSelected)for(c=0,g=t.items.length;g>c;c++)t.getOption(t.items[c]).addClass("selected");p=t.canCreate(u),p&&(w.prepend(t.render("option_create",{input:u})),s=a(w[0].childNodes[0])),t.hasOptions=v.items.length>0||p,t.hasOptions?(v.items.length>0?(r=x&&t.getOption(x),r&&r.length?q=r:"single"===t.settings.mode&&t.items.length&&(q=t.getOption(t.items[0])),q&&q.length||(q=s&&!t.settings.addPrecedence?t.getAdjacentOption(s,1):w.find("[data-selectable]:first"))):q=s,t.setActiveOption(q),b&&!t.isOpen&&t.open()):(t.setActiveOption(null),b&&t.isOpen&&t.close())},addOption:function(b){var c,d,e,f=this;if(a.isArray(b))for(c=0,d=b.length;d>c;c++)f.addOption(b[c]);else(e=f.registerOption(b))&&(f.userOptions[e]=!0,f.lastQuery=null,f.trigger("option_add",e,b))},registerOption:function(a){var b=z(a[this.settings.valueField]);return!b||this.options.hasOwnProperty(b)?!1:(a.$order=a.$order||++this.order,this.options[b]=a,b)},registerOptionGroup:function(a){var b=z(a[this.settings.optgroupValueField]);return b?(a.$order=a.$order||++this.order,this.optgroups[b]=a,b):!1},addOptionGroup:function(a,b){b[this.settings.optgroupValueField]=a,(a=this.registerOptionGroup(b))&&this.trigger("optgroup_add",a,b)},removeOptionGroup:function(a){this.optgroups.hasOwnProperty(a)&&(delete this.optgroups[a],this.renderCache={},this.trigger("optgroup_remove",a))},clearOptionGroups:function(){this.optgroups={},this.renderCache={},this.trigger("optgroup_clear")},updateOption:function(b,c){var d,e,f,g,h,i,j,k=this;if(b=z(b),f=z(c[k.settings.valueField]),null!==b&&k.options.hasOwnProperty(b)){if("string"!=typeof f)throw new Error("Value must be set in option data");j=k.options[b].$order,f!==b&&(delete k.options[b],g=k.items.indexOf(b),-1!==g&&k.items.splice(g,1,f)),c.$order=c.$order||j,k.options[f]=c,h=k.renderCache.item,i=k.renderCache.option,h&&(delete h[b],delete h[f]),i&&(delete i[b],delete i[f]),-1!==k.items.indexOf(f)&&(d=k.getItem(b),e=a(k.render("item",c)),d.hasClass("active")&&e.addClass("active"),d.replaceWith(e)),k.lastQuery=null,k.isOpen&&k.refreshOptions(!1)}},removeOption:function(a,b){var c=this;a=z(a);var d=c.renderCache.item,e=c.renderCache.option;d&&delete d[a],e&&delete e[a],delete c.userOptions[a],delete c.options[a],c.lastQuery=null,c.trigger("option_remove",a),c.removeItem(a,b)},clearOptions:function(){var a=this;a.loadedSearches={},a.userOptions={},a.renderCache={},a.options=a.sifter.items={},a.lastQuery=null,a.trigger("option_clear"),a.clear()},getOption:function(a){return this.getElementWithValue(a,this.$dropdown_content.find("[data-selectable]"))},getAdjacentOption:function(b,c){var d=this.$dropdown.find("[data-selectable]"),e=d.index(b)+c;return e>=0&&e<d.length?d.eq(e):a()},getElementWithValue:function(b,c){if(b=z(b),"undefined"!=typeof b&&null!==b)for(var d=0,e=c.length;e>d;d++)if(c[d].getAttribute("data-value")===b)return a(c[d]);return a()},getItem:function(a){return this.getElementWithValue(a,this.$control.children())},addItems:function(b,c){for(var d=a.isArray(b)?b:[b],e=0,f=d.length;f>e;e++)this.isPending=f-1>e,this.addItem(d[e],c)},addItem:function(b,c){var d=c?[]:["change"];F(this,d,function(){var d,e,f,g,h,i=this,j=i.settings.mode;return b=z(b),-1!==i.items.indexOf(b)?void("single"===j&&i.close()):void(i.options.hasOwnProperty(b)&&("single"===j&&i.clear(c),"multi"===j&&i.isFull()||(d=a(i.render("item",i.options[b])),h=i.isFull(),i.items.splice(i.caretPos,0,b),i.insertAtCaret(d),(!i.isPending||!h&&i.isFull())&&i.refreshState(),i.isSetup&&(f=i.$dropdown_content.find("[data-selectable]"),i.isPending||(e=i.getOption(b),g=i.getAdjacentOption(e,1).attr("data-value"),i.refreshOptions(i.isFocused&&"single"!==j),g&&i.setActiveOption(i.getOption(g))),!f.length||i.isFull()?i.close():i.positionDropdown(),i.updatePlaceholder(),i.trigger("item_add",b,d),i.updateOriginalInput({silent:c})))))})},removeItem:function(a,b){var c,d,e,f=this;c="object"==typeof a?a:f.getItem(a),a=z(c.attr("data-value")),d=f.items.indexOf(a),-1!==d&&(c.remove(),c.hasClass("active")&&(e=f.$activeItems.indexOf(c[0]),f.$activeItems.splice(e,1)),f.items.splice(d,1),f.lastQuery=null,!f.settings.persist&&f.userOptions.hasOwnProperty(a)&&f.removeOption(a,b),d<f.caretPos&&f.setCaret(f.caretPos-1),f.refreshState(),f.updatePlaceholder(),f.updateOriginalInput({silent:b}),f.positionDropdown(),f.trigger("item_remove",a,c))},createItem:function(b,c){var d=this,e=d.caretPos;b=b||a.trim(d.$control_input.val()||"");var f=arguments[arguments.length-1];if("function"!=typeof f&&(f=function(){}),"boolean"!=typeof c&&(c=!0),!d.canCreate(b))return f(),!1;d.lock();var g="function"==typeof d.settings.create?this.settings.create:function(a){var b={};return b[d.settings.labelField]=a,b[d.settings.valueField]=a,b},h=D(function(a){if(d.unlock(),!a||"object"!=typeof a)return f();var b=z(a[d.settings.valueField]);return"string"!=typeof b?f():(d.setTextboxValue(""),d.addOption(a),d.setCaret(e),d.addItem(b),d.refreshOptions(c&&"single"!==d.settings.mode),void f(a))}),i=g.apply(this,[b,h]);return"undefined"!=typeof i&&h(i),!0},refreshItems:function(){this.lastQuery=null,this.isSetup&&this.addItem(this.items),this.refreshState(),this.updateOriginalInput()},refreshState:function(){var a,b=this;b.isRequired&&(b.items.length&&(b.isInvalid=!1),b.$control_input.prop("required",a)),b.refreshClasses()},refreshClasses:function(){var b=this,c=b.isFull(),d=b.isLocked;b.$wrapper.toggleClass("rtl",b.rtl),b.$control.toggleClass("focus",b.isFocused).toggleClass("disabled",b.isDisabled).toggleClass("required",b.isRequired).toggleClass("invalid",b.isInvalid).toggleClass("locked",d).toggleClass("full",c).toggleClass("not-full",!c).toggleClass("input-active",b.isFocused&&!b.isInputHidden).toggleClass("dropdown-active",b.isOpen).toggleClass("has-options",!a.isEmptyObject(b.options)).toggleClass("has-items",b.items.length>0),b.$control_input.data("grow",!c&&!d)},isFull:function(){return null!==this.settings.maxItems&&this.items.length>=this.settings.maxItems},updateOriginalInput:function(a){var b,c,d,e,f=this;if(a=a||{},f.tagType===v){for(d=[],b=0,c=f.items.length;c>b;b++)e=f.options[f.items[b]][f.settings.labelField]||"",d.push('<option value="'+A(f.items[b])+'" selected="selected">'+A(e)+"</option>");d.length||this.$input.attr("multiple")||d.push('<option value="" selected="selected"></option>'),f.$input.html(d.join(""))}else f.$input.val(f.getValue()),f.$input.attr("value",f.$input.val());f.isSetup&&(a.silent||f.trigger("change",f.$input.val()))},updatePlaceholder:function(){if(this.settings.placeholder){var a=this.$control_input;this.items.length?a.removeAttr("placeholder"):a.attr("placeholder",this.settings.placeholder),a.triggerHandler("update",{force:!0})}},open:function(){var a=this;a.isLocked||a.isOpen||"multi"===a.settings.mode&&a.isFull()||(a.focus(),a.isOpen=!0,a.refreshState(),a.$dropdown.css({visibility:"hidden",display:"block"}),a.positionDropdown(),a.$dropdown.css({visibility:"visible"}),a.trigger("dropdown_open",a.$dropdown))},close:function(){var a=this,b=a.isOpen;"single"===a.settings.mode&&a.items.length&&a.hideInput(),a.isOpen=!1,a.$dropdown.hide(),a.setActiveOption(null),a.refreshState(),b&&a.trigger("dropdown_close",a.$dropdown)},positionDropdown:function(){var a=this.$control,b="body"===this.settings.dropdownParent?a.offset():a.position();b.top+=a.outerHeight(!0),this.$dropdown.css({width:a.outerWidth(),top:b.top,left:b.left})},clear:function(a){var b=this;b.items.length&&(b.$control.children(":not(input)").remove(),b.items=[],b.lastQuery=null,b.setCaret(0),b.setActiveItem(null),b.updatePlaceholder(),b.updateOriginalInput({silent:a}),b.refreshState(),b.showInput(),b.trigger("clear"))},insertAtCaret:function(b){var c=Math.min(this.caretPos,this.items.length);0===c?this.$control.prepend(b):a(this.$control[0].childNodes[c]).before(b),this.setCaret(c+1)},deleteSelection:function(b){var c,d,e,f,g,h,i,j,k,l=this;if(e=b&&b.keyCode===p?-1:1,f=H(l.$control_input[0]),l.$activeOption&&!l.settings.hideSelected&&(i=l.getAdjacentOption(l.$activeOption,-1).attr("data-value")),g=[],l.$activeItems.length){for(k=l.$control.children(".active:"+(e>0?"last":"first")),h=l.$control.children(":not(input)").index(k),e>0&&h++,c=0,d=l.$activeItems.length;d>c;c++)g.push(a(l.$activeItems[c]).attr("data-value"));
-b&&(b.preventDefault(),b.stopPropagation())}else(l.isFocused||"single"===l.settings.mode)&&l.items.length&&(0>e&&0===f.start&&0===f.length?g.push(l.items[l.caretPos-1]):e>0&&f.start===l.$control_input.val().length&&g.push(l.items[l.caretPos]));if(!g.length||"function"==typeof l.settings.onDelete&&l.settings.onDelete.apply(l,[g])===!1)return!1;for("undefined"!=typeof h&&l.setCaret(h);g.length;)l.removeItem(g.pop());return l.showInput(),l.positionDropdown(),l.refreshOptions(!0),i&&(j=l.getOption(i),j.length&&l.setActiveOption(j)),!0},advanceSelection:function(a,b){var c,d,e,f,g,h,i=this;0!==a&&(i.rtl&&(a*=-1),c=a>0?"last":"first",d=H(i.$control_input[0]),i.isFocused&&!i.isInputHidden?(f=i.$control_input.val().length,g=0>a?0===d.start&&0===d.length:d.start===f,g&&!f&&i.advanceCaret(a,b)):(h=i.$control.children(".active:"+c),h.length&&(e=i.$control.children(":not(input)").index(h),i.setActiveItem(null),i.setCaret(a>0?e+1:e))))},advanceCaret:function(a,b){var c,d,e=this;0!==a&&(c=a>0?"next":"prev",e.isShiftDown?(d=e.$control_input[c](),d.length&&(e.hideInput(),e.setActiveItem(d),b&&b.preventDefault())):e.setCaret(e.caretPos+a))},setCaret:function(b){var c=this;if(b="single"===c.settings.mode?c.items.length:Math.max(0,Math.min(c.items.length,b)),!c.isPending){var d,e,f,g;for(f=c.$control.children(":not(input)"),d=0,e=f.length;e>d;d++)g=a(f[d]).detach(),b>d?c.$control_input.before(g):c.$control.append(g)}c.caretPos=b},lock:function(){this.close(),this.isLocked=!0,this.refreshState()},unlock:function(){this.isLocked=!1,this.refreshState()},disable:function(){var a=this;a.$input.prop("disabled",!0),a.$control_input.prop("disabled",!0).prop("tabindex",-1),a.isDisabled=!0,a.lock()},enable:function(){var a=this;a.$input.prop("disabled",!1),a.$control_input.prop("disabled",!1).prop("tabindex",a.tabIndex),a.isDisabled=!1,a.unlock()},destroy:function(){var b=this,c=b.eventNS,d=b.revertSettings;b.trigger("destroy"),b.off(),b.$wrapper.remove(),b.$dropdown.remove(),b.$input.html("").append(d.$children).removeAttr("tabindex").removeClass("selectized").attr({tabindex:d.tabindex}).show(),b.$control_input.removeData("grow"),b.$input.removeData("selectize"),a(window).off(c),a(document).off(c),a(document.body).off(c),delete b.$input[0].selectize},render:function(a,b){var c,d,e="",f=!1,g=this,h=/^[\t \r\n]*<([a-z][a-z0-9\-_]*(?:\:[a-z][a-z0-9\-_]*)?)/i;return("option"===a||"item"===a)&&(c=z(b[g.settings.valueField]),f=!!c),f&&(y(g.renderCache[a])||(g.renderCache[a]={}),g.renderCache[a].hasOwnProperty(c))?g.renderCache[a][c]:(e=g.settings.render[a].apply(this,[b,A]),("option"===a||"option_create"===a)&&(e=e.replace(h,"<$1 data-selectable")),"optgroup"===a&&(d=b[g.settings.optgroupValueField]||"",e=e.replace(h,'<$1 data-group="'+B(A(d))+'"')),("option"===a||"item"===a)&&(e=e.replace(h,'<$1 data-value="'+B(A(c||""))+'"')),f&&(g.renderCache[a][c]=e),e)},clearCache:function(a){var b=this;"undefined"==typeof a?b.renderCache={}:delete b.renderCache[a]},canCreate:function(a){var b=this;if(!b.settings.create)return!1;var c=b.settings.createFilter;return!(!a.length||"function"==typeof c&&!c.apply(b,[a])||"string"==typeof c&&!new RegExp(c).test(a)||c instanceof RegExp&&!c.test(a))}}),L.count=0,L.defaults={options:[],optgroups:[],plugins:[],delimiter:",",splitOn:null,persist:!0,diacritics:!0,create:!1,createOnBlur:!1,createFilter:null,highlight:!0,openOnFocus:!0,maxOptions:1e3,maxItems:null,hideSelected:null,addPrecedence:!1,selectOnTab:!1,preload:!1,allowEmptyOption:!1,closeAfterSelect:!1,scrollDuration:60,loadThrottle:300,loadingClass:"loading",dataAttr:"data-data",optgroupField:"optgroup",valueField:"value",labelField:"text",optgroupLabelField:"label",optgroupValueField:"value",lockOptgroupOrder:!1,sortField:"$order",searchField:["text"],searchConjunction:"and",mode:null,wrapperClass:"selectize-control",inputClass:"selectize-input",dropdownClass:"selectize-dropdown",dropdownContentClass:"selectize-dropdown-content",dropdownParent:null,copyClassesToDropdown:!0,render:{}},a.fn.selectize=function(b){var c=a.fn.selectize.defaults,d=a.extend({},c,b),e=d.dataAttr,f=d.labelField,g=d.valueField,h=d.optgroupField,i=d.optgroupLabelField,j=d.optgroupValueField,k=function(b,c){var h,i,j,k,l=b.attr(e);if(l)for(c.options=JSON.parse(l),h=0,i=c.options.length;i>h;h++)c.items.push(c.options[h][g]);else{var m=a.trim(b.val()||"");if(!d.allowEmptyOption&&!m.length)return;for(j=m.split(d.delimiter),h=0,i=j.length;i>h;h++)k={},k[f]=j[h],k[g]=j[h],c.options.push(k);c.items=j}},l=function(b,c){var k,l,m,n,o=c.options,p={},q=function(a){var b=e&&a.attr(e);return"string"==typeof b&&b.length?JSON.parse(b):null},r=function(b,e){b=a(b);var i=z(b.attr("value"));if(i||d.allowEmptyOption)if(p.hasOwnProperty(i)){if(e){var j=p[i][h];j?a.isArray(j)?j.push(e):p[i][h]=[j,e]:p[i][h]=e}}else{var k=q(b)||{};k[f]=k[f]||b.text(),k[g]=k[g]||i,k[h]=k[h]||e,p[i]=k,o.push(k),b.is(":selected")&&c.items.push(i)}},s=function(b){var d,e,f,g,h;for(b=a(b),f=b.attr("label"),f&&(g=q(b)||{},g[i]=f,g[j]=f,c.optgroups.push(g)),h=a("option",b),d=0,e=h.length;e>d;d++)r(h[d],f)};for(c.maxItems=b.attr("multiple")?null:1,n=b.children(),k=0,l=n.length;l>k;k++)m=n[k].tagName.toLowerCase(),"optgroup"===m?s(n[k]):"option"===m&&r(n[k])};return this.each(function(){if(!this.selectize){var e,f=a(this),g=this.tagName.toLowerCase(),h=f.attr("placeholder")||f.attr("data-placeholder");h||d.allowEmptyOption||(h=f.children('option[value=""]').text());var i={placeholder:h,options:[],optgroups:[],items:[]};"select"===g?l(f,i):k(f,i),e=new L(f,a.extend(!0,{},c,i,b))}})},a.fn.selectize.defaults=L.defaults,a.fn.selectize.support={validity:x},L.define("drag_drop",function(){if(!a.fn.sortable)throw new Error('The "drag_drop" plugin requires jQuery UI "sortable".');if("multi"===this.settings.mode){var b=this;b.lock=function(){var a=b.lock;return function(){var c=b.$control.data("sortable");return c&&c.disable(),a.apply(b,arguments)}}(),b.unlock=function(){var a=b.unlock;return function(){var c=b.$control.data("sortable");return c&&c.enable(),a.apply(b,arguments)}}(),b.setup=function(){var c=b.setup;return function(){c.apply(this,arguments);var d=b.$control.sortable({items:"[data-value]",forcePlaceholderSize:!0,disabled:b.isLocked,start:function(a,b){b.placeholder.css("width",b.helper.css("width")),d.css({overflow:"visible"})},stop:function(){d.css({overflow:"hidden"});var c=b.$activeItems?b.$activeItems.slice():null,e=[];d.children("[data-value]").each(function(){e.push(a(this).attr("data-value"))}),b.setValue(e),b.setActiveItem(c)}})}}()}}),L.define("dropdown_header",function(b){var c=this;b=a.extend({title:"Untitled",headerClass:"selectize-dropdown-header",titleRowClass:"selectize-dropdown-header-title",labelClass:"selectize-dropdown-header-label",closeClass:"selectize-dropdown-header-close",html:function(a){return'<div class="'+a.headerClass+'"><div class="'+a.titleRowClass+'"><span class="'+a.labelClass+'">'+a.title+'</span><a href="javascript:void(0)" class="'+a.closeClass+'">&times;</a></div></div>'}},b),c.setup=function(){var d=c.setup;return function(){d.apply(c,arguments),c.$dropdown_header=a(b.html(b)),c.$dropdown.prepend(c.$dropdown_header)}}()}),L.define("optgroup_columns",function(b){var c=this;b=a.extend({equalizeWidth:!0,equalizeHeight:!0},b),this.getAdjacentOption=function(b,c){var d=b.closest("[data-group]").find("[data-selectable]"),e=d.index(b)+c;return e>=0&&e<d.length?d.eq(e):a()},this.onKeyDown=function(){var a=c.onKeyDown;return function(b){var d,e,f,g;return!this.isOpen||b.keyCode!==j&&b.keyCode!==m?a.apply(this,arguments):(c.ignoreHover=!0,g=this.$activeOption.closest("[data-group]"),d=g.find("[data-selectable]").index(this.$activeOption),g=b.keyCode===j?g.prev("[data-group]"):g.next("[data-group]"),f=g.find("[data-selectable]"),e=f.eq(Math.min(f.length-1,d)),void(e.length&&this.setActiveOption(e)))}}();var d=function(){var a,b=d.width,c=document;return"undefined"==typeof b&&(a=c.createElement("div"),a.innerHTML='<div style="width:50px;height:50px;position:absolute;left:-50px;top:-50px;overflow:auto;"><div style="width:1px;height:100px;"></div></div>',a=a.firstChild,c.body.appendChild(a),b=d.width=a.offsetWidth-a.clientWidth,c.body.removeChild(a)),b},e=function(){var e,f,g,h,i,j,k;if(k=a("[data-group]",c.$dropdown_content),f=k.length,f&&c.$dropdown_content.width()){if(b.equalizeHeight){for(g=0,e=0;f>e;e++)g=Math.max(g,k.eq(e).height());k.css({height:g})}b.equalizeWidth&&(j=c.$dropdown_content.innerWidth()-d(),h=Math.round(j/f),k.css({width:h}),f>1&&(i=j-h*(f-1),k.eq(f-1).css({width:i})))}};(b.equalizeHeight||b.equalizeWidth)&&(C.after(this,"positionDropdown",e),C.after(this,"refreshOptions",e))}),L.define("remove_button",function(b){if("single"!==this.settings.mode){b=a.extend({label:"&times;",title:"Remove",className:"remove",append:!0},b);var c=this,d='<a href="javascript:void(0)" class="'+b.className+'" tabindex="-1" title="'+A(b.title)+'">'+b.label+"</a>",e=function(a,b){var c=a.search(/(<\/[^>]+>\s*)$/);return a.substring(0,c)+b+a.substring(c)};this.setup=function(){var f=c.setup;return function(){if(b.append){var g=c.settings.render.item;c.settings.render.item=function(){return e(g.apply(this,arguments),d)}}f.apply(this,arguments),this.$control.on("click","."+b.className,function(b){if(b.preventDefault(),!c.isLocked){var d=a(b.currentTarget).parent();c.setActiveItem(d),c.deleteSelection()&&c.setCaret(c.items.length)}})}}()}}),L.define("restore_on_backspace",function(a){var b=this;a.text=a.text||function(a){return a[this.settings.labelField]},this.onKeyDown=function(){var c=b.onKeyDown;return function(b){var d,e;return b.keyCode===p&&""===this.$control_input.val()&&!this.$activeItems.length&&(d=this.caretPos-1,d>=0&&d<this.items.length)?(e=this.options[this.items[d]],this.deleteSelection(b)&&(this.setTextboxValue(a.text.apply(this,[e])),this.refreshOptions(!0)),void b.preventDefault()):c.apply(this,arguments)}}()}),L});</script>
-<style type="text/css">
 .container-fluid.crosstalk-bscols {
 margin-left: -30px;
 margin-right: -30px;
@@ -4778,7 +4382,8 @@ padding-left: 128px!important;
 <ul>
 <li><a href="#table-s1">Table S1</a></li>
 <li><a href="#key-for-columns">Key for columns</a></li>
-<li><a href="#key-for-values-in-columns-">Key for values in columns</a></li>
+<li><a href="#key-for-values-in-columns">Key for values in columns</a></li>
+<li><a href="#citations--">Citations</a></li>
 </ul></li>
 <li><a href="#session-info-">Session info</a></li>
 <li><a href="#references">References</a></li>
@@ -4996,7 +4601,7 @@ Mean
 1.200
 </td>
 <td style="text-align:left;vertical-align: middle !important;" rowspan="2">
-<span class="citation">(Townsend et al. 2013)</span>
+<span class="citation">(S. E. Townsend, Sumantra, et al. 2013)</span>
 </td>
 <td style="text-align:left;vertical-align: middle !important;" rowspan="2">
 B
@@ -5077,7 +4682,7 @@ Shape
 0.215
 </td>
 <td style="text-align:left;">
-<span class="citation">(Townsend et al. 2013)</span>
+<span class="citation">(S. E. Townsend, Sumantra, et al. 2013)</span>
 </td>
 <td style="text-align:left;">
 E
@@ -5362,12 +4967,12 @@ table(cat_summary$key)</code></pre>
 <h2 class="tabset">Supplementary Table 1: Modeling studies included in literature review</h2>
 <div id="table-s1" class="section level3">
 <h3>Table S1</h3>
-<pre class="r"><code>library(DT)
-library(readxl)
-Table_S1 &lt;- read_excel(&quot;../tables/supptable_S1.xlsx&quot;)
-datatable(Table_S1, filter = &quot;top&quot;, rownames = FALSE)</code></pre>
-<div id="htmlwidget-09efbc7c4b4eea660302" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09efbc7c4b4eea660302">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1995\" data-max=\"2019\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["{Cleaveland:1995dn}","{Coleman:1996uu}","{Bohrer:2002wl}","{Kitala:2002fz}","{Hampson:2007gu}","{WANG:2008fq}","{Lembo:2008fl}","{Hampson:2009jqa}","{Zinsstag:2009ip}","{Carroll:2010jc}","{Talbi:2010du}","{Beyer:2011bp}","{Zhang:2011ec}","{BHUNU:2011ca}","{Zhang:2012vb}","{Fitzpatrick:2012kp}","{Hou:2012fv}","{Beyer:2012ge}","{Zhang:2012fn}","{Townsend:2013hm}","{Townsend:2013bc}","{Mollentze:2014bz}","{Fitzpatrick:2014fq}","{Ferguson:2015cc}","{Durr:2015gh}","{Wiraningsih:2015fq}","{Chen:2015fb}","{Bourhy:2016hj}","{Fitzpatrick:2016fo}","{Wera:2016jm}","{Bilinski:2016df}","{Sparkes:2016ds}","{Chapwanya:2016cl}","{Tohma:2016et}","{Kurosawa:2017cj}","{Leung:2017bq}","{Liu:2017dk}","{Asamoah:2017be}","{MengistuTulu:2017fg}","{Zinsstag:2017gn}","{Cori:2018fn}","{Huang:2018iz}","{Hampson:2018ek}","{Tian:2018fe}","{Borse:2018ji}","{Kadowaki:2018ge}","{Laager:2018cv}","{Hudson:2019ef}","{Anderson:2019kp}","{Laager:2019bi}","{WilsonAggarwal:2019cy}"],[1995,1996,2002,2002,2007,2008,2008,2009,2009,2010,2010,2010,2011,2011,2012,2012,2012,2012,2012,2013,2013,2014,2014,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019],["Tanzania","Multiple (global)","Israel","Kenya","Multiple (Africa)","China","Tanzania","Tanzania","Chad","Hypothetical","Multiple (Africa)","Tanzania","China","Hypothetical","China","Tanzania","China","Tanzania","China","Indonesia","Hypothetical","South Africa","Tanzania","Philippines","Australia","Hypothetical","China","Central African Republic","India","Indonesia","Tanzania","Australia","Hypothetical","Philippines","Japan","Hypothetical","China","Hypothetical","Hypothetical","Chad","Central African Republic","China","Multiple (global)","China","Multiple (Africa)","Japan","Chad","Australia","South Africa","Chad","Chad"],["Sub-national","Sub-national","Local","Sub-national","Regional","National","Sub-national","Sub-national","Sub-national","Hypothetical","Regional","Sub-national","National","Hypothetical","National","Sub-national","Sub-national","Sub-national","National","Sub-national","Hypothetical","National","Sub-national","Sub-national","Local","Hypothetical","Sub-national","Sub-national","Sub-national","Local","Sub-national","Sub-national","Hypothetical","Sub-national","Sub-national","Hypothetical","National","Hypothetical","Hypothetical","Sub-national","Local","Sub-national","National","Regional","National","Sub-national","Sub-national","Local","Local","Sub-national","Local"],["Deterministic ODE (Ordinary Differential Equations)","ML estimation of R0 from epidemic curve","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Deterministic ODE","Transmission tree reconstruction","Stochastic nonspatial IBM; Transmission tree reconstruction; ML estimation of R0 from epidemic curve","Deterministic ODE","Deterministic ODE","Phylogeographic","Metapopulation patch occupancy","Deterministic ODE","Deterministic ODE","Deterministic reaction-diffusion ODE","Next-generation matrix model to estimate transmission parameters; transmission tree reconstruction","Deterministic ODE","Metapopulation patch occupancy","Deterministic ODE","Stochastic spatial IBM","Stochastic spatial IBM","Bayesian phylodynamic model","Deterministic ODE","Stochastic spatial IBM","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Stochastic time-varying transmission model","Deterministic ODE","Deterministic discrete-time DE (difference equations)","Deterministic ODE","Stochastic ODE","Deterministic ODE","Deterministic ODE","ML estimation of R0 from epidemic curve","Deterministic ODE","Two-patch deterministic ODE","Deterministic ODE","Deterministic ODE","Deterministic and Stochastic ODE","Graph-based transmission tree reconstruction","Deterministic ODE","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Stochastic spatial IBM","Stochastic network IBM","Stochastic spatial IBM","Stochastic nonspatial IBM","Deterministic metapopulation ODE","Stochastic network IBM"],["Modeling to explore how different mechanisms of transmission and immunity would impact control efforts","Estimating R0 and Pc using data from different settings","Exploring the impact of how distribution of the host population impacts disease spread and control efforts (ORV)","Estimating Pc incorporating dog demography and densities","Exploring mechanisms which can explain synchrony and cycles of rabies epidemics in sub-Saharan Africa","Compared dog culling and vaccination alone or in combination to control  rabies incidence","Reconstructing transmission trees from epidemiological data to infer strength of tranmission between host types","Estimating R0 and other epidemiological/demographic parameters from data; Examining the impact of dog vaccination on rabies incidence in dogs","Cost-effectiveness of interventions","Compared dog culling, vaccination, fertility control alone and in combination on rabies persistence/elimination","Testing whether natural dispersal of rabies alone could explain observed phylogenies","Comparing different metapopulation models to identify most likely sources from infections and to estimate the local impact of vaccination campaigns at the village level","Modeling the impact of dog culling vs. vaccination on rabies incidence in China","Compared  dog vaccination, culling, and human pre- and post-exposure prophylaxis for controlling rabies incidence","Examining how dog movement drives spatial spread of rabies in China","Estimating within species and cross-species transmission and thresholds of control","Estimated R0 by (eyeball) fitting to data on human reported deaths and compared the impact of dog vaccination and culling on reducing these deaths","Compared impact of dog vaccine allocation strategies at the village level on rabies incidence","Estimated seasonal transmission rates using data on reported human deaths in China and examined the impact of dog vaccination, reducing dog birth rates, culling, and PEP on R0","Estimated R0 from initial epidemic growth; used model to examine the impact of current and future vaccination campaigns on probability of eliminating canine rabies from Bali","Outbreak simulation to estimate current case detection and to look at how probability of detection affects disease spread and control","Reconstructing transmission trees from epidemiological and genetic data incorporating unobserved cases","Modeling the cost-effectiveness of mass dog vaccination","Examining the impact of human-mediated dog movement and spatial heterogeneity in coverage on the probability of rabies elimination","Examining how an introduction of canine rabies to a naïve population could result in rabies spread","Simulating and analytically calculating the disease-free equilibrium in coupled domestic dog-wildlife-human populations","Two-patch models to look at transmission between coupled provinces in China","Estimated Rt and incursions using combined phylogenetic and epidemiological modeling","Modeling the effectiveness and cost effectiveness of canine vaccination and sterilization on human health outcomes","Cost-effectiveness ofdifferent mass dog vaccination to control canine rabies incidence","Comparing cost-effectiveness of dog vaccination campaigns of varying coverage and frequency","Looked at how contact rates between and within free-roaming domestic dogs and wild dog populations as well as human responses would impact spread and control of rabies after an incursion into a naïve population","Simulating and analytically calculating the disease-free equilibrium in domestic dog populations","Modeling to estimate the time lag to detection after an incursion; Used phylogeographic methods to identify inter-island transmission","Estimation of R0 and incubation period from historical dog rabies incidence data","Comparing vaccination and population control targets for stray vs. owned dogs","Comparing dog culling and immunization alone and in combination of controlling rabies incidence in a two-patch modeling framework","Comparing dog vaccination vs. human post- and pre-exposure prophylaxis on eliminating human deaths due to rabies","Analytical and numerical simulations to examine the impact of infective immigrants on rabies spread and control","Modeling the impact of dog vaccination campaigns on observed incidence of rabies","Estimated R_eff and identified incursions across this period using transmission tree reconstruction  using spatiotemporal and genetic data","Exploring multihost transmission in chinese ferret badgers and dogs and impilications for human rabies exposures","Modeling to extrapolate current and projected national incidence of human rabies exposures to examine the cost-effectiveness of expanded PEP provisioning","Estimating key transmission parameters (dog-to-dog and dog-to-human) from incidence data","Integrating a transmission and economic model to estimate the cost-effectiveness of mass dog vaccination in East Africa","Assessing the risk of rabies outbreak into a naïve population","Exploring the impact of targeted dog vaccination strategies","Exploring how different roaming behavior of domestic dogs impacts invasion in a rabies-free area of Australia","A bioeconomic model to examine the impacts of vaccination, sterilization and other management scenarios on dog rabies incidence","Explaining resurgence of canine rabies after vaccination campaign","Exploring the impact of contact heterogeneity on rabies outbreak risk and size in an empirical domestic dog network"],["Y","N","N","N","Y","N","N","N","N","N","Y","Y","N","N","Y","N","N","N","Y","Y","N","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","N","N","N","N","N","N","N","Y","N"],["N","Y","N","Y","N","N","Y","Y","Y","N","N","N","N","N","N","Y","Y","Y","N","Y","N","Y","N","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","Y","N","N","N","N","N","N","N"],["N","N","Y","N","N","Y","N","Y","Y","Y","N","N","Y","Y","N","N","Y","Y","Y","Y","Y","N","Y","Y","N","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","Y","Y","Y","N","N","Y","N","Y","N","Y","N","Y","N","N"],["N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","Y","N","N","N","Y","N","Y","N","N","Y"],["N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","Y","N","N","N","N","N","N","N","N"],["N","Y","N","Y","N","N","Y","Y","Y","N","Y","Y","Y","N","N","Y","Y",null,"Y","Y","N",null,"Y","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","N","N","N","N","Y","Y","Y","Y","Y","N","N","Y","N","N","Y","N"],[null,"11-22 weeks of rabies incidence data from four different studies",null,"1 year of rabies incidence data from Machakos District, Kenya",null,null,"4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ","4 years of contact tracing data from Ngorongoro and Serengeti Districts; outbreak data from 14 other settings (monthly or weekly confirmed/suspect cases), ranged from 3-29 months and varied scales","6 years of weekly passive laboratory confirmed case data in N'Djamena Chad",null,"22 years of spatiotemporal and genetic data on laboratory confirmed animal cases in 3 countries","6 years of monthly bite patient data from the Serengeti District at the village level (used as occupancy, i.e. presence or absence of bite reported in a village each month)","14 years of monthly reported human rabies cases in China",null,null,"4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ","4 years of monthly reported human rabies cases in Guangdong Province, China","6 years of monthly bite data from the Serengeti District","6 years of monthly reported human rabies cases in Guangdong Province, China","1 year of monthly laboratory confirmed case data during outbreak in Bali",null,"1 year of spatiotemporal and genetic data on laboratory confirmed animal rabies cases in Kwa Zulu Natal","4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ",null,null,null,"8 years of monthly reported human rabies cases in six provinces in China","12 years of weekly number of laboratory confirmed case data and corresponding sequences from Bangui, CAR","2 years of annual reported human cases in Tamil Nadu, India",null,null,null,null,"9 years of monthly laboratory confirmed case data from Tablas Island and 266 sequences from eight regions in the Luzon Island group, Phillipines","59 years of annual number of suspected and confirmed animal and human rabies cases in Osaka Prefecture, Japan",null,null,null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures; 29 sequences generated from this same period;","11 years of spatiotemporal and genetic data on cases detected through laboratory surveillance in the city of Bangui, CAR","14 years time series of number of  human rabies deaths Zhejiang Province, China","15 year time series of rabies incidence","16 years of reported human cases from the Yunan province",null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures",null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures",null],["N","Y","N","Y","N","N","Y","Y","Y","N","Y","Y","N","N","N","Y","N","Y","N","Y","N","Y","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","N","N","Y","Y","N","Y","Y","N","N","Y","N","N","Y","N"],["N","N","N","N","N","N","N","N","N","N","N","Y","N","N","N","N","N","Y","N","Y","Y","Y","N","N","N","N","N","Y","Y","N","N","N","N","Y","N","N","N","N","N","N","Y","N","N","N","N","N","N","N","N","Y","N"],["N","N","N","N","N","N","N","Y","N","N","Y","Y","N","N",null,"N","N","Y","N","N","N","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","Y","N","Y","Y","Y","N","Y","N","N","N","N","N","N","Y","N"],["N","N","N","N","N","N","Y","Y","N","N","N","N","N","N","N","N","N","N","N","Y","Y","Y","N","Y","Y","N","N","Y","N","N","N","N","N","N","N","N","N","N","N","N","Y","N","Y","N","N","Y","Y","Y","Y","N","Y"],["Y","NA","NA","Y","Y","Y","NA","N","Y","Y","NA","Y","Y","Y","Y","NA","Y","Y","Y","N","N","NA","Y","N","N","Y","Y","N","N","N","Y","N","Y","Y","NA","Y","Y","Y","N","Y","NA","Y","N","Y","Y","N","NA","N","N","Y","NA"],["N","N","Y","N","N","N","Y","Y","N","N","Y","Y","N","N","N","Y","N","Y","N","Y","Y","Y","N","Y","Y","N","N","Y","N","N","N","Y","N","N","N","N","N","N","N","N","Y","N","Y","N","N","Y","Y","Y","Y","N","Y"],["N","N","Y","N","N","N","Y","Y","N","N","Y","Y","N","N","Y","Y","N","Y","N","Y","Y","Y","N","Y","Y","N","Y","N","N","N","N","N","N","N","N","N","Y","N","N","N","Y","N","Y","N","N","Y","Y","Y","N","Y","N"],["Cleaveland, S, and C Dye. “Maintenance of a Microparasite Infecting Several Host Species: Rabies in the Serengeti.” Parasitology 111.S1 (1995): S33–S47. Web.","Coleman, P G, and C Dye. “Immunization Coverage Required to Prevent Outbreaks of Dog Rabies.” Vaccine (1996): n. pag. Print.","Bohrer, Gil et al. “The Effectiveness of Various Rabies Spatial Vaccination Patterns in a Simulated Host Population with Clumped Distribution.” Ecological Modelling 152.2-3 (2002): 205–211. Print.","Kitala, P M et al. “Comparison of Vaccination Strategies for the Control of Dog Rabies in Machakos District, Kenya.” Epidemiology and Infection 129.1 (2002): 215–222. Web.","Hampson, Katie, Jonathan Dushoff, John Bingham, et al. “Synchronous Cycles of Domestic Dog Rabies in Sub-Saharan Africa and the Impact of Control Efforts..” Proceedings of the National Academy of Sciences 104.18 (2007): 7717–7722. Web.","WANG, XIAOWEI, and JIE LOU. “Two Dynamic Models About Rabies Between Dogs and Human.” Journal of Biological Systems 16.04 (2008): 519–529. Web.","Lembo, Tiziana et al. “Exploring Reservoir Dynamics: a Case Study of Rabies in the Serengeti Ecosystem..” The Journal of applied ecology 45.4 (2008): 1246–1257. Web.","Hampson, Katie, Jonathan Dushoff, Sarah Cleaveland, et al. “Transmission Dynamics and Prospects for the Elimination of Canine Rabies..” PLOS Biol 7.3 (2009): e53. Web.","Zinsstag, J, S Durr, et al. “Transmission Dynamics and Economics of Rabies Control in Dogs and Humans in an African City.” Proceedings of the National Academy of Sciences 106.35 (2009): 1–22. Web.","Carroll, Matthew J et al. “The Use of Immunocontraception to Improve Rabies Eradication in Urban Dog Populations.” Wildlife Research 37.8 (2010): 676–12. Web.","Talbi, Chiraz et al. “Phylodynamics and Human-Mediated Dispersal of a Zoonotic Virus.” Ed. Michael Emerman. PLoS Pathogens 6.10 (2010): e1001166–10. Web.","Beyer, H L, K Hampson, T Lembo, S Cleaveland, M Kaare, and D T Haydon. “Metapopulation Dynamics of Rabies and the Efficacy of Vaccination.” Proceedings of the Royal Society B: Biological Sciences 278.1715 (2010): 2182–2190. Web.","Zhang, Juan, Zhen Jin, Gui-Quan Sun, Tao Zhou, et al. “Analysis of Rabies in China: Transmission Dynamics and Control.” Ed. Pere-Joan Cardona. PLoS ONE 6.7 (2011): e20891. Web.","BHUNU, C P. “Impact of Culling Stray Dogs and Vaccination on the Control of Human Rabies: a Mathematical Modeling Approach.” International Journal of Biomathematics 04.04 (2011): 379–397. Web.","Zhang, J, Z Jin, G Q Sun, and X Sun. “Spatial Spread of Rabies in China.” Journal of Applied Analysis and Computation (2012): n. pag. Print.","Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Lauren Ancel Meyers, et al. “Potential for Rabies Control Through Dog Vaccination in Wildlife-Abundant Communities of Tanzania.” Ed. Richard Reithinger. PLoS Neglected Tropical Diseases 6.8 (2012): e1796–6. Web.","Hou, Qiang, Zhen Jin, and Shigui Ruan. “Dynamics of Rabies Epidemics and the Impact of Control Efforts in Guangdong Province, China.” Journal of Theoretical Biology 300.C (2012): 39–47. Web.","Beyer, Hawthorne L, Katie Hampson, Tiziana Lembo, Sarah Cleaveland, Magai Kaare, and Daniel T Haydon. “The Implications of Metapopulation Dynamics on the Design of Vaccination Campaigns.” Vaccine 30.6 (2012): 1014–1022. Web.","Zhang, Juan, Zhen Jin, Gui-Quan Sun, Xiang-Dong Sun, et al. “Modeling Seasonal Rabies Epidemics in China.” Bulletin of Mathematical Biology 74.5 (2012): 1226–1251. Web.","Townsend, Sunny E, Tiziana Lembo, et al. “Surveillance Guidelines for Disease Elimination: a Case Study of Canine Rabies.” “Comparative Immunology, Microbiology and Infectious Diseases” 36.3 (2013): 249–261. Web.","Townsend, Sunny E, I Putu Sumantra, et al. “Designing Programs for Eliminating Canine Rabies From Islands: Bali, Indonesia as a Case Study..” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 7.8 (2013): e2372. Web.","Mollentze, Nardus et al. “A Bayesian Approach for Inferring the Dynamics of Partially Observed Endemic Infectious Diseases From Space-Time-Genetic Data..” Proceedings. Biological sciences / The Royal Society 281.1782 (2014): 20133251–20133251. Web.","Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Imam Mzimbiri, et al. “Cost-Effectiveness of Canine Vaccination to Prevent Human Rabies in Rural Tanzania..” Annals of internal medicine 160.2 (2014): 91–100. Web.","Ferguson, Elaine A et al. “Heterogeneity in the Spread and Control of Infectious Disease: Consequences for the Elimination of Canine Rabies.” Nature Publishing Group 5.1 (2015): 1–13. Web.","Dürr, Salome, and Michael P Ward. “Development of a Novel Rabies Simulation Model for Application in a Non-Endemic Environment.” Ed. Jakob Zinsstag. PLoS Neglected Tropical Diseases 9.6 (2015): e0003876–22. Web.","Wiraningsih, E D et al. Stability Analysis of Rabies Model with Vaccination and Culling Effect on Dogs. Applied Mathematical …, 2015. Web.","Chen, Jing et al. “Modeling the Geographic Spread of Rabies in China.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 9.5 (2015): e0003772–18. Web.","Bourhy, Hervé et al. “Revealing the Micro-Scale Signature of Endemic Zoonotic Disease Transmission in an African Urban Setting.” Ed. Colin Parrish. PLoS Pathogens 12.4 (2016): e1005525–15. Web.","Fitzpatrick, Meagan C, Hiral A Shah, et al. “One Health Approach to Cost-Effective Rabies Control in India.” Proceedings of the National Academy of Sciences 113.51 (2016): 14574–14581. Web.","Wera, E et al. “Cost-Effectiveness of Mass Dog Vaccination Campaigns Against Rabies in Flores Island, Indonesia.” Transboundary and Emerging Diseases 64.6 (2016): 1918–1928. Web.","Bilinski, Alyssa M et al. “Optimal Frequency of Rabies Vaccination Campaigns in Sub-Saharan Africa..” Proceedings. Biological sciences / The Royal Society 283.1842 (2016): 20161211–9. Web.","Sparkes, Jessica et al. “Rabies Disease Dynamics in Naïve Dog Populations in Australia..” Preventive Veterinary Medicine 131 (2016): 127–136. Web.","Chapwanya, M, J M S Lubuma, and Y A Terefe. “Analysis and Dynamically Consistent Nonstandard Discretization for a Rabies Model in Humans and Dogs.” Revista de la Real Academia de Ciencias Exactas, Físicas y Naturales. Serie A. Matemáticas 110.2 (2016): 783–798. Web.","Tohma, Kentaro et al. “Molecular and Mathematical Modeling Analyses of Inter-Island Transmission of Rabies Into a Previously Rabies-Free Island in the Philippines.” INFECTION, GENETICS AND EVOLUTION 38.C (2016): 22–28. Web.","Kurosawa, Aiko et al. “The Rise and Fall of Rabies in Japan: a Quantitative History of Rabies Epidemics in Osaka Prefecture, 1914–1933.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 11.3 (2017): e0005435–19. Web.","Leung, Tiffany, and Stephen A Davis. “Rabies Vaccination Targets for Stray Dog Populations.” Frontiers in veterinary science 4.5 (2017): e0003786–10. Web.","Liu, Junli, Ying Jia, and Tailei Zhang. “Analysis of a Rabies Transmission Model with Population Dispersal.” Nonlinear Analysis: Real World Applications 35 (2017): 1–22. Web.","Asamoah, Joshua Kiddy K et al. “Modelling of Rabies Transmission Dynamics Using Optimal Control Analysis.” Journal of Applied Mathematics 2017.12 (2017): 1–23. Web.","Mengistu Tulu, Aberu. “The Impact of Infective Immigrants on the Spread of Dog Rabies.” American Journal of Applied Mathematics 5.3 (2017): 68–10. Web.","Zinsstag, Jakob, Monique Léchenne, et al. “Vaccination of Dogs in an African City Interrupts Rabies Transmission and Reduces Human Exposure..” Science translational medicine 9.421 (2017): eaaf6984. Web.","Cori, Anne et al. “A Graph-Based Evidence Synthesis Approach to Detecting Outbreak Clusters: an Application to Dog Rabies.” Ed. Mercedes Pascual. PLoS computational biology 14.12 (2018): e1006554–22. Web.","Huang, Jicai et al. “Modeling the Transmission Dynamics of Rabies for Dog, Chinese Ferret Badger and Human Interactions in Zhejiang Province, China.” Bulletin of Mathematical Biology 81.4 (2018): 939–962. Web.","Hampson, Katie, Francesco Ventura, et al. “The Potential Effect of Improved Provision of Rabies Post-Exposure Prophylaxis in Gavi-Eligible Countries: a Modelling Study.” The Lancet. Infectious diseases 19.1 (2018): 102–111. Web.","Tian, Huaiyu et al. “Transmission Dynamics of Re-Emerging Rabies in Domestic Dogs of Rural China.” Ed. Matthias Johannes Schnell. PLoS Pathogens 14.12 (2018): e1007392–18. Web.","Borse, Rebekah H et al. “Cost-Effectiveness of Dog Rabies Vaccination Programs in East Africa.” Ed. Jakob Zinsstag. PLoS Neglected Tropical Diseases 12.5 (2018): e0006490–21. Web.","Kadowaki, H et al. “The Risk of Rabies Spread in Japan: a Mathematical Modelling Assessment.” Epidemiology and Infection 146.10 (2018): 1245–1252. Web.","Laager, Mirjam, Céline Mbilo, et al. “The Importance of Dog Population Contact Network Structures in Rabies Transmission.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 12.8 (2018): e0006680. Web.","Hudson, Emily G et al. “Using Roaming Behaviours of Dogs to Estimate Contact Rates: the Predicted Effect on Rabies Spread.” Epidemiology and Infection 147 (2019): e135. Web.","Anderson, Aaron et al. “A Bioeconomic Model for the Optimization of Local Canine Rabies Control.” Ed. Monique Léchenne. PLoS Neglected Tropical Diseases 13.5 (2019): e0007377–24. Web.","Laager, Mirjam, Monique Léchenne, et al. “A Metapopulation Model of Dog Rabies Transmission in N•Djamena, Chad.” Journal of Theoretical Biology 462 (2019): 408–417. Web.","Wilson-Aggarwal, Jared K et al. “High-Resolution Contact Networks of Free-Ranging Domestic Dogs Canis Familiaris and Implications for Transmission of Infection.” Ed. Sergio Recuenco. PLoS Neglected Tropical Diseases 13.7 (2019): e0007565. Web."],[null,"Not explicitly density or frequency-dependent transmission","Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission",null,"Eyeball fitting",null,null,"Not explicitly density or frequency-dependent transmission","Eyeball fitting",null,"Eyeball fitting","Island setting; modeled human mediated long distance movements but no external introductions;","Island setting; modeled human mediated long distance movements but no external introductions;","Not explicitly density or frequency-dependent transmission",null,"Island setting; modeled human mediated long distance movements but no external introductions;",null,null,"Eyeball fitting",null,null,null,null,null,null,"Island settings with inter-island transmission","Not explicitly density or frequency-dependent transmission",null,null,null,null,null,"Not explicitly density or frequency-dependent transmission","Eyeball fitting",null,null,null,null,"Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Reference<\/th>\n      <th>Year<\/th>\n      <th>Country<\/th>\n      <th>Scale of analysis<\/th>\n      <th>Model type<\/th>\n      <th>Aims<\/th>\n      <th>Category: explain observed patterns<\/th>\n      <th>Category: estimate key parameters<\/th>\n      <th>Category: study control measures<\/th>\n      <th>Category: identify drivers of dynamics<\/th>\n      <th>Category: predict future trends<\/th>\n      <th>Reported rabies data<\/th>\n      <th>Data description<\/th>\n      <th>Fit to rabies data<\/th>\n      <th>Observation/Underreporting<\/th>\n      <th>Introductions<\/th>\n      <th>Heterogeneity in transmission<\/th>\n      <th>Density-dependent transmission<\/th>\n      <th>Stochastic<\/th>\n      <th>Spatial<\/th>\n      <th>Citation<\/th>\n      <th>Notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>Table_S1 &lt;- read_excel(&quot;../tables/supptable_S1.xlsx&quot;)
+Table_S1 %&gt;%
+  dplyr::select(-Citation, -`Cite Key`) %&gt;%
+  datatable(rownames = FALSE)</code></pre>
+<div id="htmlwidget-5a21da51e797a1c79f8a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5a21da51e797a1c79f8a">{"x":{"filter":"none","data":[["Cleaveland and Dye 1995","Coleman and Dye 1996","Bohrer et al. 2002","Kitala et al. 2002","Hampson et al. 2007","Wang and Lou 2008","Lembo et al. 2008","Hampson et al. 2009","Zinsstag et al. 2009","Carroll et al. 2010","Talbi et al. 2010","Beyer et al. 2010","Zhang et al. 2011","Bhunu 2011","J Zhang et al. 2012","Fitzpatrick et al. 2012","Hou, Jin, and Ruan 2012","Beyer et al. 2012","Juan Zhang et al. 2012","S. E. Townsend, Sumantra, et al. 2013","S. E. Townsend, Lembo, et al. 2013","Mollentze et al. 2014","Fitzpatrick et al. 2014","Ferguson et al. 2015","Dürr and Ward 2015","Wiraningsih et al. 2015","Chen et al. 2015","Bourhy et al. 2016","Fitzpatrick et al. 2016","Wera et al. 2016","Bilinski et al. 2016","Sparkes et al. 2016","Chapwanya, Lubuma, and Terefe 2016","Tohma et al. 2016","Kurosawa et al. 2017","Leung and Davis 2017","Liu, Jia, and Zhang 2017","Asamoah et al. 2017","Mengistu Tulu 2017","Zinsstag et al. 2017","Cori et al. 2018","Huang et al. 2018","WHO Rabies Modeling Consortium 2019","Tian et al. 2018","Borse et al. 2018","Kadowaki et al. 2018","Laager et al. 2018","Hudson et al. 2019","Anderson et al. 2019","Laager et al. 2019","Wilson-Aggarwal et al. 2019"],[1995,1996,2002,2002,2007,2008,2008,2009,2009,2010,2010,2010,2011,2011,2012,2012,2012,2012,2012,2013,2013,2014,2014,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019],["Tanzania","Multiple (global)","Israel","Kenya","Multiple (Africa)","China","Tanzania","Tanzania","Chad","Hypothetical","Multiple (Africa)","Tanzania","China","Hypothetical","China","Tanzania","China","Tanzania","China","Indonesia","Hypothetical","South Africa","Tanzania","Philippines","Australia","Hypothetical","China","Central African Republic","India","Indonesia","Tanzania","Australia","Hypothetical","Philippines","Japan","Hypothetical","China","Hypothetical","Hypothetical","Chad","Central African Republic","China","Multiple (global)","China","Multiple (Africa)","Japan","Chad","Australia","South Africa","Chad","Chad"],["Sub-national","Sub-national","Local","Sub-national","Regional","National","Sub-national","Sub-national","Sub-national","Hypothetical","Regional","Sub-national","National","Hypothetical","National","Sub-national","Sub-national","Sub-national","National","Sub-national","Hypothetical","National","Sub-national","Sub-national","Local","Hypothetical","Sub-national","Sub-national","Sub-national","Local","Sub-national","Sub-national","Hypothetical","Sub-national","Sub-national","Hypothetical","National","Hypothetical","Hypothetical","Sub-national","Local","Sub-national","National","Regional","National","Sub-national","Sub-national","Local","Local","Sub-national","Local"],["Deterministic ODE (Ordinary Differential Equations)","ML estimation of R0 from epidemic curve","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Deterministic ODE","Transmission tree reconstruction","Stochastic nonspatial IBM; Transmission tree reconstruction; ML estimation of R0 from epidemic curve","Deterministic ODE","Deterministic ODE","Phylogeographic","Metapopulation patch occupancy","Deterministic ODE","Deterministic ODE","Deterministic reaction-diffusion ODE","Next-generation matrix model to estimate transmission parameters; transmission tree reconstruction","Deterministic ODE","Metapopulation patch occupancy","Deterministic ODE","Stochastic spatial IBM","Stochastic spatial IBM","Bayesian phylodynamic model","Deterministic ODE","Stochastic spatial IBM","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Stochastic time-varying transmission model","Deterministic ODE","Deterministic discrete-time DE (difference equations)","Deterministic ODE","Stochastic ODE","Deterministic ODE","Deterministic ODE","ML estimation of R0 from epidemic curve","Deterministic ODE","Two-patch deterministic ODE","Deterministic ODE","Deterministic ODE","Deterministic and Stochastic ODE","Graph-based transmission tree reconstruction","Deterministic ODE","Stochastic spatial IBM","Deterministic ODE","Deterministic ODE","Stochastic spatial IBM","Stochastic network IBM","Stochastic spatial IBM","Stochastic nonspatial IBM","Deterministic metapopulation ODE","Stochastic network IBM"],["Modeling to explore how different mechanisms of transmission and immunity would impact control efforts","Estimating R0 and Pc using data from different settings","Exploring the impact of how distribution of the host population impacts disease spread and control efforts (ORV)","Estimating Pc incorporating dog demography and densities","Exploring mechanisms which can explain synchrony and cycles of rabies epidemics in sub-Saharan Africa","Compared dog culling and vaccination alone or in combination to control  rabies incidence","Reconstructing transmission trees from epidemiological data to infer strength of tranmission between host types","Estimating R0 and other epidemiological/demographic parameters from data; Examining the impact of dog vaccination on rabies incidence in dogs","Cost-effectiveness of interventions","Compared dog culling, vaccination, fertility control alone and in combination on rabies persistence/elimination","Testing whether natural dispersal of rabies alone could explain observed phylogenies","Comparing different metapopulation models to identify most likely sources from infections and to estimate the local impact of vaccination campaigns at the village level","Modeling the impact of dog culling vs. vaccination on rabies incidence in China","Compared  dog vaccination, culling, and human pre- and post-exposure prophylaxis for controlling rabies incidence","Examining how dog movement drives spatial spread of rabies in China","Estimating within species and cross-species transmission and thresholds of control","Estimated R0 by (eyeball) fitting to data on human reported deaths and compared the impact of dog vaccination and culling on reducing these deaths","Compared impact of dog vaccine allocation strategies at the village level on rabies incidence","Estimated seasonal transmission rates using data on reported human deaths in China and examined the impact of dog vaccination, reducing dog birth rates, culling, and PEP on R0","Estimated R0 from initial epidemic growth; used model to examine the impact of current and future vaccination campaigns on probability of eliminating canine rabies from Bali","Outbreak simulation to estimate current case detection and to look at how probability of detection affects disease spread and control","Reconstructing transmission trees from epidemiological and genetic data incorporating unobserved cases","Modeling the cost-effectiveness of mass dog vaccination","Examining the impact of human-mediated dog movement and spatial heterogeneity in coverage on the probability of rabies elimination","Examining how an introduction of canine rabies to a naïve population could result in rabies spread","Simulating and analytically calculating the disease-free equilibrium in coupled domestic dog-wildlife-human populations","Two-patch models to look at transmission between coupled provinces in China","Estimated Rt and incursions using combined phylogenetic and epidemiological modeling","Modeling the effectiveness and cost effectiveness of canine vaccination and sterilization on human health outcomes","Cost-effectiveness ofdifferent mass dog vaccination to control canine rabies incidence","Comparing cost-effectiveness of dog vaccination campaigns of varying coverage and frequency","Looked at how contact rates between and within free-roaming domestic dogs and wild dog populations as well as human responses would impact spread and control of rabies after an incursion into a naïve population","Simulating and analytically calculating the disease-free equilibrium in domestic dog populations","Modeling to estimate the time lag to detection after an incursion; Used phylogeographic methods to identify inter-island transmission","Estimation of R0 and incubation period from historical dog rabies incidence data","Comparing vaccination and population control targets for stray vs. owned dogs","Comparing dog culling and immunization alone and in combination of controlling rabies incidence in a two-patch modeling framework","Comparing dog vaccination vs. human post- and pre-exposure prophylaxis on eliminating human deaths due to rabies","Analytical and numerical simulations to examine the impact of infective immigrants on rabies spread and control","Modeling the impact of dog vaccination campaigns on observed incidence of rabies","Estimated R_eff and identified incursions across this period using transmission tree reconstruction  using spatiotemporal and genetic data","Exploring multihost transmission in chinese ferret badgers and dogs and impilications for human rabies exposures","Modeling to extrapolate current and projected national incidence of human rabies exposures to examine the cost-effectiveness of expanded PEP provisioning","Estimating key transmission parameters (dog-to-dog and dog-to-human) from incidence data","Integrating a transmission and economic model to estimate the cost-effectiveness of mass dog vaccination in East Africa","Assessing the risk of rabies outbreak into a naïve population","Exploring the impact of targeted dog vaccination strategies","Exploring how different roaming behavior of domestic dogs impacts invasion in a rabies-free area of Australia","A bioeconomic model to examine the impacts of vaccination, sterilization and other management scenarios on dog rabies incidence","Explaining resurgence of canine rabies after vaccination campaign","Exploring the impact of contact heterogeneity on rabies outbreak risk and size in an empirical domestic dog network"],["Y","N","N","N","Y","N","N","N","N","N","Y","Y","N","N","Y","N","N","N","Y","Y","N","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","N","N","N","N","N","N","N","Y","N"],["N","Y","N","Y","N","N","Y","Y","Y","N","N","N","N","N","N","Y","Y","Y","N","Y","N","Y","N","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","N","N","N","Y","N","N","Y","N","N","N","N","N","N","N"],["N","N","Y","N","N","Y","N","Y","Y","Y","N","N","Y","Y","N","N","Y","Y","Y","Y","Y","N","Y","Y","N","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","Y","Y","Y","N","N","Y","N","Y","N","Y","N","Y","N","N"],["N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","Y","N","N","N","Y","N","Y","N","N","Y"],["N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","N","Y","N","N","N","N","N","N","N","N"],["N","Y","N","Y","N","N","Y","Y","Y","N","Y","Y","Y","N","N","Y","Y",null,"Y","Y","N",null,"Y","N","N","N","Y","Y","Y","N","N","N","N","Y","Y","N","N","N","N","Y","Y","Y","Y","Y","N","N","Y","N","N","Y","N"],[null,"11-22 weeks of rabies incidence data from four different studies",null,"1 year of rabies incidence data from Machakos District, Kenya",null,null,"4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ","4 years of contact tracing data from Ngorongoro and Serengeti Districts; outbreak data from 14 other settings (monthly or weekly confirmed/suspect cases), ranged from 3-29 months and varied scales","6 years of weekly passive laboratory confirmed case data in N'Djamena Chad",null,"22 years of spatiotemporal and genetic data on laboratory confirmed animal cases in 3 countries","6 years of monthly bite patient data from the Serengeti District at the village level (used as occupancy, i.e. presence or absence of bite reported in a village each month)","14 years of monthly reported human rabies cases in China",null,null,"4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ","4 years of monthly reported human rabies cases in Guangdong Province, China","6 years of monthly bite data from the Serengeti District","6 years of monthly reported human rabies cases in Guangdong Province, China","1 year of monthly laboratory confirmed case data during outbreak in Bali",null,"1 year of spatiotemporal and genetic data on laboratory confirmed animal rabies cases in Kwa Zulu Natal","4 years of contact tracing data from the Serengeti and Ngorongoro District, TZ",null,null,null,"8 years of monthly reported human rabies cases in six provinces in China","12 years of weekly number of laboratory confirmed case data and corresponding sequences from Bangui, CAR","2 years of annual reported human cases in Tamil Nadu, India",null,null,null,null,"9 years of monthly laboratory confirmed case data from Tablas Island and 266 sequences from eight regions in the Luzon Island group, Phillipines","59 years of annual number of suspected and confirmed animal and human rabies cases in Osaka Prefecture, Japan",null,null,null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures; 29 sequences generated from this same period;","11 years of spatiotemporal and genetic data on cases detected through laboratory surveillance in the city of Bangui, CAR","14 years time series of number of  human rabies deaths Zhejiang Province, China","15 year time series of rabies incidence","16 years of reported human cases from the Yunan province",null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures",null,null,"5 years of cumulative incidence data of laboratory confirmed animal cases and associated human exposures",null],["N","Y","N","Y","N","N","Y","Y","Y","N","Y","Y","N","N","N","Y","N","Y","N","Y","N","Y","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","N","N","Y","Y","N","Y","Y","N","N","Y","N","N","Y","N"],["N","N","N","N","N","N","N","N","N","N","N","Y","N","N","N","N","N","Y","N","Y","Y","Y","N","N","N","N","N","Y","Y","N","N","N","N","Y","N","N","N","N","N","N","Y","N","N","N","N","N","N","N","N","Y","N"],["N","N","N","N","N","N","N","Y","N","N","Y","Y","N","N",null,"N","N","Y","N","N","N","Y","N","N","N","N","Y","Y","N","N","N","N","N","Y","N","N","Y","N","Y","Y","Y","N","Y","N","N","N","N","N","N","Y","N"],["N","N","N","N","N","N","Y","Y","N","N","N","N","N","N","N","N","N","N","N","Y","Y","Y","N","Y","Y","N","N","Y","N","N","N","N","N","N","N","N","N","N","N","N","Y","N","Y","N","N","Y","Y","Y","Y","N","Y"],["Y","NA","NA","Y","Y","Y","NA","N","Y","Y","NA","Y","Y","Y","Y","NA","Y","Y","Y","N","N","NA","Y","N","N","Y","Y","N","N","N","Y","N","Y","Y","NA","Y","Y","Y","N","Y","NA","Y","N","Y","Y","N","NA","N","N","Y","NA"],["N","N","Y","N","N","N","Y","Y","N","N","Y","Y","N","N","N","Y","N","Y","N","Y","Y","Y","N","Y","Y","N","N","Y","N","N","N","Y","N","N","N","N","N","N","N","N","Y","N","Y","N","N","Y","Y","Y","Y","N","Y"],["N","N","Y","N","N","N","Y","Y","N","N","Y","Y","N","N","Y","Y","N","Y","N","Y","Y","Y","N","Y","Y","N","Y","N","N","N","N","N","N","N","N","N","Y","N","N","N","Y","N","Y","N","N","Y","Y","Y","N","Y","N"],[null,"Not explicitly density or frequency-dependent transmission","Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission",null,"Eyeball fitting",null,null,"Not explicitly density or frequency-dependent transmission","Eyeball fitting",null,"Eyeball fitting","Island setting; modeled human mediated long distance movements but no external introductions;","Island setting; modeled human mediated long distance movements but no external introductions;","Not explicitly density or frequency-dependent transmission",null,"Island setting; modeled human mediated long distance movements but no external introductions;",null,null,"Eyeball fitting",null,null,null,null,null,null,"Island settings with inter-island transmission","Not explicitly density or frequency-dependent transmission",null,null,null,null,null,"Not explicitly density or frequency-dependent transmission","Eyeball fitting",null,null,null,null,"Not explicitly density or frequency-dependent transmission",null,null,null,"Not explicitly density or frequency-dependent transmission"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Reference<\/th>\n      <th>Year<\/th>\n      <th>Country<\/th>\n      <th>Scale of analysis<\/th>\n      <th>Model type<\/th>\n      <th>Aims<\/th>\n      <th>Category: explain observed patterns<\/th>\n      <th>Category: estimate key parameters<\/th>\n      <th>Category: study control measures<\/th>\n      <th>Category: identify drivers of dynamics<\/th>\n      <th>Category: predict future trends<\/th>\n      <th>Reported rabies data<\/th>\n      <th>Data description<\/th>\n      <th>Fit to rabies data<\/th>\n      <th>Observation/Underreporting<\/th>\n      <th>Introductions<\/th>\n      <th>Heterogeneity in transmission<\/th>\n      <th>Density-dependent transmission<\/th>\n      <th>Stochastic<\/th>\n      <th>Spatial<\/th>\n      <th>Notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="key-for-columns" class="section level3">
 <h3>Key for columns</h3>
@@ -5583,9 +5188,537 @@ Notes on the analysis, etc.
 <div id="key-for-values-in-columns" class="section level3">
 <h3>Key for values in columns</h3>
 <pre class="r"><code>cols_S1 &lt;- read_excel(&quot;../tables/supptable_S1.xlsx&quot;, sheet = &quot;DefineTerms&quot;)
-datatable(cols_S1, rownames = FALSE)</code></pre>
-<div id="htmlwidget-26c77a0270cd11b9d1a1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-26c77a0270cd11b9d1a1">{"x":{"filter":"none","data":[["ODE","DE","ORV","PEP","ML","IBM","R0","Rt","Reff","Pc"],["Ordinary Differential Equation","Difference Equation","Oral Rabies Vaccine","Post-Exposure Prophylaxis","Maximum likelihood","Individual-Based Model","Reproductive number (the average number of secondary cases arising from a single infection in a completely susceptible population)","Time-varying reproductive number","Effective-reproductive number (accounting for proportion susceptible in a population, i.e. with ongoing vaccination)","Critical vaccination threshold (1- 1/R0, the threshold level of vaccination necessary to interrupt transmission/eliminate infection in a population)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Term<\/th>\n      <th>Definitions<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+kable(cols_S1, rownames = FALSE) %&gt;%
+  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;))</code></pre>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:left;">
+Definitions
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ODE
+</td>
+<td style="text-align:left;">
+Ordinary Differential Equation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DE
+</td>
+<td style="text-align:left;">
+Difference Equation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ORV
+</td>
+<td style="text-align:left;">
+Oral Rabies Vaccine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PEP
+</td>
+<td style="text-align:left;">
+Post-Exposure Prophylaxis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ML
+</td>
+<td style="text-align:left;">
+Maximum likelihood
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IBM
+</td>
+<td style="text-align:left;">
+Individual-Based Model
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R0
+</td>
+<td style="text-align:left;">
+Reproductive number (the average number of secondary cases arising from a single infection in a completely susceptible population)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rt
+</td>
+<td style="text-align:left;">
+Time-varying reproductive number
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Reff
+</td>
+<td style="text-align:left;">
+Effective-reproductive number (accounting for proportion susceptible in a population, i.e. with ongoing vaccination)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pc
+</td>
+<td style="text-align:left;">
+Critical vaccination threshold (1- 1/R0, the threshold level of vaccination necessary to interrupt transmission/eliminate infection in a population)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="citations" class="section level3">
+<h3>Citations</h3>
+<pre class="r"><code>library(DT)
+library(readxl)
+Table_S1 &lt;- read_excel(&quot;../tables/supptable_S1.xlsx&quot;)
+Table_S1 %&gt;%
+  dplyr::select(`Cite Key`, Citation) %&gt;%
+  kable(rownames = FALSE) %&gt;%
+  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;)) %&gt;%
+  scroll_box(height = &quot;1000px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:1000px; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Cite Key
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Citation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Cleaveland and Dye (1995)</span>
+</td>
+<td style="text-align:left;">
+Cleaveland, S, and C Dye. “Maintenance of a Microparasite Infecting Several Host Species: Rabies in the Serengeti.” Parasitology 111.S1 (1995): S33–S47. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Coleman and Dye (1996)</span>
+</td>
+<td style="text-align:left;">
+Coleman, P G, and C Dye. “Immunization Coverage Required to Prevent Outbreaks of Dog Rabies.” Vaccine (1996): n. pag. Print.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Bohrer et al. (2002)</span>
+</td>
+<td style="text-align:left;">
+Bohrer, Gil et al. “The Effectiveness of Various Rabies Spatial Vaccination Patterns in a Simulated Host Population with Clumped Distribution.” Ecological Modelling 152.2-3 (2002): 205–211. Print.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Kitala et al. (2002)</span>
+</td>
+<td style="text-align:left;">
+Kitala, P M et al. “Comparison of Vaccination Strategies for the Control of Dog Rabies in Machakos District, Kenya.” Epidemiology and Infection 129.1 (2002): 215–222. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Hampson et al. (2007)</span>
+</td>
+<td style="text-align:left;">
+Hampson, Katie, Jonathan Dushoff, John Bingham, et al. “Synchronous Cycles of Domestic Dog Rabies in Sub-Saharan Africa and the Impact of Control Efforts..” Proceedings of the National Academy of Sciences 104.18 (2007): 7717–7722. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Wang and Lou (2008)</span>
+</td>
+<td style="text-align:left;">
+WANG, XIAOWEI, and JIE LOU. “Two Dynamic Models About Rabies Between Dogs and Human.” Journal of Biological Systems 16.04 (2008): 519–529. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Lembo et al. (2008)</span>
+</td>
+<td style="text-align:left;">
+Lembo, Tiziana et al. “Exploring Reservoir Dynamics: a Case Study of Rabies in the Serengeti Ecosystem..” The Journal of applied ecology 45.4 (2008): 1246–1257. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Hampson et al. (2009)</span>
+</td>
+<td style="text-align:left;">
+Hampson, Katie, Jonathan Dushoff, Sarah Cleaveland, et al. “Transmission Dynamics and Prospects for the Elimination of Canine Rabies..” PLOS Biol 7.3 (2009): e53. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Zinsstag et al. (2009)</span>
+</td>
+<td style="text-align:left;">
+Zinsstag, J, S Durr, et al. “Transmission Dynamics and Economics of Rabies Control in Dogs and Humans in an African City.” Proceedings of the National Academy of Sciences 106.35 (2009): 1–22. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Carroll et al. (2010)</span>
+</td>
+<td style="text-align:left;">
+Carroll, Matthew J et al. “The Use of Immunocontraception to Improve Rabies Eradication in Urban Dog Populations.” Wildlife Research 37.8 (2010): 676–12. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Talbi et al. (2010)</span>
+</td>
+<td style="text-align:left;">
+Talbi, Chiraz et al. “Phylodynamics and Human-Mediated Dispersal of a Zoonotic Virus.” Ed. Michael Emerman. PLoS Pathogens 6.10 (2010): e1001166–10. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Beyer et al. (2010)</span>
+</td>
+<td style="text-align:left;">
+Beyer, H L, K Hampson, T Lembo, S Cleaveland, M Kaare, and D T Haydon. “Metapopulation Dynamics of Rabies and the Efficacy of Vaccination.” Proceedings of the Royal Society B: Biological Sciences 278.1715 (2010): 2182–2190. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Zhang et al. (2011)</span>
+</td>
+<td style="text-align:left;">
+Zhang, Juan, Zhen Jin, Gui-Quan Sun, Tao Zhou, et al. “Analysis of Rabies in China: Transmission Dynamics and Control.” Ed. Pere-Joan Cardona. PLoS ONE 6.7 (2011): e20891. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Bhunu (2011)</span>
+</td>
+<td style="text-align:left;">
+BHUNU, C P. “Impact of Culling Stray Dogs and Vaccination on the Control of Human Rabies: a Mathematical Modeling Approach.” International Journal of Biomathematics 04.04 (2011): 379–397. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">J Zhang et al. (2012)</span>
+</td>
+<td style="text-align:left;">
+Zhang, J, Z Jin, G Q Sun, and X Sun. “Spatial Spread of Rabies in China.” Journal of Applied Analysis and Computation (2012): n. pag. Print.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Fitzpatrick et al. (2012)</span>
+</td>
+<td style="text-align:left;">
+Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Lauren Ancel Meyers, et al. “Potential for Rabies Control Through Dog Vaccination in Wildlife-Abundant Communities of Tanzania.” Ed. Richard Reithinger. PLoS Neglected Tropical Diseases 6.8 (2012): e1796–6. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Hou, Jin, and Ruan (2012)</span>
+</td>
+<td style="text-align:left;">
+Hou, Qiang, Zhen Jin, and Shigui Ruan. “Dynamics of Rabies Epidemics and the Impact of Control Efforts in Guangdong Province, China.” Journal of Theoretical Biology 300.C (2012): 39–47. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Beyer et al. (2012)</span>
+</td>
+<td style="text-align:left;">
+Beyer, Hawthorne L, Katie Hampson, Tiziana Lembo, Sarah Cleaveland, Magai Kaare, and Daniel T Haydon. “The Implications of Metapopulation Dynamics on the Design of Vaccination Campaigns.” Vaccine 30.6 (2012): 1014–1022. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Juan Zhang et al. (2012)</span>
+</td>
+<td style="text-align:left;">
+Zhang, Juan, Zhen Jin, Gui-Quan Sun, Xiang-Dong Sun, et al. “Modeling Seasonal Rabies Epidemics in China.” Bulletin of Mathematical Biology 74.5 (2012): 1226–1251. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">S. E. Townsend, Sumantra, et al. (2013)</span>
+</td>
+<td style="text-align:left;">
+Townsend, Sunny E, Tiziana Lembo, et al. “Surveillance Guidelines for Disease Elimination: a Case Study of Canine Rabies.” “Comparative Immunology, Microbiology and Infectious Diseases” 36.3 (2013): 249–261. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">S. E. Townsend, Lembo, et al. (2013)</span>
+</td>
+<td style="text-align:left;">
+Townsend, Sunny E, I Putu Sumantra, et al. “Designing Programs for Eliminating Canine Rabies From Islands: Bali, Indonesia as a Case Study..” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 7.8 (2013): e2372. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Mollentze et al. (2014)</span>
+</td>
+<td style="text-align:left;">
+Mollentze, Nardus et al. “A Bayesian Approach for Inferring the Dynamics of Partially Observed Endemic Infectious Diseases From Space-Time-Genetic Data..” Proceedings. Biological sciences / The Royal Society 281.1782 (2014): 20133251–20133251. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Fitzpatrick et al. (2014)</span>
+</td>
+<td style="text-align:left;">
+Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Imam Mzimbiri, et al. “Cost-Effectiveness of Canine Vaccination to Prevent Human Rabies in Rural Tanzania..” Annals of internal medicine 160.2 (2014): 91–100. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Ferguson et al. (2015)</span>
+</td>
+<td style="text-align:left;">
+Ferguson, Elaine A et al. “Heterogeneity in the Spread and Control of Infectious Disease: Consequences for the Elimination of Canine Rabies.” Nature Publishing Group 5.1 (2015): 1–13. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Dürr and Ward (2015)</span>
+</td>
+<td style="text-align:left;">
+Dürr, Salome, and Michael P Ward. “Development of a Novel Rabies Simulation Model for Application in a Non-Endemic Environment.” Ed. Jakob Zinsstag. PLoS Neglected Tropical Diseases 9.6 (2015): e0003876–22. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Wiraningsih et al. (2015)</span>
+</td>
+<td style="text-align:left;">
+Wiraningsih, E D et al. Stability Analysis of Rabies Model with Vaccination and Culling Effect on Dogs. Applied Mathematical …, 2015. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Chen et al. (2015)</span>
+</td>
+<td style="text-align:left;">
+Chen, Jing et al. “Modeling the Geographic Spread of Rabies in China.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 9.5 (2015): e0003772–18. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Bourhy et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Bourhy, Hervé et al. “Revealing the Micro-Scale Signature of Endemic Zoonotic Disease Transmission in an African Urban Setting.” Ed. Colin Parrish. PLoS Pathogens 12.4 (2016): e1005525–15. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Fitzpatrick et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Fitzpatrick, Meagan C, Hiral A Shah, et al. “One Health Approach to Cost-Effective Rabies Control in India.” Proceedings of the National Academy of Sciences 113.51 (2016): 14574–14581. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Wera et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Wera, E et al. “Cost-Effectiveness of Mass Dog Vaccination Campaigns Against Rabies in Flores Island, Indonesia.” Transboundary and Emerging Diseases 64.6 (2016): 1918–1928. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Bilinski et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Bilinski, Alyssa M et al. “Optimal Frequency of Rabies Vaccination Campaigns in Sub-Saharan Africa..” Proceedings. Biological sciences / The Royal Society 283.1842 (2016): 20161211–9. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Sparkes et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Sparkes, Jessica et al. “Rabies Disease Dynamics in Naïve Dog Populations in Australia..” Preventive Veterinary Medicine 131 (2016): 127–136. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Chapwanya, Lubuma, and Terefe (2016)</span>
+</td>
+<td style="text-align:left;">
+Chapwanya, M, J M S Lubuma, and Y A Terefe. “Analysis and Dynamically Consistent Nonstandard Discretization for a Rabies Model in Humans and Dogs.” Revista de la Real Academia de Ciencias Exactas, Físicas y Naturales. Serie A. Matemáticas 110.2 (2016): 783–798. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Tohma et al. (2016)</span>
+</td>
+<td style="text-align:left;">
+Tohma, Kentaro et al. “Molecular and Mathematical Modeling Analyses of Inter-Island Transmission of Rabies Into a Previously Rabies-Free Island in the Philippines.” INFECTION, GENETICS AND EVOLUTION 38.C (2016): 22–28. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Kurosawa et al. (2017)</span>
+</td>
+<td style="text-align:left;">
+Kurosawa, Aiko et al. “The Rise and Fall of Rabies in Japan: a Quantitative History of Rabies Epidemics in Osaka Prefecture, 1914–1933.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 11.3 (2017): e0005435–19. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Leung and Davis (2017)</span>
+</td>
+<td style="text-align:left;">
+Leung, Tiffany, and Stephen A Davis. “Rabies Vaccination Targets for Stray Dog Populations.” Frontiers in veterinary science 4.5 (2017): e0003786–10. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Liu, Jia, and Zhang (2017)</span>
+</td>
+<td style="text-align:left;">
+Liu, Junli, Ying Jia, and Tailei Zhang. “Analysis of a Rabies Transmission Model with Population Dispersal.” Nonlinear Analysis: Real World Applications 35 (2017): 1–22. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Asamoah et al. (2017)</span>
+</td>
+<td style="text-align:left;">
+Asamoah, Joshua Kiddy K et al. “Modelling of Rabies Transmission Dynamics Using Optimal Control Analysis.” Journal of Applied Mathematics 2017.12 (2017): 1–23. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Mengistu Tulu (2017)</span>
+</td>
+<td style="text-align:left;">
+Mengistu Tulu, Aberu. “The Impact of Infective Immigrants on the Spread of Dog Rabies.” American Journal of Applied Mathematics 5.3 (2017): 68–10. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Zinsstag et al. (2017)</span>
+</td>
+<td style="text-align:left;">
+Zinsstag, Jakob, Monique Léchenne, et al. “Vaccination of Dogs in an African City Interrupts Rabies Transmission and Reduces Human Exposure..” Science translational medicine 9.421 (2017): eaaf6984. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Cori et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Cori, Anne et al. “A Graph-Based Evidence Synthesis Approach to Detecting Outbreak Clusters: an Application to Dog Rabies.” Ed. Mercedes Pascual. PLoS computational biology 14.12 (2018): e1006554–22. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Huang et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Huang, Jicai et al. “Modeling the Transmission Dynamics of Rabies for Dog, Chinese Ferret Badger and Human Interactions in Zhejiang Province, China.” Bulletin of Mathematical Biology 81.4 (2018): 939–962. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">WHO Rabies Modelling Consortium (2019)</span>
+</td>
+<td style="text-align:left;">
+Hampson, Katie, Francesco Ventura, et al. “The Potential Effect of Improved Provision of Rabies Post-Exposure Prophylaxis in Gavi-Eligible Countries: a Modelling Study.” The Lancet. Infectious diseases 19.1 (2018): 102–111. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Tian et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Tian, Huaiyu et al. “Transmission Dynamics of Re-Emerging Rabies in Domestic Dogs of Rural China.” Ed. Matthias Johannes Schnell. PLoS Pathogens 14.12 (2018): e1007392–18. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Borse et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Borse, Rebekah H et al. “Cost-Effectiveness of Dog Rabies Vaccination Programs in East Africa.” Ed. Jakob Zinsstag. PLoS Neglected Tropical Diseases 12.5 (2018): e0006490–21. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Kadowaki et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Kadowaki, H et al. “The Risk of Rabies Spread in Japan: a Mathematical Modelling Assessment.” Epidemiology and Infection 146.10 (2018): 1245–1252. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Laager et al. (2018)</span>
+</td>
+<td style="text-align:left;">
+Laager, Mirjam, Céline Mbilo, et al. “The Importance of Dog Population Contact Network Structures in Rabies Transmission.” Ed. Charles E Rupprecht. PLoS Neglected Tropical Diseases 12.8 (2018): e0006680. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Hudson et al. (2019)</span>
+</td>
+<td style="text-align:left;">
+Hudson, Emily G et al. “Using Roaming Behaviours of Dogs to Estimate Contact Rates: the Predicted Effect on Rabies Spread.” Epidemiology and Infection 147 (2019): e135. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Anderson et al. (2019)</span>
+</td>
+<td style="text-align:left;">
+Anderson, Aaron et al. “A Bioeconomic Model for the Optimization of Local Canine Rabies Control.” Ed. Monique Léchenne. PLoS Neglected Tropical Diseases 13.5 (2019): e0007377–24. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Laager et al. (2019)</span>
+</td>
+<td style="text-align:left;">
+Laager, Mirjam, Monique Léchenne, et al. “A Metapopulation Model of Dog Rabies Transmission in N•Djamena, Chad.” Journal of Theoretical Biology 462 (2019): 408–417. Web.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="citation">Wilson-Aggarwal et al. (2019)</span>
+</td>
+<td style="text-align:left;">
+Wilson-Aggarwal, Jared K et al. “High-Resolution Contact Networks of Free-Ranging Domestic Dogs Canis Familiaris and Implications for Transmission of Infection.” Ed. Sergio Recuenco. PLoS Neglected Tropical Diseases 13.7 (2019): e0007565. Web.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="session-info" class="section level2">
@@ -5647,20 +5780,167 @@ datatable(cols_S1, rownames = FALSE)</code></pre>
 <div id="references" class="section level2">
 <h2>References</h2>
 <div id="refs" class="references hanging-indent">
+<div id="ref-Anderson:2019kp">
+<p>Anderson, Aaron, Johann Kotzé, Stephanie A Shwiff, Brody Hatch, Chris Slootmaker, Anne Conan, Darryn Knobel, and Louis H Nel. 2019. “A bioeconomic model for the optimization of local canine rabies control.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Asamoah:2017be">
+<p>Asamoah, Joshua Kiddy K, Francis T Oduro, Ebenezer Bonyah, and Baba Seidu. 2017. “Modelling of Rabies Transmission Dynamics Using Optimal Control Analysis.” <em>Journal of Applied Mathematics</em>.</p>
+</div>
+<div id="ref-Beyer:2012ge">
+<p>Beyer, Hawthorne L, Katie Hampson, Tiziana Lembo, Sarah Cleaveland, Magai Kaare, and Daniel T Haydon. 2012. “The implications of metapopulation dynamics on the design of vaccination campaigns.” <em>Vaccine</em>.</p>
+</div>
+<div id="ref-Beyer:2011bp">
+<p>Beyer, H L, K Hampson, T Lembo, S Cleaveland, M Kaare, and D T Haydon. 2010. “Metapopulation dynamics of rabies and the efficacy of vaccination.” <em>Proceedings of the Royal Society B: Biological Sciences</em>.</p>
+</div>
+<div id="ref-BHUNU:2011ca">
+<p>Bhunu, C P. 2011. “Impacts of culling stray dogs and vaccination on the control of human rabies: a mathematical modeling approach.” <em>International Journal of Biomathematics</em>.</p>
+</div>
+<div id="ref-Bilinski:2016df">
+<p>Bilinski, Alyssa M, Meagan C Fitzpatrick, Charles E Rupprecht, A David Paltiel, and Alison P Galvani. 2016. “Optimal frequency of rabies vaccination campaigns in Sub-Saharan Africa.” <em>Proceedings. Biological Sciences / the Royal Society</em>.</p>
+</div>
+<div id="ref-Bohrer:2002wl">
+<p>Bohrer, Gil, Shachar Shem-Tov, Eric Summer, Keren Or, and David Saltz. 2002. “The effectiveness of various rabies spatial vaccination patterns in a simulated host population with clumped distribution.” <em>Ecological Modelling</em>.</p>
+</div>
+<div id="ref-Borse:2018ji">
+<p>Borse, Rebekah H, Charisma Y Atkins, Manoj Gambhir, Eduardo A Undurraga, Jesse D Blanton, Emily B Kahn, Jessie L Dyer, Charles E Rupprecht, and Martin I Meltzer. 2018. “Cost-effectiveness of dog rabies vaccination programs in East Africa.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Bourhy:2016hj">
+<p>Bourhy, Hervé, Emmanuel Nakouné, Matthew Hall, Pierre Nouvellet, Anthony Lepelletier, Chiraz Talbi, Laurence Watier, et al. 2016. “Revealing the Micro-scale Signature of Endemic Zoonotic Disease Transmission in an African Urban Setting.” <em>PLoS Pathogens</em>.</p>
+</div>
+<div id="ref-Carroll:2010jc">
+<p>Carroll, Matthew J, Alexander Singer, Graham C Smith, Dave P Cowan, and Giovanna Massei. 2010. “The use of immunocontraception to improve rabies eradication in urban dog populations.” <em>Wildlife Research</em>.</p>
+</div>
+<div id="ref-Chapwanya:2016cl">
+<p>Chapwanya, M, J M S Lubuma, and Y A Terefe. 2016. “Analysis and dynamically consistent nonstandard discretization for a rabies model in humans and dogs.” <em>Revista de La Real Academia de Ciencias Exactas, Fı́sicas Y Naturales. Serie A. Matemáticas</em>.</p>
+</div>
+<div id="ref-Chen:2015fb">
+<p>Chen, Jing, Lan Zou, Zhen Jin, and Shigui Ruan. 2015. “Modeling the Geographic Spread of Rabies in China.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Cleaveland:1995dn">
+<p>Cleaveland, S, and C Dye. 1995. “Maintenance of a microparasite infecting several host species: rabies in the Serengeti.” <em>Parasitology</em>.</p>
+</div>
+<div id="ref-Coleman:1996uu">
+<p>Coleman, P G, and C Dye. 1996. “Immunization coverage required to prevent outbreaks of dog rabies.” <em>Vaccine</em>.</p>
+</div>
+<div id="ref-Cori:2018fn">
+<p>Cori, Anne, Pierre Nouvellet, Tini Garske, Hervé Bourhy, Emmanuel Nakouné, and Thibaut Jombart. 2018. “A graph-based evidence synthesis approach to detecting outbreak clusters: An application to dog rabies.” <em>PLoS Computational Biology</em>.</p>
+</div>
 <div id="ref-czuprynaEcologyDemographyFreeRoaming2016">
 <p>Czupryna, Anna M, Joel S Brown, Machunde A Bigambo, Christopher J Whelan, Supriya D Mehta, Rachel M Santymire, Felix J Lankester, and Lisa J Faust. 2016. “Ecology and Demography of Free-Roaming Domestic Dogs in Rural Villages Near Serengeti National Park in Tanzania.” <em>PLoS ONE</em>.</p>
 </div>
-<div id="ref-hampsonTransmissionDynamicsProspects2009">
-<p>Hampson, Katie, Jonathan Dushoff, Sarah Cleaveland, Daniel T Haydon, Magai Kaare, Craig Packer, and Andy Dobson. 2009. “Transmission Dynamics and Prospects for the Elimination of Canine Rabies.” <em>PLOS Biol</em>.</p>
+<div id="ref-Durr:2015gh">
+<p>Dürr, Salome, and Michael P Ward. 2015. “Development of a Novel Rabies Simulation Model for Application in a Non-endemic Environment.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Ferguson:2015cc">
+<p>Ferguson, Elaine A, Katie Hampson, Sarah Cleaveland, Ramona Consunji, Raffy Deray, John Friar, Daniel T Haydon, Joji Jimenez, Marlon Pancipane, and Sunny E Townsend. 2015. “Heterogeneity in the spread and control of infectious disease: consequences for the elimination of canine rabies.” <em>Nature Publishing Group</em>.</p>
+</div>
+<div id="ref-Fitzpatrick:2012kp">
+<p>Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Lauren Ancel Meyers, Jeffrey P Townsend, and Alison P Galvani. 2012. “Potential for Rabies Control through Dog Vaccination in Wildlife-Abundant Communities of Tanzania.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Fitzpatrick:2014fq">
+<p>Fitzpatrick, Meagan C, Katie Hampson, Sarah Cleaveland, Imam Mzimbiri, Felix Lankester, Tiziana Lembo, Lauren A Meyers, A David Paltiel, and Alison P Galvani. 2014. “Cost-effectiveness of canine vaccination to prevent human rabies in rural Tanzania.” <em>Annals of Internal Medicine</em>.</p>
+</div>
+<div id="ref-Fitzpatrick:2016fo">
+<p>Fitzpatrick, Meagan C, Hiral A Shah, Abhishek Pandey, Alyssa M Bilinski, Manish Kakkar, Andrew D Clark, Jeffrey P Townsend, Syed Shahid Abbas, and Alison P Galvani. 2016. “One Health approach to cost-effective rabies control in India.” <em>Proceedings of the National Academy of Sciences</em>.</p>
+</div>
+<div id="ref-Hampson:2007gu">
+<p>Hampson, Katie, Jonathan Dushoff, John Bingham, Gideon Brückner, Y H Ali, and Andy Dobson. 2007. “Synchronous cycles of domestic dog rabies in sub-Saharan Africa and the impact of control efforts.” <em>Proceedings of the National Academy of Sciences</em>.</p>
+</div>
+<div id="ref-Hampson:2009jqa">
+<p>Hampson, Katie, Jonathan Dushoff, Sarah Cleaveland, Daniel T Haydon, Magai Kaare, Craig Packer, and Andy Dobson. 2009. “Transmission dynamics and prospects for the elimination of canine rabies.” <em>PLOS Biol</em>.</p>
+</div>
+<div id="ref-Hou:2012fv">
+<p>Hou, Qiang, Zhen Jin, and Shigui Ruan. 2012. “Dynamics of rabies epidemics and the impact of control efforts in Guangdong Province, China.” <em>Journal of Theoretical Biology</em>.</p>
+</div>
+<div id="ref-Huang:2018iz">
+<p>Huang, Jicai, Shigui Ruan, Yaqin Shu, and Xiao Wu. 2018. “Modeling the Transmission Dynamics of Rabies for Dog, Chinese Ferret Badger and Human Interactions in Zhejiang Province, China.” <em>Bulletin of Mathematical Biology</em>.</p>
+</div>
+<div id="ref-Hudson:2019ef">
+<p>Hudson, Emily G, Victoria J Brookes, Michael P Ward, and Salome Dürr. 2019. “Using roaming behaviours of dogs to estimate contact rates: the predicted effect on rabies spread.” <em>Epidemiology and Infection</em>.</p>
+</div>
+<div id="ref-Kadowaki:2018ge">
+<p>Kadowaki, H, K Hampson, K Tojinbara, A Yamada, and K Makita. 2018. “The risk of rabies spread in Japan: a mathematical modelling assessment.” <em>Epidemiology and Infection</em>.</p>
+</div>
+<div id="ref-Kitala:2002fz">
+<p>Kitala, P M, J J McDermott, P G Coleman, and C Dye. 2002. “Comparison of vaccination strategies for the control of dog rabies in Machakos District, Kenya.” <em>Epidemiology and Infection</em>.</p>
+</div>
+<div id="ref-Kurosawa:2017cj">
+<p>Kurosawa, Aiko, Kageaki Tojinbara, Hazumu Kadowaki, Katie Hampson, Akio Yamada, and Kohei Makita. 2017. “The rise and fall of rabies in Japan: A quantitative history of rabies epidemics in Osaka Prefecture, 19141933.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Laager:2019bi">
+<p>Laager, Mirjam, Monique Léchenne, Kemdongarti Naissengar, Rolande Mindekem, Assandi Oussiguere, Jakob Zinsstag, and Nakul Chitnis. 2019. “A metapopulation model of dog rabies transmission in N’Djamena, Chad.” <em>Journal of Theoretical Biology</em>.</p>
+</div>
+<div id="ref-Laager:2018cv">
+<p>Laager, Mirjam, Céline Mbilo, Enos Abdelaziz Madaye, Abakar Naminou, Monique Léchenne, Aurélie Tschopp, Service Kemdongarti Naı̈ssengar, Timo Smieszek, Jakob Zinsstag, and Nakul Chitnis. 2018. “The importance of dog population contact network structures in rabies transmission.” <em>PLoS Neglected Tropical Diseases</em>.</p>
 </div>
 <div id="ref-lakshmananThreeyearRabiesDuration2006">
 <p>Lakshmanan, Nallakannu, Thomas C Gore, Karen L Duncan, Michael J Coyne, Melissa A Lum, and Frank J Sterner. 2006. “Three-Year Rabies Duration of Immunity in Dogs Following Vaccination with a Core Combination Vaccine Against Canine Distemper Virus, Canine Adenovirus Type-1, Canine Parvovirus, and Rabies Virus.” <em>Veterinary Therapeutics : Research in Applied Veterinary Medicine</em>.</p>
 </div>
+<div id="ref-Lembo:2008fl">
+<p>Lembo, Tiziana, Katie Hampson, Daniel T Haydon, Meggan Craft, Andy Dobson, Jonathan Dushoff, Eblate Ernest, et al. 2008. “Exploring reservoir dynamics: a case study of rabies in the Serengeti ecosystem.” <em>The Journal of Applied Ecology</em>.</p>
+</div>
+<div id="ref-Leung:2017bq">
+<p>Leung, Tiffany, and Stephen A Davis. 2017. “Rabies Vaccination Targets for Stray Dog Populations.” <em>Frontiers in Veterinary Science</em>.</p>
+</div>
+<div id="ref-Liu:2017dk">
+<p>Liu, Junli, Ying Jia, and Tailei Zhang. 2017. “Analysis of a rabies transmission model with population dispersal.” <em>Nonlinear Analysis: Real World Applications</em>.</p>
+</div>
 <div id="ref-lloyd-smithEpidemicDynamicsHumanAnimal2009">
 <p>Lloyd-Smith, J O, D George, K M Pepin, V E Pitzer, J R C Pulliam, A P Dobson, P J Hudson, and B T Grenfell. 2009. “Epidemic Dynamics at the Human-Animal Interface.” <em>Science</em>.</p>
 </div>
-<div id="ref-townsendDesigningProgramsEliminating2013">
-<p>Townsend, Sunny E, I Putu Sumantra, Pudjiatmoko, Gusti Ngurah Bagus, Eric Brum, Sarah Cleaveland, Sally Crafter, et al. 2013. “Designing Programs for Eliminating Canine Rabies from Islands: Bali, Indonesia as a Case Study.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+<div id="ref-MengistuTulu:2017fg">
+<p>Mengistu Tulu, Aberu. 2017. “The Impact of Infective Immigrants on the Spread of Dog Rabies.” <em>American Journal of Applied Mathematics</em>.</p>
+</div>
+<div id="ref-Mollentze:2014bz">
+<p>Mollentze, Nardus, Louis H Nel, Sunny Townsend, Kevin le Roux, Katie Hampson, Daniel T Haydon, and Samuel Soubeyrand. 2014. “A Bayesian approach for inferring the dynamics of partially observed endemic infectious diseases from space-time-genetic data.” <em>Proceedings. Biological Sciences / the Royal Society</em>.</p>
+</div>
+<div id="ref-Sparkes:2016ds">
+<p>Sparkes, Jessica, Steven McLeod, Guy Ballard, Peter J S Fleming, Gerhard Körtner, and Wendy Y Brown. 2016. “Rabies disease dynamics in naı̈ve dog populations in Australia.” <em>Preventive Veterinary Medicine</em>.</p>
+</div>
+<div id="ref-Talbi:2010du">
+<p>Talbi, Chiraz, Philippe Lemey, Marc A Suchard, Elbia Abdelatif, Mehdi Elharrak, Nourlil Jalal, Abdellah Faouzi, et al. 2010. “Phylodynamics and Human-Mediated Dispersal of a Zoonotic Virus.” <em>PLoS Pathogens</em>.</p>
+</div>
+<div id="ref-Tian:2018fe">
+<p>Tian, Huaiyu, Yun Feng, Bram Vrancken, Bernard Cazelles, Hua Tan, Mandev S Gill, Qiqi Yang, et al. 2018. “Transmission dynamics of re-emerging rabies in domestic dogs of rural China.” <em>PLoS Pathogens</em>.</p>
+</div>
+<div id="ref-Tohma:2016et">
+<p>Tohma, Kentaro, Mariko Saito, Catalino S Demetria, Daria L Manalo, Beatriz P Quiambao, Taro Kamigaki, and Hitoshi Oshitani. 2016. “Molecular and mathematical modeling analyses of inter-island transmission of rabies into a previously rabies-free island in the Philippines.” <em>INFECTION, GENETICS AND EVOLUTION</em>.</p>
+</div>
+<div id="ref-Townsend:2013bc">
+<p>Townsend, Sunny E, Tiziana Lembo, Sarah Cleaveland, François X Meslin, Mary Elizabeth Miranda, Anak Agung Gde Putra, Daniel T Haydon, and Katie Hampson. 2013. “Surveillance guidelines for disease elimination: A case study of canine rabies.” <em>&quot;Comparative Immunology, Microbiology and Infectious Diseases&quot;</em>.</p>
+</div>
+<div id="ref-Townsend:2013hm">
+<p>Townsend, Sunny E, I Putu Sumantra, Pudjiatmoko, Gusti Ngurah Bagus, Eric Brum, Sarah Cleaveland, Sally Crafter, et al. 2013. “Designing programs for eliminating canine rabies from islands: Bali, Indonesia as a case study.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-WANG:2008fq">
+<p>Wang, Xiaowei, and Jie Lou. 2008. “Two dynamic models about rabies between dogs and humans.” <em>Journal of Biological Systems</em>.</p>
+</div>
+<div id="ref-Wera:2016jm">
+<p>Wera, E, M C M Mourits, M M Siko, and H Hogeveen. 2016. “Cost-Effectiveness of Mass Dog Vaccination Campaigns against Rabies in Flores Island, Indonesia.” <em>Transboundary and Emerging Diseases</em>.</p>
+</div>
+<div id="ref-Hampson:2018ek">
+<p>WHO Rabies Modelling Consortium. 2019. “The potential impact of improved provision of rabies post-exposure prophylaxis in Gavi-eligible countries: a modelling study.” <em>The Lancet Infectious Diseases</em>.</p>
+</div>
+<div id="ref-WilsonAggarwal:2019cy">
+<p>Wilson-Aggarwal, Jared K, Laura Ozella, Michele Tizzoni, Ciro Cattuto, George J F Swan, Tchonfienet Moundai, Matthew J Silk, James A Zingeser, and Robbie A McDonald. 2019. “High-resolution contact networks of free-ranging domestic dogs Canis familiaris and implications for transmission of infection.” <em>PLoS Neglected Tropical Diseases</em>.</p>
+</div>
+<div id="ref-Wiraningsih:2015fq">
+<p>Wiraningsih, E D, F Agusto, L Aryati, S Lenhart, and S Toaha. 2015. <em>Stability analysis of rabies model with vaccination and culling effect on dogs</em>. Applied Mathematical ….</p>
+</div>
+<div id="ref-Zhang:2012vb">
+<p>Zhang, J, Z Jin, G Q Sun, and X Sun. 2012. “Spatial spread of rabies in China.” <em>Journal of Applied Analysis and Computation</em>.</p>
+</div>
+<div id="ref-Zhang:2012fn">
+<p>Zhang, Juan, Zhen Jin, Gui-Quan Sun, Xiang-Dong Sun, and Shigui Ruan. 2012. “Modeling Seasonal Rabies Epidemics in China.” <em>Bulletin of Mathematical Biology</em>.</p>
+</div>
+<div id="ref-Zhang:2011ec">
+<p>Zhang, Juan, Zhen Jin, Gui-Quan Sun, Tao Zhou, and Shigui Ruan. 2011. “Analysis of Rabies in China: Transmission Dynamics and Control.” <em>PLoS ONE</em>.</p>
+</div>
+<div id="ref-Zinsstag:2017gn">
+<p>Zinsstag, Jakob, Monique Léchenne, Mirjam Laager, Rolande Mindekem, Service Naı̈ssengar, Assandi Oussiguere, Kebkiba Bidjeh, et al. 2017. “Vaccination of dogs in an African city interrupts rabies transmission and reduces human exposure.” <em>Science Translational Medicine</em>.</p>
+</div>
+<div id="ref-Zinsstag:2009ip">
+<p>Zinsstag, J, S Durr, M A Penny, R Mindekem, F Roth, S M Gonzalez, S Naissengar, and J Hattendorf. 2009. “Transmission dynamics and economics of rabies control in dogs and humans in an African city.” <em>Proceedings of the National Academy of Sciences</em>.</p>
 </div>
 </div>
 </article>
