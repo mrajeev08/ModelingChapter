@@ -36,20 +36,18 @@ newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.backgr
 ```
 
 ## Authors
-
-Malavika Rajeev, C. Jessica E. Metcalf
-Department of Ecology and Evolutionary Biology
-Princeton University, 
-Princeton, New Jersey
-USA
-
-Katie Hampson
-Institute of Biodiversity, Animal Health and Comparative Medicine
-College of Medicine, Veterinary Medicine and Life Sciences
-University of Glasgow
-Glasgow G12 8QQ
-UK
-
+<font size="4"> Malavika Rajeev, C. Jessica E. Metcalf </font>  
+*Department of Ecology and Evolutionary Biology*   
+*Princeton University,*  
+*Princeton, New Jersey, USA*  
+  
+  
+<font size="4"> Katie Hampson </font>  
+*Institute of Biodiversity, Animal Health and Comparative Medicine*  
+*College of Medicine, Veterinary Medicine and Life Sciences*  
+*University of Glasgow*  
+*Glasgow G12 8QQ, UK*  
+  
 ## Abstract
 
 Mathematical models of infectious disease are used to develop an understanding of disease dynamics and aid in the design of control strategies. Specifically, modeling can guide planning and implementation of interventions and improve our understanding of how disease dynamics, and therefore intervention strategies, may change as control measures are implemented. In light of the mounting evidence that elimination of canine rabies is a realistic objective, the WHO has set a global target of zero human deaths due to dog-mediated rabies by 2030. In this chapter, we focus on how dynamic epidemiological modeling can contribute to guiding efforts to achieve this goal. We review existing modeling work and the insights generated from these studies, and identify outstanding questions and gaps in our knowledge. We further discuss the role that modeling can play in the future to address these questions and inform elimination.
