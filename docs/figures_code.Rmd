@@ -1,17 +1,23 @@
 ---
-title: "Figures and associated code"
-author: "Malavika Rajeev"
+title: |
+  Modeling canine rabies virus transmission dynamics
+subtitle: |
+  *Figures, tables, and associated code for chapter in forthcoming Rabies, 4th edition*
 date: "`r Sys.Date()`"
 output:
   html_document:
     toc: true
     code_folding: hide
     css: github.css
+    includes:
+      before_body: header.html
+bibliography: ["references.bib"]
 ---
 
 ```{r setup, include=FALSE}
 rm(list = ls())
 library(knitr)
+library(kableExtra)
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, error = FALSE, 
                       warning = FALSE, fig.fullwidth = TRUE)
 library(ggplot2)
@@ -22,9 +28,31 @@ library(ggsn)
 library(tidyverse)
 library(patchwork)
 library(UpSetR)
+library(DT)
+library(readxl)
+
 newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.background = element_blank())
 
 ```
+
+## Authors
+
+Malavika Rajeev, C. Jessica E. Metcalf
+Department of Ecology and Evolutionary Biology
+Princeton University, 
+Princeton, New Jersey
+USA
+
+Katie Hampson
+Institute of Biodiversity, Animal Health and Comparative Medicine
+College of Medicine, Veterinary Medicine and Life Sciences
+University of Glasgow
+Glasgow G12 8QQ
+UK
+
+## Abstract
+
+Mathematical models of infectious disease are used to develop an understanding of disease dynamics and aid in the design of control strategies. Specifically, modeling can guide planning and implementation of interventions and improve our understanding of how disease dynamics, and therefore intervention strategies, may change as control measures are implemented. In light of the mounting evidence that elimination of canine rabies is a realistic objective, the WHO has set a global target of zero human deaths due to dog-mediated rabies by 2030. In this chapter, we focus on how dynamic epidemiological modeling can contribute to guiding efforts to achieve this goal. We review existing modeling work and the insights generated from these studies, and identify outstanding questions and gaps in our knowledge. We further discuss the role that modeling can play in the future to address these questions and inform elimination.
 
 ## Figure 1: SEIV Framework
 ```{r figure 1, results = 'hide'}
@@ -74,7 +102,7 @@ vacc_a <- ggplot(data = vacc_df, aes(x = Year, y = propVacc)) +
   newtheme +
   theme(text = element_text(color = "aquamarine4"), axis.text = element_text(color = "aquamarine4"), 
         axis.line = element_line(color = "aquamarine4"))
-ggsave("figs/fig1/vacc_a.jpeg", vacc_a, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/vacc_a.jpeg", vacc_a, device = "jpeg", width = 5, height = 5)
 
 ### Secondary cases
 ## params
@@ -88,7 +116,7 @@ sec_b <- ggplot(data = secondaries, aes(x = secondaries)) +
   theme(text = element_text(color = alpha("firebrick3", 1)),
         axis.text = element_text(color = alpha("firebrick3", 1)), 
         axis.line = element_line(color = alpha("firebrick3", 1)))
-ggsave("figs/fig1/sec_b.jpeg", sec_b, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/sec_b.jpeg", sec_b, device = "jpeg", width = 5, height = 5)
 # include_graphics("figs/fig1/secc_b.jpeg")
 
 ### Incubation period
@@ -102,7 +130,7 @@ inc_c <- ggplot(data = incubation, aes (x = Days, y = Density)) +
   newtheme +
   theme(text = element_text(color = "darkred"), axis.text = element_text(color = "darkred"), 
         axis.line = element_line(color = "darkred"))
-ggsave("figs/fig1/inc_c.jpeg", inc_c, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/inc_c.jpeg", inc_c, device = "jpeg", width = 5, height = 5)
 
 ### Infectious period
 infectious <- as.data.frame(list(Days = seq(0, 10, 0.1), 
@@ -115,11 +143,11 @@ inf_d <- ggplot(data = infectious, aes (x = Days, y = Density)) +
   newtheme +
   theme(text = element_text(color = "navy"), axis.text = element_text(color = "navy"), 
         axis.line = element_line(color = "navy"))
-ggsave("figs/fig1/inf_d.jpeg", inf_d, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/inf_d.jpeg", inf_d, device = "jpeg", width = 5, height = 5)
 
 
 ### Road network with scale
-tz_roads <- readOGR("data/Tanzania_Roads/Tanzania_Roads.shp")
+tz_roads <- readOGR("../data/Tanzania_Roads/Tanzania_Roads.shp")
 tz_roads <- fortify(tz_roads)
 
 map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
@@ -131,7 +159,7 @@ map_e1 <- ggplot(data = tz_roads, aes(x = long, y = lat, group = group)) +
            height = 0.02, model = 'WGS84') +
   theme_map()
 
-ggsave("figs/fig1/map_e1.jpeg", map_e1, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/map_e1.jpeg", map_e1, device = "jpeg", width = 5, height = 5)
 
 
 ### Dispersal kernel
@@ -147,20 +175,31 @@ disp_e2 <- ggplot(data = dispersal, aes (x = km, y = Density)) +
   theme(text = element_text(color = "mediumorchid4"), axis.text = element_text(color = "mediumorchid4"), 
         axis.line = element_line(color = "mediumorchid4"))
 
-ggsave("figs/fig1/disp_e2.jpeg", disp_e2, device = "jpeg", width = 5, height = 5)
+ggsave("../figs/fig1/disp_e2.jpeg", disp_e2, device = "jpeg", width = 5, height = 5)
 
 ```
 
 ```{r fig1 final, echo = FALSE}
 ## Final figure 1 (assembled in keynote!)
-include_graphics("figs/fig1.jpeg")
+include_graphics("../figs/fig1.jpeg")
 ```
   
 **Figure 20.1.** The *S*usceptible-*E*xposed-*I*nfectious-*V*accinated **(SEIV)** modeling framework for canine rabies: circles indicate epidemiological classes, arrows linking circles indicate how individuals can move between classes, insets describe underlying processes and influences.  **A)** Host demography (i.e., the balance between births and deaths) and vaccination govern the susceptible and vaccinated population dynamics. Following vaccination campaigns, vaccination coverage (y axis, inset) first increases (vertical jumps) then wanes over time (x axis) as vaccinated individuals die, susceptible individuals are born, or as immunity conferred by vaccination wanes (in this example, campaigns reach 70% of the population annually, but coverage wanes to approximately 35% before the next annual campaign). **B)** Transmission is on average low, but highly heterogeneous. Inset shows number of secondary cases generated from a negative binomial distribution (n = 1000 draws, mean number of secondary cases = 1.2, red dashed line). **C)** Individuals move from exposed to infectious on average after 22.3 days (inset, dashed line) but this is also highly variable with some infections occurring months to years after exposure. **D)** Disease-induced mortality is complete, and the infectious period is short, on average 3.1 days (dashed line), with deaths due to infection occurring within 10 days. **E)** Introductions from outside the population modeled may seed cases within. Introductions may results from disease-mediated movement of infectious dogs (sometimes upwards of 10 km; inset shows dispersal kernel, gamma distribution) and human-mediated movements of incubating dogs (potentially on the scale of 100s of km through movement along roads; the inset shows an example of a major road network in Tanzania). All parameters used and associated references are listed in Table 20.1
 
+
+## Table 1: Modeling studies included in literature review {.tabset}
+
+```{r}
+table1 <- read.csv("../tables/maintable_20.1.csv")
+kable(table1, rownames = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  collapse_rows()
+```
+
+
 ## Figure 2: Summarizing studies
 ```{r figure 2}
-studies <- read.csv("data/modeling_studies.csv")
+studies <- read.csv("../data/modeling_studies.csv")
 
 ## A. Studies by Year
 year_A <- ggplot(data = studies, aes(x = Year)) +
@@ -188,7 +227,7 @@ country_B <- ggplot(data = studies, aes(x = fct_relevel(reorder(Country, Country
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ## C. R0 plot
-r_ests <- read.csv("data/r_ests.csv")
+r_ests <- read.csv("../data/r_ests.csv")
 R0_C <- ggplot(data = filter(r_ests, R_type == "R0"), aes(x = Estimate)) +
   geom_histogram(binwidth = 0.25, color = "white", fill = "grey50") +
   scale_y_continuous(labels = scales::number_format(accuracy = 1)) +
@@ -219,8 +258,8 @@ features_D <- ggplot(data = summary, aes(x = reorder(key, -proportion), y = prop
 
 
 fig2 <- year_A + R0_C + country_B + features_D + plot_layout(ncol = 2, nrow = 2)
-ggsave("figs/fig2.jpeg", fig2, device = "jpeg", width = 8, height = 8)
-include_graphics("figs/fig2.jpeg")
+ggsave("../figs/fig2.jpeg", fig2, device = "jpeg", width = 8, height = 8)
+include_graphics("../figs/fig2.jpeg")
 
 ```
   
@@ -229,7 +268,7 @@ include_graphics("figs/fig2.jpeg")
 ## Figure 3: data
 ```{r Fig 3}
 ## Reported data
-repdata <- read.csv("data/reported_data.csv")
+repdata <- read.csv("../data/reported_data.csv")
 repdata %>%
   mutate(Nobs_maxed = case_when(Nobs < 250 ~ as.numeric(Nobs), Nobs >= 250 ~ 250), 
          Spatial.scale = fct_relevel(Spatial.scale, "National", after = Inf), 
@@ -259,8 +298,8 @@ data_B <- ggplot(data = repdata, aes(x = Temporal.scale, y = Length, fill = Spat
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
   guides(fill = guide_legend(override.aes = list(size = 3)))
 fig3 <- data_A + data_B + plot_layout(ncol = 2, widths = c(1, 1))
-ggsave("figs/fig3.jpeg", plot = fig3, device = "jpeg", height = 8, width = 12)
-include_graphics("figs/fig3.jpeg")
+ggsave("../figs/fig3.jpeg", plot = fig3, device = "jpeg", height = 8, width = 12)
+include_graphics("../figs/fig3.jpeg")
 ```
   
 **Figure 20.3. Rabies data reported in modeling studies** (N = 25 studies reporting 30 unique data sources). **A)** Type of data used. **B)** The scales of temporal (x-axis) and spatial (colors) information available and the duration (y axis). The size of the points is proportional to the number of observations in each data set. Any rabies data that was reported in studies were included (even if not used for fitting purposes, only for qualitative comparison). If multiple data sets were used, they were included as separate data sources, and if the same data set was used in multiple studies it was only included once.
@@ -401,8 +440,8 @@ fdt_plot <- ggplot(data = fdt, aes(x = time, y = infected/pop, group = R0, color
   newtheme +
   labs(tag = "A", subtitle = "Frequency")
 figS1 <- fdt_plot / ddt_plot
-ggsave("figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 7, width = 7)
-include_graphics("figs/figS1.jpeg")
+ggsave("../figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 7, width = 7)
+include_graphics("../figs/figS1.jpeg")
 ```
 **Supplemental Figure 1. Density vs. frequency-dependent transmission.** Monthly incidence (the proportion of the population infected, and thus removed (as a result of mortality)) from mass-action models of rabies with **A)** frequency and B) density dependent transmission. Even in low transmission scenarios (R0 = 1.01 - 1.1), incidence peaks at between 1.5 – 2.0% per month for models with density-dependent transmission and between 0.01 - 30% for frequency-dependent transmission, compared with the 1 - 2% max annual incidence observed empirically. Demographic and transmission parameters are listed in Table 20.1 (mean incubation and infectious periods were input as annual rates). Frequency-dependent model is a SEI model with starting dog population of 50,000 and seeded with 2 infectious individuals. Density-dependent model is adapted from Anderson et al. 1981, with starting population density of 15 dogs per km2 , 0.01 infectious dogs per km2, and carrying capacity of 29 dogs per km2. 
 
@@ -420,7 +459,7 @@ names(categories) <- c("Reference", "Explain patterns",
                        "Identify drivers", "Predict trends")
 
 ## Upset plot
-jpeg("figs/figS2.jpeg", width = 1500, height = 1500)
+jpeg("../figs/figS2.jpeg", width = 1500, height = 1500)
 upset(categories, nsets = 5, nintersects = NA,
       sets.x.label = "Type of study", mainbar.y.label = "Number of studies", text.scale = 5)
 dev.off()
@@ -434,10 +473,10 @@ table(cat_summary$key)
 ```
 
 ```{r supp fig 2, echo = FALSE}
-include_graphics("figs/figS2.jpeg")
+include_graphics("../figs/figS2.jpeg")
 ```
 
-**Supplemental Figure 2. Types of modeling studies^[Categories adapted from Lloyd-Smith, J O et al. [Epidemic Dynamics at the Human-Animal Interface.](https://science.sciencemag.org/content/326/5958/1362.long) Science 326.5958 (2009): 1–7.]**. 1) Predict future trends based on currently available data and model projections; 2) Study control measures (using models to estimate/simulate the impacts of control efforts and compare intervention strategies); 3) Estimate key parameters such as Ro, the incubation period, the dispersal kernel; we also differentiate between studies which 4) Identify drivers of dynamics (that is look at hypothetical factors which may drive transmission without comparing or fitting to data) and studies which 5) Explain observed patterns (use models and data to determine likely drivers of observed patterns).
+**Supplemental Figure 2. Types of modeling studies (categories adapted from @lloyd-smithEpidemicDynamicsHumanAnimal2009)**. 1) Predict future trends based on currently available data and model projections; 2) Study control measures (using models to estimate/simulate the impacts of control efforts and compare intervention strategies); 3) Estimate key parameters such as Ro, the incubation period, the dispersal kernel; we also differentiate between studies which 4) Identify drivers of dynamics (that is look at hypothetical factors which may drive transmission without comparing or fitting to data) and studies which 5) Explain observed patterns (use models and data to determine likely drivers of observed patterns).
 
 ## Supplementary Table 1: Modeling studies included in literature review {.tabset}
 
@@ -445,20 +484,22 @@ include_graphics("figs/figS2.jpeg")
 ```{r}
 library(DT)
 library(readxl)
-Table_S1 <- read_excel("Table.S1.xlsx")
+Table_S1 <- read_excel("../tables/supptable_S1.xlsx")
 datatable(Table_S1, filter = "top", rownames = FALSE)
 
 ```
 
 ### Key for columns
 ```{r}
-cols_S1 <- read_excel("Table.S1.xlsx", sheet = "DefineColumns")
-datatable(cols_S1, rownames = FALSE)
+cols_S1 <- read_excel("../tables/supptable_S1.xlsx", sheet = "DefineColumns")
+kable(cols_S1, rownames = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  collapse_rows()
 ```
 
 ### Key for values in columns
 ```{r}
-cols_S1 <- read_excel("Table.S1.xlsx", sheet = "DefineTerms")
+cols_S1 <- read_excel("../tables/supptable_S1.xlsx", sheet = "DefineTerms")
 datatable(cols_S1, rownames = FALSE)
 ```
 
@@ -466,3 +507,6 @@ datatable(cols_S1, rownames = FALSE)
 ```{r print session info}
 sessionInfo()
 ```
+
+## References
+
