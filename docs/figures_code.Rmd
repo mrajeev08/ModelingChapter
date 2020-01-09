@@ -1,18 +1,31 @@
 ---
-title: |
-  Modeling canine rabies virus transmission dynamics
-subtitle: |
-  *Figures, tables, and associated code for chapter in forthcoming Rabies, 4th edition*
-date: "`r Sys.Date()`"
 output:
   html_document:
-    toc: true
-    code_folding: hide
+    code_folding: show
     css: github.css
     includes:
       before_body: header.html
 bibliography: ["references.bib"]
 ---
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="github.css">
+<style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
+
+<article class="markdown-body">
 
 ```{r setup, include=FALSE}
 rm(list = ls())
@@ -34,6 +47,10 @@ library(readxl)
 newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.background = element_blank())
 
 ```
+
+# Modeling canine rabies virus transmission dynamics {-}
+## *Figures, tables, and associated code for chapter in forthcoming Rabies, 4th edition* {-}
+## `r Sys.Date()` {-}
 
 ## Authors
 <font size="4"> Malavika Rajeev, C. Jessica E. Metcalf </font>  
@@ -507,4 +524,6 @@ sessionInfo()
 ```
 
 ## References
+<div id="refs"></div>
 
+</article>
