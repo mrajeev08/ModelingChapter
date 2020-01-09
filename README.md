@@ -2,9 +2,7 @@
 ### Chapter 20 in forthcoming [Rabies, 4th edition](https://www.elsevier.com/books/rabies/fooks/978-0-12-818705-0). 
 #### See figures, tables, and code [here](https://mrajeev08.github.io/ModelingChapter/).  
 
-<p align="center">
-    <img width="750" src="figs/fig1.jpeg">
-</p>  
+<img align="left" width="750" src="figs/fig1.jpeg">
 
 ## Abstract
 
