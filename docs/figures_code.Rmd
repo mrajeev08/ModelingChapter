@@ -1,7 +1,7 @@
 ---
 output:
   html_document:
-    code_folding: show
+    code_folding: hide
     css: github.css
     includes:
       before_body: header.html
@@ -43,14 +43,17 @@ library(patchwork)
 library(UpSetR)
 library(DT)
 library(readxl)
+source("render_toc.R")
 
 newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.background = element_blank())
 
 ```
 
-# Modeling canine rabies virus transmission dynamics {-}
-## *Figures, tables, and associated code for chapter in forthcoming Rabies, 4th edition* {-}
-## `r Sys.Date()` {-}
+# Modeling canine rabies virus transmission dynamics
+<font size="4"> _**Chapter 20 in forthcoming Rabies, 4th edition**_</font>  
+<font size="4"> _**Figures, tables, supplementary materials, and code**_</font>  
+  
+_*`r Sys.Date()`*_
 
 ## Authors
 <font size="4"> Malavika Rajeev, C. Jessica E. Metcalf </font>  
@@ -64,12 +67,21 @@ newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.backgr
 *College of Medicine, Veterinary Medicine and Life Sciences*  
 *University of Glasgow*  
 *Glasgow G12 8QQ, UK*  
-  
+
+## Contents
+```{r toc, echo=FALSE}
+render_toc("figures_code.Rmd", toc_header_name = "Contents", 
+           excludes = c("Authors", "Modeling canine rabies virus transmission dynamics", 
+                        "Figures, tables, and associated code for chapter in forthcoming Rabies, 4th edition",
+                        "r Sys.Date()"))
+```
+
 ## Abstract
 
-Mathematical models of infectious disease are used to develop an understanding of disease dynamics and aid in the design of control strategies. Specifically, modeling can guide planning and implementation of interventions and improve our understanding of how disease dynamics, and therefore intervention strategies, may change as control measures are implemented. In light of the mounting evidence that elimination of canine rabies is a realistic objective, the WHO has set a global target of zero human deaths due to dog-mediated rabies by 2030. In this chapter, we focus on how dynamic epidemiological modeling can contribute to guiding efforts to achieve this goal. We review existing modeling work and the insights generated from these studies, and identify outstanding questions and gaps in our knowledge. We further discuss the role that modeling can play in the future to address these questions and inform elimination.
-
-## Figure 1: SEIV Framework
+Mathematical models of infectious disease are used to develop an understanding of disease dynamics and aid in the design of control strategies. Specifically, modeling can guide planning and implementation of interventions and improve our understanding of how disease dynamics, and therefore intervention strategies, may change as control measures are implemented. In light of the mounting evidence that elimination of canine rabies is a realistic objective, the WHO has set a global target of zero human deaths due to dog-mediated rabies by 2030. In this chapter, we focus on how dynamic epidemiological modeling can contribute to guiding efforts to achieve this goal. We review existing modeling work and the insights generated from these studies, and identify outstanding questions and gaps in our knowledge. We further discuss the role that modeling can play in the future to address these questions and inform elimination.  
+  
+    
+## Figure 20.1: SEIV Framework
 ```{r figure 1, results = 'hide'}
 ## Project population
 vacc_reconstruct <- function(t, y, parms){
@@ -199,10 +211,10 @@ ggsave("../figs/fig1/disp_e2.jpeg", disp_e2, device = "jpeg", width = 5, height 
 include_graphics("../figs/fig1.jpeg")
 ```
   
-**Figure 20.1.** The *S*usceptible-*E*xposed-*I*nfectious-*V*accinated **(SEIV)** modeling framework for canine rabies: circles indicate epidemiological classes, arrows linking circles indicate how individuals can move between classes, insets describe underlying processes and influences.  **A)** Host demography (i.e., the balance between births and deaths) and vaccination govern the susceptible and vaccinated population dynamics. Following vaccination campaigns, vaccination coverage (y axis, inset) first increases (vertical jumps) then wanes over time (x axis) as vaccinated individuals die, susceptible individuals are born, or as immunity conferred by vaccination wanes (in this example, campaigns reach 70% of the population annually, but coverage wanes to approximately 35% before the next annual campaign). **B)** Transmission is on average low, but highly heterogeneous. Inset shows number of secondary cases generated from a negative binomial distribution (n = 1000 draws, mean number of secondary cases = 1.2, red dashed line). **C)** Individuals move from exposed to infectious on average after 22.3 days (inset, dashed line) but this is also highly variable with some infections occurring months to years after exposure. **D)** Disease-induced mortality is complete, and the infectious period is short, on average 3.1 days (dashed line), with deaths due to infection occurring within 10 days. **E)** Introductions from outside the population modeled may seed cases within. Introductions may results from disease-mediated movement of infectious dogs (sometimes upwards of 10 km; inset shows dispersal kernel, gamma distribution) and human-mediated movements of incubating dogs (potentially on the scale of 100s of km through movement along roads; the inset shows an example of a major road network in Tanzania). All parameters used and associated references are listed in Table 20.1
-
-
-## Table 1: Modeling studies included in literature review {.tabset}
+The **S**usceptible-**E**xposed-**I**nfectious-**V**accinated **(SEIV)** modeling framework for canine rabies: circles indicate epidemiological classes, arrows linking circles indicate how individuals can move between classes, insets describe underlying processes and influences.  **A)** Host demography (i.e., the balance between births and deaths) and vaccination govern the susceptible and vaccinated population dynamics. Following vaccination campaigns, vaccination coverage (y axis, inset) first increases (vertical jumps) then wanes over time (x axis) as vaccinated individuals die, susceptible individuals are born, or as immunity conferred by vaccination wanes (in this example, campaigns reach 70% of the population annually, but coverage wanes to approximately 35% before the next annual campaign). **B)** Transmission is on average low, but highly heterogeneous. Inset shows number of secondary cases generated from a negative binomial distribution (n = 1000 draws, mean number of secondary cases = 1.2, red dashed line). **C)** Individuals move from exposed to infectious on average after 22.3 days (inset, dashed line) but this is also highly variable with some infections occurring months to years after exposure. **D)** Disease-induced mortality is complete, and the infectious period is short, on average 3.1 days (dashed line), with deaths due to infection occurring within 10 days. **E)** Introductions from outside the population modeled may seed cases within. Introductions may results from disease-mediated movement of infectious dogs (sometimes upwards of 10 km; inset shows dispersal kernel, gamma distribution) and human-mediated movements of incubating dogs (potentially on the scale of 100s of km through movement along roads; the inset shows an example of a major road network in Tanzania). All parameters used and associated references are listed in Table 20.1  
+  
+  
+## Table 20.1: Key parameter values associated with underlying processes illustrated in Figure 20.1 {.tabset}
 
 ```{r}
 table1 <- read.csv("../tables/maintable_20.1.csv")
@@ -210,9 +222,9 @@ kable(table1, rownames = FALSE) %>%
   kable_styling(bootstrap_options = c("striped", "hover")) %>%
   collapse_rows()
 ```
-
-
-## Figure 2: Summarizing studies
+  
+   
+## Figure 20.2: Summarizing studies
 ```{r figure 2}
 studies <- read.csv("../data/modeling_studies.csv")
 
@@ -279,8 +291,9 @@ include_graphics("../figs/fig2.jpeg")
 ```
   
 **Figure 20.2. Summary of studies with a dynamic model of canine rabies.** A total of 51 studies were included. **A)** Year of publication, with most studies published after 2006; **B)** Countries where rabies dynamics were modeled: studies were concentrated in China, Tanzania, and Chad, but many also examined dynamics in hypothetical contexts, not specific to any geographic situation. **C)** Estimates of R0: most studies estimated R0 below 2 (10 studies, with 31 estimates; estimates of Re (the effective reproduction number which accounts for ongoing vaccination) and Rt (time-varying reproductive number) were excluded (N = 3). **D)** Key features of models (N = 51): most assumed density-dependent transmission (N = 27). Less than half were fit to data (N = 20), stochastic (N = 20), or spatially-explicit (N = 19). 15/51 studies incorporated individual heterogeneity in transmission and 14/51 introductions from outside the population modeled. Only 10 included an observation model in their analysis or accounted for underreporting in their inference. Full bibliography and metadata included in Supplementary Table 1.)
-
-## Figure 3: data
+  
+   
+## Figure 20.3: data
 ```{r Fig 3}
 ## Reported data
 repdata <- read.csv("../data/reported_data.csv")
@@ -318,8 +331,10 @@ include_graphics("../figs/fig3.jpeg")
 ```
   
 **Figure 20.3. Rabies data reported in modeling studies** (N = 25 studies reporting 30 unique data sources). **A)** Type of data used. **B)** The scales of temporal (x-axis) and spatial (colors) information available and the duration (y axis). The size of the points is proportional to the number of observations in each data set. Any rabies data that was reported in studies were included (even if not used for fitting purposes, only for qualitative comparison). If multiple data sets were used, they were included as separate data sources, and if the same data set was used in multiple studies it was only included once.
+  
+   
+## Supplementary Figure S1  
 
-## Supplementary Figure S1
 ```{r SEI mods}
 # models
 SEI.rabies <- function(nu = 0.50, mu = 0.42, R0 = 1.2, sigma = (1/22.3*365),
@@ -458,8 +473,10 @@ figS1 <- fdt_plot / ddt_plot
 ggsave("../figs/figS1.jpeg", plot = figS1, device = "jpeg", height = 7, width = 7)
 include_graphics("../figs/figS1.jpeg")
 ```
-**Supplemental Figure 1. Density vs. frequency-dependent transmission.** Monthly incidence (the proportion of the population infected, and thus removed (as a result of mortality)) from mass-action models of rabies with **A)** frequency and B) density dependent transmission. Even in low transmission scenarios (R0 = 1.01 - 1.1), incidence peaks at between 1.5 – 2.0% per month for models with density-dependent transmission and between 0.01 - 30% for frequency-dependent transmission, compared with the 1 - 2% max annual incidence observed empirically. Demographic and transmission parameters are listed in Table 20.1 (mean incubation and infectious periods were input as annual rates). Frequency-dependent model is a SEI model with starting dog population of 50,000 and seeded with 2 infectious individuals. Density-dependent model is adapted from Anderson et al. 1981, with starting population density of 15 dogs per km2 , 0.01 infectious dogs per km2, and carrying capacity of 29 dogs per km2. 
-
+  
+**Density vs. frequency-dependent transmission.** Monthly incidence (the proportion of the population infected, and thus removed (as a result of mortality)) from mass-action models of rabies with **A)** frequency and B) density dependent transmission. Even in low transmission scenarios (R0 = 1.01 - 1.1), incidence peaks at between 1.5 – 2.0% per month for models with density-dependent transmission and between 0.01 - 30% for frequency-dependent transmission, compared with the 1 - 2% max annual incidence observed empirically. Demographic and transmission parameters are listed in Table 20.1 (mean incubation and infectious periods were input as annual rates). Frequency-dependent model is a SEI model with starting dog population of 50,000 and seeded with 2 infectious individuals. Density-dependent model is adapted from Anderson et al. 1981, with starting population density of 15 dogs per km2 , 0.01 infectious dogs per km2, and carrying capacity of 29 dogs per km2. 
+  
+   
 ## Supplementary Figure S2
 
 ```{r extra upset plots, results = 'hide'}
@@ -491,8 +508,9 @@ table(cat_summary$key)
 include_graphics("../figs/figS2.jpeg")
 ```
 
-**Supplemental Figure 2. Types of modeling studies (categories adapted from @lloyd-smithEpidemicDynamicsHumanAnimal2009)**. 1) Predict future trends based on currently available data and model projections; 2) Study control measures (using models to estimate/simulate the impacts of control efforts and compare intervention strategies); 3) Estimate key parameters such as Ro, the incubation period, the dispersal kernel; we also differentiate between studies which 4) Identify drivers of dynamics (that is look at hypothetical factors which may drive transmission without comparing or fitting to data) and studies which 5) Explain observed patterns (use models and data to determine likely drivers of observed patterns).
-
+**Types of modeling studies (categories adapted from @lloyd-smithEpidemicDynamicsHumanAnimal2009)**. 1) Predict future trends based on currently available data and model projections; 2) Study control measures (using models to estimate/simulate the impacts of control efforts and compare intervention strategies); 3) Estimate key parameters such as Ro, the incubation period, the dispersal kernel; we also differentiate between studies which 4) Identify drivers of dynamics (that is look at hypothetical factors which may drive transmission without comparing or fitting to data) and studies which 5) Explain observed patterns (use models and data to determine likely drivers of observed patterns).
+  
+   
 ## Supplementary Table 1: Modeling studies included in literature review {.tabset}
 
 ### Supplementary Table 1
@@ -517,12 +535,14 @@ kable(cols_S1, rownames = FALSE) %>%
 cols_S1 <- read_excel("../tables/supptable_S1.xlsx", sheet = "DefineTerms")
 datatable(cols_S1, rownames = FALSE)
 ```
-
+  
+   
 ## Session info
 ```{r print session info}
 sessionInfo()
 ```
-
+  
+   
 ## References
 <div id="refs"></div>
 
