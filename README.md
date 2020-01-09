@@ -3,7 +3,7 @@
 #### See figures, tables, and code [here](https://mrajeev08.github.io/ModelingChapter/).  
 
 <p align="left">
-  <img width="460" height="300" src="figs/fig1.jpeg">
+  <img width="750" src="figs/fig1.jpeg">
 </p>
   
 ## Abstract
