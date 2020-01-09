@@ -2,8 +2,8 @@
 ### Chapter 20 in forthcoming [Rabies, 4th edition](https://www.elsevier.com/books/rabies/fooks/978-0-12-818705-0). 
 #### See figures, tables, and code [here](https://mrajeev08.github.io/ModelingChapter/).  
 
-<img align="left" width="750" src="figs/fig1.jpeg">
-
+<img align="left" width="750" src="figs/fig1.jpeg">  
+  
 ## Abstract
 
 Mathematical models of infectious disease are used to develop an understanding of disease dynamics and aid in the design of control strategies. Specifically, modeling can guide planning and implementation of interventions and improve our understanding of how disease dynamics, and therefore intervention strategies, may change as control measures are implemented. In light of the mounting evidence that elimination of canine rabies is a realistic objective, the WHO has set a global target of zero human deaths due to dog-mediated rabies by 2030. In this chapter, we focus on how dynamic epidemiological modeling can contribute to guiding efforts to achieve this goal. We review existing modeling work and the insights generated from these studies, and identify outstanding questions and gaps in our knowledge. We further discuss the role that modeling can play in the future to address these questions and inform elimination.
