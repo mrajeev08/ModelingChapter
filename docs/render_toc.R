@@ -10,7 +10,8 @@
 #' Because this function returns only the markdown list, the header for the
 #' Table of Contents itself must be manually included in the text. Use
 #' `toc_header_name` to exclude the table of contents header from the TOC, or
-#' set to `NULL` for it to be included.
+#' set to `NULL` for it to be included. MR NOTE: It's better to use custom slugs if special characters
+#' in header!
 #' 
 #' @section Usage:
 #' Just drop in a chunk where you want the toc to appear (set `echo=FALSE`):
@@ -69,7 +70,7 @@ render_toc <- function(
     if (grepl("\\{#.+\\}(\\s+)?$", h)) {
       # has special header slug
       header_text <- gsub("#+ (.+)\\s+?\\{.+$", "\\1", h)
-      header_slug <- gsub(".+\\{\\s?#([-_.a-zA-Z]+).+", "\\1", h)
+      header_slug <- gsub(".+\\{\\s?#([-_.a-zA-Z0-9]+).+", "\\1", h)
     } else {
       header_text <- gsub("#+\\s+?", "", h)
       header_text <- gsub("\\s+?\\{.+\\}\\s*$", "", header_text) # strip { .tabset ... }
