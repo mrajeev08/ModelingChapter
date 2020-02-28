@@ -134,6 +134,7 @@ ggsave("../figs/fig1/vacc_a.jpeg", vacc_a, device = "jpeg", width = 5, height = 
 
 ### Secondary cases
 ## params
+set.seed(123)
 secondaries <- data.frame(secondaries = rnbinom(1000, mu = 1.2, size = 1.3))
 sec_b <- ggplot(data = secondaries, aes(x = secondaries)) +
   geom_histogram(binwidth = 1, color = "lightgray", fill = "red", alpha = 0.5) +
