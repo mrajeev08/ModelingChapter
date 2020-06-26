@@ -28,7 +28,6 @@ bibliography: ["references.bib"]
 <article class="markdown-body">
 
 ```{r setup, include=FALSE}
-rm(list = ls())
 library(knitr)
 library(kableExtra)
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, error = FALSE, 
@@ -50,7 +49,8 @@ newtheme <- theme_classic() + theme(text = element_text(size = 14), panel.backgr
 ```
 
 # Modeling canine rabies virus transmission dynamics
-<font size="4"> _**Chapter 20 in forthcoming Rabies, 4th edition**_</font>  
+<font size="4"> _**Chapter 20 in [Rabies, 4th edition](https://www.elsevier.com/books/rabies/fooks/978-0-12-818705-0)**_</font>  
+<font size="4"> _**Full text (author's pre-editorial version) available [here](https://oar.princeton.edu/jspui/handle/88435/pr1mf4h)**_</font>  
 <font size="4"> _**Figures, tables, supplementary materials, and code**_</font>  
   
 _*`r Sys.Date()`*_
