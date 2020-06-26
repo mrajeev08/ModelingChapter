@@ -1,6 +1,7 @@
 # Modeling canine rabies virus transmission dynamics 
-### Chapter 20 in forthcoming [Rabies, 4th edition](https://www.elsevier.com/books/rabies/fooks/978-0-12-818705-0). 
-#### See figures, tables, and code [here](https://mrajeev08.github.io/ModelingChapter/).  
+### Chapter 20 in [Rabies, 4th edition](https://www.elsevier.com/books/rabies/fooks/978-0-12-818705-0). 
+### Full text (author's pre-editorial version) available [here](https://oar.princeton.edu/jspui/handle/88435/pr1mf4h).
+### See figures, tables, and code [here](https://mrajeev08.github.io/ModelingChapter/).  
 
 <p align="left">
   <img width="750" src="figs/fig1.jpeg">
@@ -22,5 +23,5 @@ Final figures are in [figs/](figs) and tables in [tables/](tables). Data pulled 
 
 All main/supplemental figures and tables can be viewed along with code [here](https://mrajeev08.github.io/ModelingChapter/).
   
-
+Full pre-editorial version is available through the [Princeton University Open Access Repository](https://oar.princeton.edu/jspui/handle/88435/pr1mf4h) (no login required!).
 
